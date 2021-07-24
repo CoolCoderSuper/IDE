@@ -170,8 +170,14 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tabs\ErrorListTab.resx">
+      <DependentUpon>ErrorListTab.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tabs\OutputTab.resx">
       <DependentUpon>OutputTab.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tabs\TaskListTab.resx">
+      <DependentUpon>TaskListTab.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ Public Class Compile
 
         If results.Errors.HasErrors Then
             results.Errors.Cast(Of CompilerError)().ToList().ForEach(Sub([error])
-                                                                         strOutput += [error].ErrorText & vbCrLf + Environment.NewLine
+                                                                         strOutput &= [error].ErrorNumber & ": '" & [error].ErrorText & "' at line " & [error].Line & " in " & [error].FileName & vbCrLf
                                                                      End Sub)
         Else
             strOutput += "----Build succeeded----" & Environment.NewLine
@@ -34,7 +34,7 @@ Public Class Compile
 
         If results.Errors.HasErrors Then
             results.Errors.Cast(Of CompilerError)().ToList().ForEach(Sub([error])
-                                                                         strOutput += [error].ErrorText & vbCrLf
+                                                                         strOutput &= [error].ErrorNumber & ": '" & [error].ErrorText & "' at line " & [error].Line & " in " & [error].FileName & vbCrLf
                                                                      End Sub)
         Else
             strOutput += "----Build succeeded----" & Environment.NewLine
