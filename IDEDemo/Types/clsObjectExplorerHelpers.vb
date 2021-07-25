@@ -1,13 +1,4 @@
-﻿Public Enum ExplorerItemType
-    [Class]
-    Method
-    [Property]
-    [Event]
-    [Operator]
-    Variable
-End Enum
-
-Public Class ExplorerItem
+﻿Public Class ExplorerItem
     Public type As ExplorerItemType
 
     Public title As String

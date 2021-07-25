@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1525
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "IDEDemo", "IDEDemo\IDEDemo.vbproj", "{340C0B36-F205-42B5-9245-B292F02C9BFD}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeveloperCore", "IDEDemo\DeveloperCore.vbproj", "{340C0B36-F205-42B5-9245-B292F02C9BFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

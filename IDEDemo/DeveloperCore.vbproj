@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{340C0B36-F205-42B5-9245-B292F02C9BFD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>IDEDemo.My.MyApplication</StartupObject>
-    <RootNamespace>IDEDemo</RootNamespace>
-    <AssemblyName>IDEDemo</AssemblyName>
+    <StartupObject>DeveloperCore.My.MyApplication</StartupObject>
+    <RootNamespace>DeveloperCore</RootNamespace>
+    <AssemblyName>DeveloperCore</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -24,7 +24,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>IDEDemo.xml</DocumentationFile>
+    <DocumentationFile>DeveloperCore.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -34,7 +34,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>IDEDemo.xml</DocumentationFile>
+    <DocumentationFile>DeveloperCore.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -131,6 +131,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -143,7 +144,10 @@
     <Compile Include="Tabs\TaskListTab.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Types\clsObjectExplorerTypes.vb" />
+    <Compile Include="Types\clsObjectExplorerHelpers.vb" />
+    <Compile Include="Types\Enums.vb" />
+    <Compile Include="Types\ErrorNumber.vb" />
+    <Compile Include="Types\ErrorItem.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmOptions.resx">

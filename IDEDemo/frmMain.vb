@@ -378,6 +378,12 @@ Public Class frmMain
             objTab.FilePath = objItem.Tag
             objTab.Init()
             tcMain.Items.Add(objTab)
+            tcMain.SelectedItem = objTab
+            If Language = "cs" Then
+                ReCSharpBuildObjectExplorer(CurrentTB.Text)
+            Else
+                ReBuildVBObjectExplorer(CurrentTB.Text)
+            End If
         End If
     End Sub
 #End Region
@@ -417,6 +423,14 @@ Public Class frmMain
         If Not tcTools.Items.Contains(tbOutput) Then
             tcTools.Items.Add(tbOutput)
         End If
+    End Sub
+
+    Private Sub tcTools_TabStripItemSelectionChanged(e As FarsiLibrary.Win.TabStripItemChangedEventArgs) Handles tcTools.TabStripItemSelectionChanged
+
+    End Sub
+
+    Private Sub tcViews_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tcViews.SelectedIndexChanged
+
     End Sub
 #End Region
 
