@@ -1,4 +1,5 @@
-﻿Imports FarsiLibrary.Win
+﻿Imports System.Windows.Forms
+Imports FarsiLibrary.Win
 Public Class ErrorListTab
     Inherits FATabStripItem
 

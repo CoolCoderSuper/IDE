@@ -1,16 +1,22 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
 Imports System.Text.RegularExpressions
-Imports FastColoredTextBoxNS
+Imports System.Windows.Forms
+Imports CodingCool.DeveloperCore.Core
 Imports FarsiLibrary.Win
-
+Imports FastColoredTextBoxNS
+'TODO: Reference list of Assemblies instead of reading project file
+'TODO: Change image list to reference resource instead of file
 Public Class CodeTab
     Inherits FATabStripItem
 
 #Region "Components"
     Friend WithEvents docMap As DocumentMap
-    Friend WithEvents txtEditor As FastColoredTextBox
+    Public WithEvents txtEditor As FastColoredTextBox
     Private components As System.ComponentModel.IContainer
     Friend WithEvents popupMenu As AutocompleteMenu
+    Dim items As List(Of AutocompleteItem)
+    Dim strRoot As String
 
 #End Region
 
@@ -79,14 +85,12 @@ Public Class CodeTab
 
 #Region "Intialization"
 
-    Public Sub New(l As Language)
+    Public Sub New(l As Language, strPR As String)
+        items = New List(Of AutocompleteItem)
         InitializeComponent()
         InitStylesPriority()
-        popupMenu = New AutocompleteMenu(txtEditor)
-        popupMenu.Items.ImageList = autocompleteImg
-        popupMenu.SearchPattern = "[\w\.:=!<>]"
-        popupMenu.AllowTabKey = True
         Language = l
+        strRoot = strPR
         If Language = Language.CSharp Then
             BuildCSAutocompleteMenu()
             Me.txtEditor.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(39), Global.Microsoft.VisualBasic.ChrW(39)}
@@ -107,6 +111,7 @@ Public Class CodeTab
         Me.txtEditor = New FastColoredTextBoxNS.FastColoredTextBox()
         Me.docMap = New FastColoredTextBoxNS.DocumentMap()
         Me.autocompleteImg = New System.Windows.Forms.ImageList(Me.components)
+        Me.popupMenu = New AutocompleteMenu(txtEditor)
         CType(Me.txtEditor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -152,8 +157,13 @@ Public Class CodeTab
         Me.autocompleteImg.TransparentColor = System.Drawing.Color.Transparent
         Me.autocompleteImg.Images.SetKeyName(0, "script_16x16.png")
         Me.autocompleteImg.Images.SetKeyName(1, "app_16x16.png")
-        Me.autocompleteImg.Images.SetKeyName(2, "1302166543_virtualbox.png")
-        Me.autocompleteImg.Images.SetKeyName(3, "key-2-64x64.png")
+        Me.autocompleteImg.Images.SetKeyName(2, "Method")
+        Me.autocompleteImg.Images.SetKeyName(3, "Keyword")
+        Me.autocompleteImg.Images.Add("Property", My.Resources.property_new)
+        Me.autocompleteImg.Images.Add("Class", My.Resources.class_new)
+        popupMenu.Items.ImageList = autocompleteImg
+        popupMenu.SearchPattern = "[\w\.:=!<>]"
+        popupMenu.AllowTabKey = True
         '
         'CodeTab
         '
@@ -214,16 +224,15 @@ Public Class CodeTab
 #Region "Autocomplete menu"
 
     Private Sub BuildCSAutocompleteMenu()
-        Dim items As New List(Of AutocompleteItem)()
         For Each item As String In CSSnippets
             items.Add(New SnippetAutocompleteItem(item) With {.ImageIndex = 1})
         Next
         For Each item As String In CSdeclarationSnippets
             items.Add(New DeclarationSnippet(item) With {.ImageIndex = 0})
         Next
-        For Each item As String In Methods
-            items.Add(New MethodAutocompleteItem(item) With {.ImageIndex = 2})
-        Next
+        'For Each item As String In Methods
+        '    items.Add(New MethodAutocompleteItem(item) With {.ImageIndex = 2})
+        'Next
         For Each item As String In CSKeyWords
             items.Add(New AutocompleteItem(item) With {.ImageIndex = 3})
         Next
@@ -234,16 +243,15 @@ Public Class CodeTab
     End Sub
 
     Private Sub BuildVBAutocompleteMenu()
-        Dim items As New List(Of AutocompleteItem)()
         For Each item As String In VBSnippets
             items.Add(New SnippetAutocompleteItem(item) With {.ImageIndex = 1})
         Next
         For Each item As String In VBDecSnippets
             items.Add(New DeclarationSnippet(item) With {.ImageIndex = 0})
         Next
-        For Each item As String In Methods
-            items.Add(New MethodAutocompleteItem(item) With {.ImageIndex = 2})
-        Next
+        'For Each item As String In Methods
+        '    items.Add(New MethodAutocompleteItem(item) With {.ImageIndex = 2})
+        'Next
         For Each item As String In VBKeyWords
             items.Add(New AutocompleteItem(item) With {.ImageIndex = 3})
         Next
@@ -607,7 +615,59 @@ Public Class CodeTab
         ElseIf Language = Language.VB Then
             VBSyntaxHighlight(e)
         End If
-        Text = IO.Path.GetFileName(FilePath) & " *"
+        Title = IO.Path.GetFileName(FilePath) & " *"
+        Dim strLine As String = txtEditor.Lines.ElementAt(e.ChangedRange.ToLine)
+        items.Clear()
+        If Language = Language.CSharp Then
+            BuildCSAutocompleteMenu()
+        Else
+            BuildVBAutocompleteMenu()
+        End If
+        If strLine.Count > 0 AndAlso strLine.Last = "." Then
+            Dim strType As String = strLine.Substring(0, strLine.LastIndexOf("."))
+            Dim objType As Type = Type.GetType(strType)
+            If objType IsNot Nothing Then
+                objType.GetProperties().ToList.ForEach(Sub(x)
+                                                           items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                       End Sub)
+                objType.GetMethods().ToList.ForEach(Sub(x)
+                                                        items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 2})
+                                                    End Sub)
+                objType.GetNestedTypes.ToList.ForEach(Sub(x)
+                                                          items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 5})
+                                                      End Sub)
+                objType.GetFields.ToList.ForEach(Sub(x)
+                                                     items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                 End Sub)
+            Else
+                Dim lAssemblies As New List(Of Reflection.Assembly)
+                Dim objDoc As XDocument = XDocument.Load(strRoot)
+                Dim objRoot As XElement = objDoc.Element("Project")
+                Dim objReferences As XElement = objRoot.Element("References")
+                objReferences.Elements("Reference").ToList.ForEach(Sub(x)
+                                                                       lAssemblies.Add(Reflection.Assembly.LoadFrom(x.Value))
+                                                                   End Sub)
+                For Each objAssembly As Reflection.Assembly In lAssemblies
+                    Dim objAssemblyType As Type = objAssembly.GetType(strType)
+                    If objAssemblyType IsNot Nothing Then
+                        objAssemblyType.GetProperties().ToList.ForEach(Sub(x)
+                                                                           items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                                       End Sub)
+                        objAssemblyType.GetMethods().ToList.ForEach(Sub(x)
+                                                                        items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 2})
+                                                                    End Sub)
+                        objAssemblyType.GetNestedTypes.ToList.ForEach(Sub(x)
+                                                                          items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 5})
+                                                                      End Sub)
+                        objAssemblyType.GetFields.ToList.ForEach(Sub(x)
+                                                                     items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                                 End Sub)
+                        Exit For
+                    End If
+                Next
+            End If
+            popupMenu.Items.SetAutocompleteItems(items)
+        End If
     End Sub
 
     Private Sub txtEditor_ToolTipNeeded(sender As Object, e As ToolTipNeededEventArgs) Handles txtEditor.ToolTipNeeded
@@ -675,127 +735,3 @@ Public Class CodeTab
 #End Region
 
 End Class
-
-#Region "Declaration snippets"
-
-''' <summary>
-''' This item appears when any part of snippet text is typed
-''' </summary>
-Public Class DeclarationSnippet
-    Inherits SnippetAutocompleteItem
-
-    Public Sub New(ByVal snippet As String)
-        MyBase.New(snippet)
-    End Sub
-
-    Public Overrides Function Compare(ByVal fragmentText As String) As CompareResult
-        Dim pattern = Regex.Escape(fragmentText)
-        If Regex.IsMatch(Text, "\b" & pattern, RegexOptions.IgnoreCase) Then
-            Return CompareResult.Visible
-        End If
-        Return CompareResult.Hidden
-    End Function
-
-End Class
-
-''' <summary>
-''' Inerts line break after '}'
-''' </summary>
-Public Class InsertEnterSnippet
-    Inherits AutocompleteItem
-    Private enterPlace As Place = Place.Empty
-
-    Public Sub New()
-        MyBase.New("[Line break]")
-    End Sub
-
-    Public Overrides Property ToolTipTitle() As String
-        Get
-            Return "Insert line break after '}'"
-        End Get
-        Set(ByVal value As String)
-        End Set
-    End Property
-
-    Public Overrides Function Compare(ByVal fragmentText As String) As CompareResult
-        Dim r = Parent.Fragment.Clone()
-        While r.Start.iChar > 0
-            If r.CharBeforeStart = "}"c Then
-                enterPlace = r.Start
-                Return CompareResult.Visible
-            End If
-
-            r.GoLeftThroughFolded()
-        End While
-
-        Return CompareResult.Hidden
-    End Function
-
-    Public Overrides Function GetTextForReplace() As String
-        'extend range
-        Dim r As Range = Parent.Fragment
-        Dim [end] As Place = r.[End]
-        r.Start = enterPlace
-        r.[End] = r.[End]
-        'insert line break
-        Return Environment.NewLine + r.Text
-    End Function
-
-    Public Overrides Sub OnSelected(ByVal popupMenu As AutocompleteMenu, ByVal e As SelectedEventArgs)
-        MyBase.OnSelected(popupMenu, e)
-        If Parent.Fragment.tb.AutoIndent Then
-            Parent.Fragment.tb.DoAutoIndent()
-        End If
-    End Sub
-
-End Class
-
-''' <summary>
-''' Divides numbers and words: "123AND456" -> "123 AND 456"
-''' Or "i=2" -> "i = 2"
-''' </summary>
-Public Class InsertSpaceSnippet
-    Inherits AutocompleteItem
-    Private pattern As String
-
-    Public Sub New(ByVal pattern As String)
-        MyBase.New("")
-        Me.pattern = pattern
-    End Sub
-
-    Public Sub New()
-        Me.New("^(\d+)([a-zA-Z_]+)(\d*)$")
-    End Sub
-
-    Public Overrides Property ToolTipTitle() As String
-        Get
-            Return Text
-        End Get
-        Set(ByVal value As String)
-        End Set
-    End Property
-
-    Public Overrides Function Compare(ByVal fragmentText As String) As CompareResult
-        If Regex.IsMatch(fragmentText, pattern) Then
-            Text = InsertSpaces(fragmentText)
-            If Text <> fragmentText Then
-                Return CompareResult.Visible
-            End If
-        End If
-        Return CompareResult.Hidden
-    End Function
-
-    Public Function InsertSpaces(ByVal fragment As String) As String
-        Dim m = Regex.Match(fragment, pattern)
-        If m Is Nothing Then
-            Return fragment
-        End If
-        If m.Groups(1).Value = "" AndAlso m.Groups(3).Value = "" Then
-            Return fragment
-        End If
-        Return (m.Groups(1).Value & " " & m.Groups(2).Value & " " & m.Groups(3).Value).Trim()
-    End Function
-
-End Class
-
-#End Region

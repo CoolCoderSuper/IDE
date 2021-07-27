@@ -4,38 +4,31 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{340C0B36-F205-42B5-9245-B292F02C9BFD}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>CodingCool.DeveloperCore.My.MyApplication</StartupObject>
-    <RootNamespace>CodingCool.DeveloperCore</RootNamespace>
-    <AssemblyName>DeveloperCore</AssemblyName>
+    <ProjectGuid>{47D8247E-E451-4944-B340-04A0A830CCFF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CodingCool.DeveloperCore.Editor</RootNamespace>
+    <AssemblyName>CodingCool.DeveloperCore.Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DeveloperCore.xml</DocumentationFile>
+    <DocumentationFile>CodingCool.DeveloperCore.Editor.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DeveloperCore.xml</DocumentationFile>
+    <DocumentationFile>CodingCool.DeveloperCore.Editor.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -56,9 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -68,7 +59,6 @@
     <Reference Include="TabStrip">
       <HintPath>..\..\FastColoredTextBox\TesterVB\TabStrip.dll</HintPath>
     </Reference>
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -76,51 +66,14 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
-    <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsCompile.vb" />
-    <Compile Include="clsCursorHelper.vb" />
-    <Compile Include="frmOptions.Designer.vb">
-      <DependentUpon>frmOptions.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmOptions.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="frmMain.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMain.Designer.vb">
-      <DependentUpon>frmMain.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Project\frmNewFile.Designer.vb">
-      <DependentUpon>frmNewFile.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Project\frmNewFile.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmNewProject.Designer.vb">
-      <DependentUpon>frmNewProject.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmNewProject.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Project\frmReferences.Designer.vb">
-      <DependentUpon>frmReferences.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Project\frmReferences.vb">
-      <SubType>Form</SubType>
+    <Compile Include="CodeTab.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -128,40 +81,26 @@
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Beta\WinFormsPage.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Types\Project.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmOptions.resx">
-      <DependentUpon>frmOptions.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Project\frmNewFile.resx">
-      <DependentUpon>frmNewFile.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmNewProject.resx">
-      <DependentUpon>frmNewProject.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Project\frmReferences.resx">
-      <DependentUpon>frmReferences.vb</DependentUpon>
+    <EmbeddedResource Include="CodeTab.resx">
+      <DependentUpon>CodeTab.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Beta\WinFormsPage.resx">
-      <DependentUpon>WinFormsPage.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -174,20 +113,11 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodingCool.DeveloperCore.Core\CodingCool.DeveloperCore.Core.vbproj">
-      <Project>{E13EE95D-015B-42A5-9CE2-2EE3F378A17C}</Project>
+      <Project>{e13ee95d-015b-42a5-9ce2-2ee3f378a17c}</Project>
       <Name>CodingCool.DeveloperCore.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodingCool.DeveloperCore.Editor\CodingCool.DeveloperCore.Editor.vbproj">
-      <Project>{47d8247e-e451-4944-b340-04a0a830ccff}</Project>
-      <Name>CodingCool.DeveloperCore.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodingCool.DeveloperCore.Views\CodingCool.DeveloperCore.Views.vbproj">
-      <Project>{aa191046-8570-4809-beef-1ee9020534dd}</Project>
-      <Name>CodingCool.DeveloperCore.Views</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

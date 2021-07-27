@@ -1,4 +1,5 @@
-﻿Imports FarsiLibrary.Win
+﻿Imports System.Drawing
+Imports FarsiLibrary.Win
 Imports FastColoredTextBoxNS
 
 Public Class OutputTab

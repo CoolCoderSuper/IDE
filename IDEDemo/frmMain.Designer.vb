@@ -44,6 +44,7 @@ Partial Class frmMain
         Me.btnBuild = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnViewOutput = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnOptions = New System.Windows.Forms.ToolStripMenuItem()
         Me.tcTools = New FarsiLibrary.Win.FATabStrip()
         Me.tcViews = New System.Windows.Forms.TabControl()
@@ -53,8 +54,8 @@ Partial Class frmMain
         Me.btnNewContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnDeleteContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnExistingContext = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tbObject = New System.Windows.Forms.TabPage()
-        Me.tvObjectExplorer = New System.Windows.Forms.TreeView()
+        Me.tpProperties = New System.Windows.Forms.TabPage()
+        Me.props = New System.Windows.Forms.PropertyGrid()
         Me.tcMain = New FarsiLibrary.Win.FATabStrip()
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
@@ -63,7 +64,7 @@ Partial Class frmMain
         Me.tcViews.SuspendLayout()
         Me.tbSolution.SuspendLayout()
         Me.menuFiles.SuspendLayout()
-        Me.tbObject.SuspendLayout()
+        Me.tpProperties.SuspendLayout()
         CType(Me.tcMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.splitterMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splitterMain.Panel1.SuspendLayout()
@@ -77,7 +78,7 @@ Partial Class frmMain
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.btnSave, Me.btnSaveAll, Me.btnUndo, Me.btnRedo, Me.btnStart, Me.btnBuild, Me.ViewToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.btnSave, Me.btnSaveAll, Me.btnUndo, Me.btnRedo, Me.btnStart, Me.btnBuild, Me.ViewToolStripMenuItem, Me.ToolsToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -152,12 +153,15 @@ Partial Class frmMain
         'btnSave
         '
         Me.btnSave.Name = "btnSave"
+        Me.btnSave.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.btnSave.Size = New System.Drawing.Size(43, 20)
         Me.btnSave.Text = "Save"
         '
         'btnSaveAll
         '
         Me.btnSaveAll.Name = "btnSaveAll"
+        Me.btnSaveAll.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.btnSaveAll.Size = New System.Drawing.Size(57, 20)
         Me.btnSaveAll.Text = "SaveAll"
         '
@@ -198,10 +202,17 @@ Partial Class frmMain
         Me.btnViewOutput.Size = New System.Drawing.Size(112, 22)
         Me.btnViewOutput.Text = "Output"
         '
+        'ToolsToolStripMenuItem
+        '
+        Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnOptions})
+        Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
+        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(46, 20)
+        Me.ToolsToolStripMenuItem.Text = "Tools"
+        '
         'btnOptions
         '
         Me.btnOptions.Name = "btnOptions"
-        Me.btnOptions.Size = New System.Drawing.Size(61, 20)
+        Me.btnOptions.Size = New System.Drawing.Size(116, 22)
         Me.btnOptions.Text = "Options"
         '
         'tcTools
@@ -210,18 +221,18 @@ Partial Class frmMain
         Me.tcTools.Font = New System.Drawing.Font("Tahoma", 8.25!)
         Me.tcTools.Location = New System.Drawing.Point(0, 0)
         Me.tcTools.Name = "tcTools"
-        Me.tcTools.Size = New System.Drawing.Size(888, 102)
+        Me.tcTools.Size = New System.Drawing.Size(815, 102)
         Me.tcTools.TabIndex = 6
         '
         'tcViews
         '
         Me.tcViews.Controls.Add(Me.tbSolution)
-        Me.tcViews.Controls.Add(Me.tbObject)
+        Me.tcViews.Controls.Add(Me.tpProperties)
         Me.tcViews.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcViews.Location = New System.Drawing.Point(0, 0)
         Me.tcViews.Name = "tcViews"
         Me.tcViews.SelectedIndex = 0
-        Me.tcViews.Size = New System.Drawing.Size(198, 602)
+        Me.tcViews.Size = New System.Drawing.Size(271, 602)
         Me.tcViews.TabIndex = 4
         '
         'tbSolution
@@ -230,7 +241,7 @@ Partial Class frmMain
         Me.tbSolution.Location = New System.Drawing.Point(4, 22)
         Me.tbSolution.Name = "tbSolution"
         Me.tbSolution.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbSolution.Size = New System.Drawing.Size(190, 576)
+        Me.tbSolution.Size = New System.Drawing.Size(263, 576)
         Me.tbSolution.TabIndex = 0
         Me.tbSolution.Text = "Solution Explorer"
         Me.tbSolution.UseVisualStyleBackColor = True
@@ -242,7 +253,7 @@ Partial Class frmMain
         Me.lstFiles.HideSelection = False
         Me.lstFiles.Location = New System.Drawing.Point(3, 3)
         Me.lstFiles.Name = "lstFiles"
-        Me.lstFiles.Size = New System.Drawing.Size(184, 570)
+        Me.lstFiles.Size = New System.Drawing.Size(257, 570)
         Me.lstFiles.TabIndex = 4
         Me.lstFiles.UseCompatibleStateImageBehavior = False
         Me.lstFiles.View = System.Windows.Forms.View.List
@@ -272,24 +283,24 @@ Partial Class frmMain
         Me.btnExistingContext.Size = New System.Drawing.Size(115, 22)
         Me.btnExistingContext.Text = "Existing"
         '
-        'tbObject
+        'tpProperties
         '
-        Me.tbObject.Controls.Add(Me.tvObjectExplorer)
-        Me.tbObject.Location = New System.Drawing.Point(4, 22)
-        Me.tbObject.Name = "tbObject"
-        Me.tbObject.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbObject.Size = New System.Drawing.Size(191, 576)
-        Me.tbObject.TabIndex = 1
-        Me.tbObject.Text = "Object Explorer"
-        Me.tbObject.UseVisualStyleBackColor = True
+        Me.tpProperties.Controls.Add(Me.props)
+        Me.tpProperties.Location = New System.Drawing.Point(4, 22)
+        Me.tpProperties.Name = "tpProperties"
+        Me.tpProperties.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpProperties.Size = New System.Drawing.Size(263, 576)
+        Me.tpProperties.TabIndex = 2
+        Me.tpProperties.Text = "Properties"
+        Me.tpProperties.UseVisualStyleBackColor = True
         '
-        'tvObjectExplorer
+        'props
         '
-        Me.tvObjectExplorer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tvObjectExplorer.Location = New System.Drawing.Point(3, 3)
-        Me.tvObjectExplorer.Name = "tvObjectExplorer"
-        Me.tvObjectExplorer.Size = New System.Drawing.Size(185, 570)
-        Me.tvObjectExplorer.TabIndex = 1
+        Me.props.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.props.Location = New System.Drawing.Point(3, 3)
+        Me.props.Name = "props"
+        Me.props.Size = New System.Drawing.Size(257, 570)
+        Me.props.TabIndex = 0
         '
         'tcMain
         '
@@ -297,7 +308,7 @@ Partial Class frmMain
         Me.tcMain.Font = New System.Drawing.Font("Tahoma", 8.25!)
         Me.tcMain.Location = New System.Drawing.Point(0, 0)
         Me.tcMain.Name = "tcMain"
-        Me.tcMain.Size = New System.Drawing.Size(888, 496)
+        Me.tcMain.Size = New System.Drawing.Size(815, 496)
         Me.tcMain.TabIndex = 5
         '
         'splitterMain
@@ -314,7 +325,7 @@ Partial Class frmMain
         '
         Me.splitterMain.Panel2.Controls.Add(Me.splitterEdit)
         Me.splitterMain.Size = New System.Drawing.Size(1090, 602)
-        Me.splitterMain.SplitterDistance = 198
+        Me.splitterMain.SplitterDistance = 271
         Me.splitterMain.TabIndex = 7
         '
         'splitterEdit
@@ -331,7 +342,7 @@ Partial Class frmMain
         'splitterEdit.Panel2
         '
         Me.splitterEdit.Panel2.Controls.Add(Me.tcTools)
-        Me.splitterEdit.Size = New System.Drawing.Size(888, 602)
+        Me.splitterEdit.Size = New System.Drawing.Size(815, 602)
         Me.splitterEdit.SplitterDistance = 496
         Me.splitterEdit.TabIndex = 0
         '
@@ -344,14 +355,14 @@ Partial Class frmMain
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "frmMain"
-        Me.Text = "IDEDemo"
+        Me.Text = "DeveloperCore"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         CType(Me.tcTools, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tcViews.ResumeLayout(False)
         Me.tbSolution.ResumeLayout(False)
         Me.menuFiles.ResumeLayout(False)
-        Me.tbObject.ResumeLayout(False)
+        Me.tpProperties.ResumeLayout(False)
         CType(Me.tcMain, System.ComponentModel.ISupportInitialize).EndInit()
         Me.splitterMain.Panel1.ResumeLayout(False)
         Me.splitterMain.Panel2.ResumeLayout(False)
@@ -383,7 +394,6 @@ Partial Class frmMain
     Friend WithEvents tcViews As TabControl
     Friend WithEvents tbSolution As TabPage
     Friend WithEvents lstFiles As ListView
-    Friend WithEvents tbObject As TabPage
     Friend WithEvents tcMain As FATabStrip
     Friend WithEvents tcTools As FATabStrip
     Friend WithEvents menuFiles As ContextMenuStrip
@@ -391,11 +401,13 @@ Partial Class frmMain
     Friend WithEvents btnDeleteContext As ToolStripMenuItem
     Friend WithEvents btnExistingContext As ToolStripMenuItem
     Friend WithEvents btnOptions As ToolStripMenuItem
-    Friend WithEvents tvObjectExplorer As TreeView
     Friend WithEvents btnUndo As ToolStripMenuItem
     Friend WithEvents btnRedo As ToolStripMenuItem
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnViewOutput As ToolStripMenuItem
     Friend WithEvents splitterMain As SplitContainer
     Friend WithEvents splitterEdit As SplitContainer
+    Friend WithEvents tpProperties As TabPage
+    Friend WithEvents props As PropertyGrid
+    Friend WithEvents ToolsToolStripMenuItem As ToolStripMenuItem
 End Class
