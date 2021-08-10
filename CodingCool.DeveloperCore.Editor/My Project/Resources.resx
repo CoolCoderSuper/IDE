@@ -121,6 +121,12 @@
   <data name="class_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\..\..\Users\User\Pictures\Saved Pictures\IDE\New\class_new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="keyword" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\Users\User\Documents\key-2-64x64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="method_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\Users\User\Pictures\Saved Pictures\IDE\New\method_new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="property_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\..\..\Users\User\Pictures\Saved Pictures\IDE\New\property_new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

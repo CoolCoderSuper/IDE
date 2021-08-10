@@ -14,6 +14,8 @@ Public Class frmMain
 #Region "Variables"
     WithEvents CurrentTB As FastColoredTextBoxNS.FastColoredTextBox
     WithEvents tbOutput As OutputTab
+    WithEvents tbTaskList As TaskListTab
+    WithEvents tbErrorList As ErrorListTab
     WithEvents tbObjectExplorer As ObjectExplorerTab
 #End Region
 
@@ -26,10 +28,63 @@ Public Class frmMain
         tcMain.BackColor = ColorTranslator.FromHtml("#8a8a88")
         BackColor = ColorTranslator.FromHtml("#888888")
         LoadProjectFiles()
+        ConfigureErrorList()
+        tcTools.Items.Add(tbErrorList)
+        ConfigueTaskList()
+        tcTools.Items.Add(tbTaskList)
         tbOutput = New OutputTab
         tcTools.Items.Add(tbOutput)
         tbObjectExplorer = New ObjectExplorerTab
         tcViews.TabPages.Add(tbObjectExplorer)
+    End Sub
+
+    Private Sub ConfigueTaskList()
+        Try
+            Dim l As New List(Of String)
+            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
+            Dim objRoot As XElement = objDoc.Element("Project")
+            Dim objFiles As XElement = objRoot.Element("Files")
+            For Each objEl As XElement In objFiles.Elements("File")
+                l.Add(objEl.Value)
+            Next
+            tbTaskList = New TaskListTab("", l.ToArray)
+        Catch ex As Exception
+            tbTaskList = New TaskListTab("", {})
+        End Try
+        If Language = "cs" Then
+            tbTaskList.CommentPrefix = "//"
+        Else
+            tbTaskList.CommentPrefix = "'"
+        End If
+    End Sub
+
+    Private Sub ConfigureErrorList()
+        tbErrorList = New ErrorListTab
+        Try
+            Dim l As New List(Of String)
+            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
+            Dim objRoot As XElement = objDoc.Element("Project")
+            Dim objFiles As XElement = objRoot.Element("Files")
+            For Each objEl As XElement In objFiles.Elements("File")
+                l.Add(objEl.Value)
+            Next
+            tbErrorList.Files = l.ToArray
+        Catch ex As Exception
+            tbErrorList.Files = {}
+        End Try
+        Try
+            Dim l As New List(Of String)
+            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
+            Dim objRoot As XElement = objDoc.Element("Project")
+            Dim objFiles As XElement = objRoot.Element("References")
+            For Each objEl As XElement In objFiles.Elements("Reference")
+                l.Add(objEl.Value)
+            Next
+            tbErrorList.References = l.ToArray
+        Catch ex As Exception
+            tbErrorList.References = {}
+        End Try
+        tbErrorList.Language = Language
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
@@ -117,7 +172,11 @@ Public Class frmMain
     End Sub
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
+        Dim ofd As New OpenFileDialog
+        ofd.Filter = "Code files (*." & Language & ")|*." & Language
+        If ofd.ShowDialog = DialogResult.OK Then
 
+        End If
     End Sub
 
     Private Sub btnDeleteContext_Click(sender As Object, e As EventArgs) Handles btnDeleteContext.Click
@@ -210,12 +269,16 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub tcTools_TabStripItemSelectionChanged(e As FarsiLibrary.Win.TabStripItemChangedEventArgs) Handles tcTools.TabStripItemSelectionChanged
-
+    Private Sub btnTaskList_Click(sender As Object, e As EventArgs) Handles btnTaskList.Click
+        If Not tcTools.Items.Contains(tbTaskList) Then
+            tcTools.Items.Add(tbTaskList)
+        End If
     End Sub
 
-    Private Sub tcViews_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tcViews.SelectedIndexChanged
-
+    Private Sub btnErrorList_Click(sender As Object, e As EventArgs) Handles btnErrorList.Click
+        If Not tcTools.Items.Contains(tbErrorList) Then
+            tcTools.Items.Add(tbErrorList)
+        End If
     End Sub
 
 #End Region

@@ -44,6 +44,7 @@ Partial Class frmMain
         Me.btnBuild = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnViewOutput = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnTaskList = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnOptions = New System.Windows.Forms.ToolStripMenuItem()
         Me.tcTools = New FarsiLibrary.Win.FATabStrip()
@@ -59,6 +60,7 @@ Partial Class frmMain
         Me.tcMain = New FarsiLibrary.Win.FATabStrip()
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
+        Me.btnErrorList = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.tcTools, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tcViews.SuspendLayout()
@@ -191,7 +193,7 @@ Partial Class frmMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnViewOutput})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnErrorList, Me.btnTaskList, Me.btnViewOutput})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
@@ -199,8 +201,14 @@ Partial Class frmMain
         'btnViewOutput
         '
         Me.btnViewOutput.Name = "btnViewOutput"
-        Me.btnViewOutput.Size = New System.Drawing.Size(112, 22)
+        Me.btnViewOutput.Size = New System.Drawing.Size(180, 22)
         Me.btnViewOutput.Text = "Output"
+        '
+        'btnTaskList
+        '
+        Me.btnTaskList.Name = "btnTaskList"
+        Me.btnTaskList.Size = New System.Drawing.Size(180, 22)
+        Me.btnTaskList.Text = "Task List"
         '
         'ToolsToolStripMenuItem
         '
@@ -212,7 +220,7 @@ Partial Class frmMain
         'btnOptions
         '
         Me.btnOptions.Name = "btnOptions"
-        Me.btnOptions.Size = New System.Drawing.Size(116, 22)
+        Me.btnOptions.Size = New System.Drawing.Size(180, 22)
         Me.btnOptions.Text = "Options"
         '
         'tcTools
@@ -346,6 +354,12 @@ Partial Class frmMain
         Me.splitterEdit.SplitterDistance = 496
         Me.splitterEdit.TabIndex = 0
         '
+        'btnErrorList
+        '
+        Me.btnErrorList.Name = "btnErrorList"
+        Me.btnErrorList.Size = New System.Drawing.Size(180, 22)
+        Me.btnErrorList.Text = "Error List"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -410,4 +424,6 @@ Partial Class frmMain
     Friend WithEvents tpProperties As TabPage
     Friend WithEvents props As PropertyGrid
     Friend WithEvents ToolsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents btnTaskList As ToolStripMenuItem
+    Friend WithEvents btnErrorList As ToolStripMenuItem
 End Class
