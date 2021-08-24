@@ -1,5 +1,5 @@
 ﻿Public Class ExplorerItem
-    Public type As ExplorerItemType
+    Public type As ExplorerItemTypes
 
     Public title As String
 

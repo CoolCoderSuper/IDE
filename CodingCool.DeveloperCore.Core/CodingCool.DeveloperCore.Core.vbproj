@@ -10,7 +10,7 @@
     <AssemblyName>CodingCool.DeveloperCore.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -49,11 +49,13 @@
       <HintPath>..\..\FastColoredTextBox\FastColoredTextBox.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
@@ -96,6 +98,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ObjectExplorer\ObjectExplorerHelpers.vb" />
+    <Compile Include="Project\AssemblyInfo.vb" />
+    <Compile Include="Project\File.vb" />
+    <Compile Include="Project\DesignableObject.vb" />
+    <Compile Include="Project\Framework.vb" />
+    <Compile Include="Project\Project.vb" />
+    <Compile Include="Project\Reference.vb" />
+    <Compile Include="Project\WindowsApplicationFramework.vb" />
     <Compile Include="Task\TaskHelper.vb" />
     <Compile Include="Task\TaskItem.vb" />
   </ItemGroup>

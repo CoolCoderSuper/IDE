@@ -36,4 +36,31 @@ Public Class Helpers
         Return dtReturn
     End Function
 
+    Public Shared Function CompareLists(ByVal list1 As List(Of ExplorerItem), ByVal list2 As List(Of ExplorerItem)) As Boolean
+        If list1 Is Nothing OrElse list2 Is Nothing Then Return list1 Is list2
+        If Not list1.Count = list2.Count Then Return False
+        Dim hash As Dictionary(Of Object, Integer) = New Dictionary(Of Object, Integer)()
+
+        For Each employee As Object In list1
+
+            If hash.ContainsKey(employee) Then
+                hash(employee) += 1
+            Else
+                hash.Add(employee, 1)
+            End If
+        Next
+
+        For Each employee As Object In list2
+
+            If Not hash.ContainsKey(employee) OrElse hash(employee) = 0 Then
+                Return False
+            End If
+
+            hash(employee) -= 1
+        Next
+
+        Return True
+    End Function
+
+
 End Class

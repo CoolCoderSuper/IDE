@@ -16,10 +16,10 @@ Public Class ObjectExplorerTab
 #Region "Initialization"
     Public Sub New()
         ilImages = New ImageList
-        ilImages.Images.Add("Class", My.Resources.class_new)
-        ilImages.Images.Add("Event", My.Resources.event_new)
-        ilImages.Images.Add("Method", My.Resources.method_new)
-        ilImages.Images.Add("Property", My.Resources.property_new)
+        ilImages.Images.Add("Class", My.Resources.Icons_16x16_Class)
+        ilImages.Images.Add("Event", My.Resources.Icons_16x16_Event)
+        ilImages.Images.Add("Method", My.Resources.Icons_16x16_Method)
+        ilImages.Images.Add("Property", My.Resources.Icons_16x16_Property)
         Text = "Object Explorer"
         InitializeComponent()
     End Sub
@@ -65,19 +65,19 @@ Public Class ObjectExplorerTab
                     Dim item As ExplorerItem = New ExplorerItem() With {.title = s, .position = r.Index}
                     If Regex.IsMatch(item.title, "\b(class|struct|enum|interface)\b") Then
                         item.title = item.title.Substring(item.title.LastIndexOf(" ")).Trim()
-                        item.type = ExplorerItemType.[Class]
+                        item.type = ExplorerItemTypes.[Class]
                         list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer())
                         lastClassIndex = list.Count
                     Else
                         If item.title.Contains(" event ") Then
                             Dim ii As Integer = item.title.LastIndexOf(" ")
                             item.title = item.title.Substring(ii).Trim()
-                            item.type = ExplorerItemType.[Event]
+                            item.type = ExplorerItemTypes.[Event]
                         Else
                             If item.title.Contains("(") Then
                                 Dim parts As String() = item.title.Split(New Char() {"("})
                                 item.title = parts(0).Substring(parts(0).LastIndexOf(" ")).Trim() + "(" + parts(1)
-                                item.type = ExplorerItemType.Method
+                                item.type = ExplorerItemTypes.Method
                             Else
                                 If item.title.EndsWith("]") Then
                                     Dim parts As String() = item.title.Split(New Char() {"["})
@@ -85,11 +85,11 @@ Public Class ObjectExplorerTab
                                         Continue For
                                     End If
                                     item.title = parts(0).Substring(parts(0).LastIndexOf(" ")).Trim() + "[" + parts(1)
-                                    item.type = ExplorerItemType.Method
+                                    item.type = ExplorerItemTypes.Method
                                 Else
                                     Dim ii As Integer = item.title.LastIndexOf(" ")
                                     item.title = item.title.Substring(ii).Trim()
-                                    item.type = ExplorerItemType.[Property]
+                                    item.type = ExplorerItemTypes.[Property]
                                 End If
                             End If
                         End If
@@ -100,10 +100,12 @@ Public Class ObjectExplorerTab
                 End Try
             Next
             list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer())
-            MyBase.BeginInvoke(Sub()
-                                   ExplorerList = list
-                               End Sub)
-            LoadObject()
+            If list IsNot ExplorerList Then
+                MyBase.BeginInvoke(Sub()
+                                       ExplorerList = list
+                                   End Sub)
+                LoadObject()
+            End If
         Catch ex_332 As Exception
             Console.WriteLine(ex_332)
         End Try
@@ -150,46 +152,46 @@ Public Class ObjectExplorerTab
                     Dim item As ExplorerItem = New ExplorerItem() With {.title = s, .position = j}
                     If Regex.IsMatch(item.title, "(?i)\b(class|structure|enum|interface|module)\b") Then
                         item.title = item.title.Substring(item.title.LastIndexOf(" ")).Trim()
-                        item.type = ExplorerItemType.[Class]
+                        item.type = ExplorerItemTypes.[Class]
                         list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer())
                         lastClassIndex = list.Count
                     Else
                         If Regex.IsMatch(item.title, "(?i)\b(operator|property|function|event|private|public|shadows|shared|dim|const|friend|protected|readonly)\b") Then
                             If Regex.IsMatch(item.title, "(?i)\b(\sproperty\s|property\s)\b") Then
-                                item.type = ExplorerItemType.Property
+                                item.type = ExplorerItemTypes.Property
                                 Dim ii As Integer = item.title.ToLower.LastIndexOf(" property ")
                                 If ii < 0 Then
                                     ii = item.title.ToLower.LastIndexOf("property ")
                                 End If
                                 item.title = item.title.Substring(ii).Trim()
                             ElseIf Regex.IsMatch(item.title, "(?i)\b(\sfunction\s|function\s)\b") Then
-                                item.type = ExplorerItemType.Method
+                                item.type = ExplorerItemTypes.Method
                                 Dim ii As Integer = item.title.ToLower.LastIndexOf(" function ")
                                 If ii < 0 Then
                                     ii = item.title.ToLower.LastIndexOf("function ")
                                 End If
                                 item.title = item.title.Substring(ii).Trim()
                             ElseIf Regex.IsMatch(item.title, "(?i)\b(\sevent\s|event\s)\b") Then
-                                item.type = ExplorerItemType.Event
+                                item.type = ExplorerItemTypes.Event
                                 Dim ii As Integer = item.title.ToLower.LastIndexOf(" event ")
                                 If ii < 0 Then
                                     ii = item.title.ToLower.LastIndexOf("event ")
                                 End If
                                 item.title = item.title.Substring(ii).Trim()
                             ElseIf Regex.IsMatch(item.title, "(?i)\b(\soperator\s)\b") Then
-                                item.type = ExplorerItemType.Operator
+                                item.type = ExplorerItemTypes.Operator
                                 Dim ii As Integer = item.title.ToLower.LastIndexOf(" operator ")
                                 If ii < 0 Then
                                     ii = item.title.ToLower.LastIndexOf("operator ")
                                 End If
                                 item.title = item.title.Substring(ii).Trim()
                             ElseIf Regex.IsMatch(item.title, "(?i)\b(private|public|shadows|shared|dim|const|friend|protected|readonly)\b") Then
-                                item.type = ExplorerItemType.Variable
+                                item.type = ExplorerItemTypes.Variable
                                 item.title = item.title.Trim
                             End If
                         End If
                         If Regex.IsMatch(item.title, "(?i)\b(\ssub\s|sub\s)\b") Then
-                            item.type = ExplorerItemType.Method
+                            item.type = ExplorerItemTypes.Method
                             Dim ii As Integer = item.title.ToLower.LastIndexOf(" sub ")
                             If ii < 0 Then
                                 ii = item.title.ToLower.LastIndexOf("sub ")
@@ -207,14 +209,17 @@ Public Class ObjectExplorerTab
                 End Try
             Next
             list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer())
-            MyBase.BeginInvoke(Sub()
-                                   ExplorerList = list
-                               End Sub)
-            LoadObject()
+            If Helpers.CompareLists(list, ExplorerList) Then
+                MyBase.BeginInvoke(Sub()
+                                       ExplorerList = list
+                                   End Sub)
+                LoadObject()
+            End If
         Catch ex_332 As Exception
 
         End Try
     End Sub
+
 #End Region
 
 #Region "Load"
@@ -223,38 +228,38 @@ Public Class ObjectExplorerTab
         Dim lastNode As New TreeNode
         For Each item As ExplorerItem In ExplorerList
             Select Case item.type
-                Case ExplorerItemType.Class
+                Case ExplorerItemTypes.Class
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Class"
                     node.SelectedImageKey = "Class"
                     tvObjectExplorer.Nodes.Add(node)
                     lastNode = node
-                Case ExplorerItemType.Variable
+                Case ExplorerItemTypes.Variable
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Property"
                     node.SelectedImageKey = "Property"
                     lastNode.Nodes.Add(node)
-                Case ExplorerItemType.Property
+                Case ExplorerItemTypes.Property
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Property"
                     node.SelectedImageKey = "Property"
                     lastNode.Nodes.Add(node)
-                Case ExplorerItemType.Method
+                Case ExplorerItemTypes.Method
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Method"
                     node.SelectedImageKey = "Method"
                     lastNode.Nodes.Add(node)
-                Case ExplorerItemType.Event
+                Case ExplorerItemTypes.Event
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Event"
                     node.SelectedImageKey = "Event"
                     lastNode.Nodes.Add(node)
-                Case ExplorerItemType.Operator
+                Case ExplorerItemTypes.Operator
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Property"

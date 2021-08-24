@@ -21,6 +21,28 @@ Public Class frmMain
 
 #Region "Events"
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        btnComment.Image = Icons.Commands.My.Resources.Icons_16x16_CommentRegion
+        btnComment.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnRedo.Image = Icons.Commands.My.Resources.Icons_16x16_RedoIcon
+        btnRedo.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnUndo.Image = Icons.Commands.My.Resources.Icons_16x16_UndoIcon
+        btnUndo.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnSave.Image = Icons.Commands.My.Resources.Icons_16x16_SaveIcon
+        btnSave.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnSaveAll.Image = Icons.Commands.My.Resources.Icons_16x16_SaveAllIcon
+        btnSaveAll.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnStart.Image = Icons.Commands.My.Resources.Icons_16x16_RunProgramIcon
+        btnStart.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnBuild.Image = Icons.Commands.My.Resources.Icons_16x16_BuildCurrentSelectedProject
+        btnBuild.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnCut.Image = Icons.Commands.My.Resources.Icons_16x16_CutIcon
+        btnCut.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnCopy.Image = Icons.Commands.My.Resources.Icons_16x16_CopyIcon
+        btnCopy.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnPaste.Image = Icons.Commands.My.Resources.Icons_16x16_PasteIcon
+        btnPaste.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnDeleteText.Image = Icons.Commands.My.Resources.Icons_16x16_DeleteIcon
+        btnDeleteText.DisplayStyle = ToolStripItemDisplayStyle.Image
         tbSolution.BackColor = ColorTranslator.FromHtml("#8a8a88")
         lstFiles.BackColor = ColorTranslator.FromHtml("#8a8a88")
         lstFiles.ForeColor = Color.White
@@ -36,6 +58,7 @@ Public Class frmMain
         tcTools.Items.Add(tbOutput)
         tbObjectExplorer = New ObjectExplorerTab
         tcViews.TabPages.Add(tbObjectExplorer)
+        tmrObjectExplorer.Start()
     End Sub
 
     Private Sub ConfigueTaskList()
@@ -91,21 +114,18 @@ Public Class frmMain
         Dispose()
     End Sub
 
-    Private Sub Code_Changed(sender As Object, e As FastColoredTextBoxNS.TextChangedEventArgs) Handles CurrentTB.TextChanged
-        If Language = "cs" Then
-            tbObjectExplorer.ReCSharpBuildObjectExplorer(CurrentTB.Text)
-        Else
-            tbObjectExplorer.ReBuildVBObjectExplorer(CurrentTB.Text)
+    Private Sub tmrObjectExplorer_Tick(sender As Object, e As EventArgs) Handles tmrObjectExplorer.Tick
+        If CurrentTB IsNot Nothing Then
+            If Language = "cs" Then
+                tbObjectExplorer.ReCSharpBuildObjectExplorer(CurrentTB.Text)
+            Else
+                tbObjectExplorer.ReBuildVBObjectExplorer(CurrentTB.Text)
+            End If
         End If
     End Sub
 
     Private Sub tcMain_TabStripItemSelectionChanged(e As FarsiLibrary.Win.TabStripItemChangedEventArgs) Handles tcMain.TabStripItemSelectionChanged
         CurrentTB = CType(e.Item, CodeTab).txtEditor
-        If Language = "cs" Then
-            tbObjectExplorer.ReCSharpBuildObjectExplorer(CurrentTB.Text)
-        Else
-            tbObjectExplorer.ReBuildVBObjectExplorer(CurrentTB.Text)
-        End If
     End Sub
 
     Private Sub frmMain_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -119,6 +139,7 @@ Public Class frmMain
     Private Sub btnOptions_Click(sender As Object, e As EventArgs) Handles btnOptions.Click
         frmOptions.ShowDialog()
     End Sub
+
 #End Region
 
 #Region "Build"
@@ -128,7 +149,9 @@ Public Class frmMain
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         Build()
-        Process.Start(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe")
+        If IO.File.Exists(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe") Then
+            Process.Start(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe")
+        End If
     End Sub
 
     Private Sub Build()
@@ -194,6 +217,7 @@ Public Class frmMain
         Next
     End Sub
     Private Sub LoadProjectFiles()
+        lstFiles.Clear()
         Try
             Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
             Dim objRoot As XElement = objDoc.Element("Project")
@@ -223,13 +247,10 @@ Public Class frmMain
             objTab.Init()
             tcMain.Items.Add(objTab)
             tcMain.SelectedItem = objTab
-            If Language = "cs" Then
-                tbObjectExplorer.ReCSharpBuildObjectExplorer(CurrentTB.Text)
-            Else
-                tbObjectExplorer.ReBuildVBObjectExplorer(CurrentTB.Text)
-            End If
+            CurrentTB.ClearUndo()
         End If
     End Sub
+
 #End Region
 
 #Region "Project"
@@ -258,6 +279,26 @@ Public Class frmMain
 
     Private Sub btnRedo_Click(sender As Object, e As EventArgs) Handles btnRedo.Click
         CurrentTB.Redo()
+    End Sub
+
+    Private Sub btnComment_Click(sender As Object, e As EventArgs) Handles btnComment.Click
+        CurrentTB.CommentSelected()
+    End Sub
+
+    Private Sub btnCut_Click(sender As Object, e As EventArgs) Handles btnCut.Click
+        CurrentTB.Cut()
+    End Sub
+
+    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
+        CurrentTB.Copy()
+    End Sub
+
+    Private Sub btnPaste_Click(sender As Object, e As EventArgs) Handles btnPaste.Click
+        CurrentTB.Paste()
+    End Sub
+
+    Private Sub btnDeleteText_Click(sender As Object, e As EventArgs) Handles btnDeleteText.Click
+        CurrentTB.Text = CurrentTB.Text.Remove(CurrentTB.SelectionStart, CurrentTB.SelectionLength)
     End Sub
 
 #End Region

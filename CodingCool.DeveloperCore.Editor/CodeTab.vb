@@ -93,9 +93,11 @@ Public Class CodeTab
         If Language = Language.CSharp Then
             BuildCSAutocompleteMenu()
             Me.txtEditor.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(39), Global.Microsoft.VisualBasic.ChrW(39)}
+            Me.txtEditor.CommentPrefix = "//"
         ElseIf Language = Language.VB Then
             BuildVBAutocompleteMenu()
             Me.txtEditor.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34)}
+            Me.txtEditor.CommentPrefix = "'"
         End If
     End Sub
 
@@ -197,7 +199,6 @@ Public Class CodeTab
         e.ChangedRange.SetStyle(GreenStyle, "(/\*.*?\*/)|(.*\*/)", RegexOptions.Singleline Or RegexOptions.RightToLeft)
         e.ChangedRange.SetStyle(MagentaStyle, "\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b")
         e.ChangedRange.SetStyle(GrayStyle, "^\s*(?<range>\[.+?\])\s*$", RegexOptions.Multiline)
-        'e.ChangedRange.SetStyle(BoldStyle, "\b(class|struct|enum|interface|namespace)\s+(?<range>\w+?)\b")
         e.ChangedRange.SetStyle(BlueStyle, "\b(abstract|as|base|bool|break|byte|case|catch|char|checked|class|const|continue|decimal|default|delegate|do|double|else|enum|event|explicit|extern|false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|override|params|private|protected|public|readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile|while|add|alias|ascending|descending|dynamic|from|get|global|group|into|join|let|orderby|partial|remove|select|set|value|var|where|yield)\b|#region\b|#endregion\b")
         e.ChangedRange.ClearFoldingMarkers()
         e.ChangedRange.SetFoldingMarkers("{", "}")
@@ -212,12 +213,14 @@ Public Class CodeTab
         txtEditor.RightBracket2 = "}"
         txtEditor.CommentPrefix = "'"
         e.ChangedRange.ClearStyle(BlueStyle, BoldStyle, GrayStyle, MagentaStyle, GreenStyle, BrownStyle)
-        e.ChangedRange.SetStyle(BrownStyle, """.*?""|'.+?'")
+        e.ChangedRange.SetStyle(BrownStyle, """.*?""")
         e.ChangedRange.SetStyle(GreenStyle, "'.*$", RegexOptions.Multiline)
         e.ChangedRange.SetStyle(MagentaStyle, "([0-9.*/+\-\^\&\<\>])+")
         e.ChangedRange.SetStyle(GrayStyle, "'''.*$", RegexOptions.Multiline)
         e.ChangedRange.SetStyle(BlueStyle, "(?i)\b(addhandler|andalso|addressof|alias|and|as|boolean|byref|byte|byval|call|case|catch|cbool|cbyte|cchar|cdate|cdbl|cdec|char|cint|class|clng|cobj|const|continue|csbyte|cuint|culng|cushort|date|decimal|declare|default|delegate|dim|directcast|do|double|each|else|elseif|end|enum|erase|error|event|exit|false|finally|friend|function|get|gettype|getxmlnamespace|global|goto|handles|if|implements|imports|in|inherits|integer|interface|is|isnot|let|lib|like|long|loop|me|mod|module|mustinherit|mustoverride|mybase|myclass|nameof|namespace|narrowing|new|next|not|nothing|notinheritable|notoverridable|object|of|on|operator|option|optional|or|overrides|paramarray|partial|private|property|protected|public|raiseevent|readonly|redim|removehandler|resume|return|sbyte|select|set|shadows|shared|short|single|static|step|stop|string|structure|sub|synclock|then|throw|to|true|try|trycast|typeof|uinteger|ulong|ushort|using|when|while|widening|with|withevents|writeonly|xor|for|aggregate|ansi|assembly|async|auto|await|binary|compare|custom|distinct|equals|explicit|from|into|isfalse|istrue|iterator|join|key|mid|off|preserve|skip|strict|take|text|unicode|until|where|yield)\b")
         e.ChangedRange.ClearFoldingMarkers()
+        e.ChangedRange.SetFoldingMarkers("{", "}")
+        'e.ChangedRange.SetFoldingMarkers("(?i)\b(if)\b", "(?i)\b(end\sif)\b")
     End Sub
 
 #End Region
@@ -672,7 +675,26 @@ Public Class CodeTab
     End Sub
 
     Private Sub txtEditor_ToolTipNeeded(sender As Object, e As ToolTipNeededEventArgs) Handles txtEditor.ToolTipNeeded
-        If Not String.IsNullOrEmpty(e.HoveredWord) Then
+        Dim bGo As Boolean = True
+        Dim iGreenStyle = txtEditor.GetStyleIndex(GreenStyle)
+        If iGreenStyle >= 0 Then
+
+            If e.Place.iChar > 0 Then
+                Dim c As [Char] = txtEditor(e.Place.iLine)(e.Place.iChar - 1)
+                Dim greenStyleIndex = Range.ToStyleIndex(iGreenStyle)
+                If (c.style And greenStyleIndex) <> 0 Then bGo = False
+            End If
+        End If
+        Dim iRegStyle = txtEditor.GetStyleIndex(BrownStyle)
+        If iRegStyle >= 0 Then
+
+            If e.Place.iChar > 0 Then
+                Dim c As [Char] = txtEditor(e.Place.iLine)(e.Place.iChar - 1)
+                Dim regStyleIndex = Range.ToStyleIndex(iRegStyle)
+                If (c.style And regStyleIndex) <> 0 Then bGo = False
+            End If
+        End If
+        If Not String.IsNullOrEmpty(e.HoveredWord) And bGo = True Then
             If Language = Language.CSharp Then
 
             Else

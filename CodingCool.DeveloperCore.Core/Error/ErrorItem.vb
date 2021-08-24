@@ -6,7 +6,7 @@ Public Class ErrorItem
     ''' The error's type: Error, Warning, ect.
     ''' </summary>
     ''' <returns></returns>
-    Public Property ErrorType As ErrorType
+    Public Property ErrorType As ErrorTypes
 
     ''' <summary>
     ''' The error number: BC323, CS232, ect. and the error's help link.

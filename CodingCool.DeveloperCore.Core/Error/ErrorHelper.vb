@@ -17,9 +17,9 @@ Public Class ErrorHelper
             objItem.File = objError.FileName
             objItem.Line = objItem.Line
             If objError.IsWarning Then
-                objItem.ErrorType = ErrorType.Warning
+                objItem.ErrorType = ErrorTypes.Warning
             Else
-                objItem.ErrorType = ErrorType.Error
+                objItem.ErrorType = ErrorTypes.Error
             End If
             objItem.ErrorNumber = New ErrorNumber
             objItem.ErrorNumber.ErrorNumber = objError.ErrorNumber

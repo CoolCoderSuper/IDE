@@ -25,6 +25,20 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("My Project")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test", 3, 3)
+        Dim Reference1 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test1", 3, 3)
+        Dim Reference2 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("References", 1, 1, New System.Windows.Forms.TreeNode() {TreeNode2, TreeNode3})
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Test", 4, 4, New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode4})
+        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("My Project")
+        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test", 3, 3)
+        Dim Reference3 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
+        Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test1", 3, 3)
+        Dim Reference4 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
+        Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("References", 1, 1, New System.Windows.Forms.TreeNode() {TreeNode7, TreeNode8})
+        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Test", 4, 4, New System.Windows.Forms.TreeNode() {TreeNode6, TreeNode9})
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -38,13 +52,19 @@ Partial Class frmMain
         Me.btnExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnSave = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnSaveAll = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnCut = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnCopy = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnPaste = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnDeleteText = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnUndo = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnRedo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnComment = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnStart = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnBuild = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnViewOutput = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnErrorList = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnTaskList = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnViewOutput = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnOptions = New System.Windows.Forms.ToolStripMenuItem()
         Me.tcTools = New FarsiLibrary.Win.FATabStrip()
@@ -56,11 +76,11 @@ Partial Class frmMain
         Me.btnDeleteContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnExistingContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.tpProperties = New System.Windows.Forms.TabPage()
-        Me.props = New System.Windows.Forms.PropertyGrid()
+        Me.SolutionExplorer1 = New CodingCool.DeveloperCore.SolutionExplorer.SolutionExplorer()
         Me.tcMain = New FarsiLibrary.Win.FATabStrip()
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
-        Me.btnErrorList = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmrObjectExplorer = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip1.SuspendLayout()
         CType(Me.tcTools, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tcViews.SuspendLayout()
@@ -80,10 +100,11 @@ Partial Class frmMain
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.btnSave, Me.btnSaveAll, Me.btnUndo, Me.btnRedo, Me.btnStart, Me.btnBuild, Me.ViewToolStripMenuItem, Me.ToolsToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.btnSave, Me.btnSaveAll, Me.btnCut, Me.btnCopy, Me.btnPaste, Me.btnDeleteText, Me.btnUndo, Me.btnRedo, Me.btnComment, Me.btnStart, Me.btnBuild, Me.ViewToolStripMenuItem, Me.ToolsToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.MenuStrip1.ShowItemToolTips = True
         Me.MenuStrip1.Size = New System.Drawing.Size(1090, 24)
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
@@ -167,27 +188,66 @@ Partial Class frmMain
         Me.btnSaveAll.Size = New System.Drawing.Size(57, 20)
         Me.btnSaveAll.Text = "SaveAll"
         '
+        'btnCut
+        '
+        Me.btnCut.Name = "btnCut"
+        Me.btnCut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+        Me.btnCut.Size = New System.Drawing.Size(38, 20)
+        Me.btnCut.Text = "Cut"
+        '
+        'btnCopy
+        '
+        Me.btnCopy.Name = "btnCopy"
+        Me.btnCopy.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.btnCopy.Size = New System.Drawing.Size(47, 20)
+        Me.btnCopy.Text = "Copy"
+        '
+        'btnPaste
+        '
+        Me.btnPaste.Name = "btnPaste"
+        Me.btnPaste.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.btnPaste.Size = New System.Drawing.Size(47, 20)
+        Me.btnPaste.Text = "Paste"
+        '
+        'btnDeleteText
+        '
+        Me.btnDeleteText.Name = "btnDeleteText"
+        Me.btnDeleteText.ShortcutKeys = System.Windows.Forms.Keys.Delete
+        Me.btnDeleteText.Size = New System.Drawing.Size(52, 20)
+        Me.btnDeleteText.Text = "Delete"
+        '
         'btnUndo
         '
         Me.btnUndo.Name = "btnUndo"
+        Me.btnUndo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
         Me.btnUndo.Size = New System.Drawing.Size(48, 20)
         Me.btnUndo.Text = "Undo"
         '
         'btnRedo
         '
         Me.btnRedo.Name = "btnRedo"
+        Me.btnRedo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
         Me.btnRedo.Size = New System.Drawing.Size(46, 20)
         Me.btnRedo.Text = "Redo"
+        '
+        'btnComment
+        '
+        Me.btnComment.Name = "btnComment"
+        Me.btnComment.Size = New System.Drawing.Size(145, 20)
+        Me.btnComment.Text = "Comment\Uncomment"
         '
         'btnStart
         '
         Me.btnStart.Name = "btnStart"
+        Me.btnStart.ShortcutKeys = System.Windows.Forms.Keys.F5
         Me.btnStart.Size = New System.Drawing.Size(43, 20)
         Me.btnStart.Text = "Start"
         '
         'btnBuild
         '
         Me.btnBuild.Name = "btnBuild"
+        Me.btnBuild.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
         Me.btnBuild.Size = New System.Drawing.Size(46, 20)
         Me.btnBuild.Text = "Build"
         '
@@ -198,17 +258,23 @@ Partial Class frmMain
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
         '
-        'btnViewOutput
+        'btnErrorList
         '
-        Me.btnViewOutput.Name = "btnViewOutput"
-        Me.btnViewOutput.Size = New System.Drawing.Size(180, 22)
-        Me.btnViewOutput.Text = "Output"
+        Me.btnErrorList.Name = "btnErrorList"
+        Me.btnErrorList.Size = New System.Drawing.Size(120, 22)
+        Me.btnErrorList.Text = "Error List"
         '
         'btnTaskList
         '
         Me.btnTaskList.Name = "btnTaskList"
-        Me.btnTaskList.Size = New System.Drawing.Size(180, 22)
+        Me.btnTaskList.Size = New System.Drawing.Size(120, 22)
         Me.btnTaskList.Text = "Task List"
+        '
+        'btnViewOutput
+        '
+        Me.btnViewOutput.Name = "btnViewOutput"
+        Me.btnViewOutput.Size = New System.Drawing.Size(120, 22)
+        Me.btnViewOutput.Text = "Output"
         '
         'ToolsToolStripMenuItem
         '
@@ -220,7 +286,7 @@ Partial Class frmMain
         'btnOptions
         '
         Me.btnOptions.Name = "btnOptions"
-        Me.btnOptions.Size = New System.Drawing.Size(180, 22)
+        Me.btnOptions.Size = New System.Drawing.Size(116, 22)
         Me.btnOptions.Text = "Options"
         '
         'tcTools
@@ -293,7 +359,7 @@ Partial Class frmMain
         '
         'tpProperties
         '
-        Me.tpProperties.Controls.Add(Me.props)
+        Me.tpProperties.Controls.Add(Me.SolutionExplorer1)
         Me.tpProperties.Location = New System.Drawing.Point(4, 22)
         Me.tpProperties.Name = "tpProperties"
         Me.tpProperties.Padding = New System.Windows.Forms.Padding(3)
@@ -302,13 +368,74 @@ Partial Class frmMain
         Me.tpProperties.Text = "Properties"
         Me.tpProperties.UseVisualStyleBackColor = True
         '
-        'props
+        'SolutionExplorer1
         '
-        Me.props.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.props.Location = New System.Drawing.Point(3, 3)
-        Me.props.Name = "props"
-        Me.props.Size = New System.Drawing.Size(257, 570)
-        Me.props.TabIndex = 0
+        Me.SolutionExplorer1.BackColor = System.Drawing.SystemColors.Window
+        Me.SolutionExplorer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SolutionExplorer1.ImageIndex = 0
+        Me.SolutionExplorer1.LabelEdit = True
+        Me.SolutionExplorer1.Location = New System.Drawing.Point(3, 3)
+        Me.SolutionExplorer1.Name = "SolutionExplorer1"
+        TreeNode1.Name = "Test_ProjectSettings"
+        TreeNode1.Text = "My Project"
+        TreeNode2.ImageIndex = 3
+        TreeNode2.Name = "Test_References_/Test"
+        TreeNode2.SelectedImageIndex = 3
+        Reference1.CopyLocal = False
+        Reference1.EmbedInteropTypes = False
+        Reference1.Path = "/Test"
+        Reference1.SpecificVersion = False
+        TreeNode2.Tag = Reference1
+        TreeNode2.Text = "/Test"
+        TreeNode3.ImageIndex = 3
+        TreeNode3.Name = "Test_References_/Test1"
+        TreeNode3.SelectedImageIndex = 3
+        Reference2.CopyLocal = False
+        Reference2.EmbedInteropTypes = False
+        Reference2.Path = "/Test1"
+        Reference2.SpecificVersion = False
+        TreeNode3.Tag = Reference2
+        TreeNode3.Text = "/Test1"
+        TreeNode4.ImageIndex = 1
+        TreeNode4.Name = "Test_References"
+        TreeNode4.SelectedImageIndex = 1
+        TreeNode4.Text = "References"
+        TreeNode5.ImageIndex = 4
+        TreeNode5.Name = "Test"
+        TreeNode5.SelectedImageIndex = 4
+        TreeNode5.Text = "Test"
+        TreeNode6.Name = "Test_ProjectSettings"
+        TreeNode6.Text = "My Project"
+        TreeNode7.ImageIndex = 3
+        TreeNode7.Name = "Test_References_/Test"
+        TreeNode7.SelectedImageIndex = 3
+        Reference3.CopyLocal = False
+        Reference3.EmbedInteropTypes = False
+        Reference3.Path = "/Test"
+        Reference3.SpecificVersion = False
+        TreeNode7.Tag = Reference3
+        TreeNode7.Text = "/Test"
+        TreeNode8.ImageIndex = 3
+        TreeNode8.Name = "Test_References_/Test1"
+        TreeNode8.SelectedImageIndex = 3
+        Reference4.CopyLocal = False
+        Reference4.EmbedInteropTypes = False
+        Reference4.Path = "/Test1"
+        Reference4.SpecificVersion = False
+        TreeNode8.Tag = Reference4
+        TreeNode8.Text = "/Test1"
+        TreeNode9.ImageIndex = 1
+        TreeNode9.Name = "Test_References"
+        TreeNode9.SelectedImageIndex = 1
+        TreeNode9.Text = "References"
+        TreeNode10.ImageIndex = 4
+        TreeNode10.Name = "Test"
+        TreeNode10.SelectedImageIndex = 4
+        TreeNode10.Text = "Test"
+        Me.SolutionExplorer1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode5, TreeNode10})
+        Me.SolutionExplorer1.SelectedImageIndex = 0
+        Me.SolutionExplorer1.Size = New System.Drawing.Size(257, 570)
+        Me.SolutionExplorer1.TabIndex = 0
         '
         'tcMain
         '
@@ -354,11 +481,9 @@ Partial Class frmMain
         Me.splitterEdit.SplitterDistance = 496
         Me.splitterEdit.TabIndex = 0
         '
-        'btnErrorList
+        'tmrObjectExplorer
         '
-        Me.btnErrorList.Name = "btnErrorList"
-        Me.btnErrorList.Size = New System.Drawing.Size(180, 22)
-        Me.btnErrorList.Text = "Error List"
+        Me.tmrObjectExplorer.Interval = 1000
         '
         'frmMain
         '
@@ -422,8 +547,14 @@ Partial Class frmMain
     Friend WithEvents splitterMain As SplitContainer
     Friend WithEvents splitterEdit As SplitContainer
     Friend WithEvents tpProperties As TabPage
-    Friend WithEvents props As PropertyGrid
     Friend WithEvents ToolsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnTaskList As ToolStripMenuItem
     Friend WithEvents btnErrorList As ToolStripMenuItem
+    Friend WithEvents btnComment As ToolStripMenuItem
+    Friend WithEvents tmrObjectExplorer As Timer
+    Friend WithEvents SolutionExplorer1 As SolutionExplorer.SolutionExplorer
+    Friend WithEvents btnCut As ToolStripMenuItem
+    Friend WithEvents btnCopy As ToolStripMenuItem
+    Friend WithEvents btnDeleteText As ToolStripMenuItem
+    Friend WithEvents btnPaste As ToolStripMenuItem
 End Class
