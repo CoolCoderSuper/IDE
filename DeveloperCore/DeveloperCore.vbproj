@@ -16,7 +16,8 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -27,6 +28,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>DeveloperCore.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +39,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>DeveloperCore.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -182,6 +185,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodingCool.Developer.WinForms.Designer\CodingCool.Developer.WinForms.Designer.vbproj">
+      <Project>{080f91cb-d488-40af-a1b7-d8fc27125b27}</Project>
+      <Name>CodingCool.Developer.WinForms.Designer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodingCool.DeveloperCore.Core\CodingCool.DeveloperCore.Core.vbproj">
       <Project>{E13EE95D-015B-42A5-9CE2-2EE3F378A17C}</Project>
       <Name>CodingCool.DeveloperCore.Core</Name>
@@ -193,6 +200,10 @@
     <ProjectReference Include="..\CodingCool.DeveloperCore.Icons.Commands\CodingCool.DeveloperCore.Icons.Commands.vbproj">
       <Project>{203943ae-d821-409a-8ab3-9d8929fac0cb}</Project>
       <Name>CodingCool.DeveloperCore.Icons.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodingCool.DeveloperCore.ObjectExplorer\CodingCool.DeveloperCore.ObjectExplorer.vbproj">
+      <Project>{3dce28c7-09f6-49c6-b26f-62b56e9a2f59}</Project>
+      <Name>CodingCool.DeveloperCore.ObjectExplorer</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodingCool.DeveloperCore.SolutionExplorer\CodingCool.DeveloperCore.SolutionExplorer.vbproj">
       <Project>{55a8cab0-b381-47f9-a432-837409752e61}</Project>

@@ -5,6 +5,7 @@ Public Class SolutionExplorer
     Inherits TreeView
     Dim proj As Project
     Dim il As ImageList
+
     Public Sub New()
         il = New ImageList
         proj = New Project
@@ -23,7 +24,6 @@ Public Class SolutionExplorer
         il.Images.Add(Icons.SolutionExplorer.My.Resources.Reference)
         il.Images.Add(Icons.SolutionExplorer.VB.Projects.My.Resources.FullProject)
         ImageList = il
-        Load()
     End Sub
 
     Public Shadows Sub Load()

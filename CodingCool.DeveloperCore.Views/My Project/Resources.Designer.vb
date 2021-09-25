@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -58,126 +58,6 @@ Namespace My.Resources
             Set
                 resourceCulture = value
             End Set
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property ClassBrowser() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ClassBrowser", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property ErrorList() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ErrorList", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Class() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Class", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Enum() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Enum", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Event() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Event", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Field() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Field", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Interface() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Interface", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Method() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Method", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_NameSpace() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_NameSpace", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Operator() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Operator", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Property() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Property", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Icons_16x16_Struct() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Icons_16x16_Struct", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
         End Property
         
         '''<summary>

@@ -620,58 +620,58 @@ Public Class CodeTab
             VBSyntaxHighlight(e)
         End If
         Title = IO.Path.GetFileName(FilePath) & " *"
-        'Dim strLine As String = txtEditor.Lines.ElementAt(e.ChangedRange.ToLine)
-        'items.Clear()
-        'If Language = Language.CSharp Then
-        '    BuildCSAutocompleteMenu()
-        'Else
-        '    BuildVBAutocompleteMenu()
-        'End If
-        'If strLine.Count > 0 AndAlso strLine.Last = "." Then
-        '    Dim strType As String = strLine.Substring(0, strLine.LastIndexOf("."))
-        '    Dim objType As Type = Type.GetType(strType)
-        '    If objType IsNot Nothing Then
-        '        objType.GetProperties().ToList.ForEach(Sub(x)
-        '                                                   items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
-        '                                               End Sub)
-        '        objType.GetMethods().ToList.ForEach(Sub(x)
-        '                                                items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 2})
-        '                                            End Sub)
-        '        objType.GetNestedTypes.ToList.ForEach(Sub(x)
-        '                                                  items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 5})
-        '                                              End Sub)
-        '        objType.GetFields.ToList.ForEach(Sub(x)
-        '                                             items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
-        '                                         End Sub)
-        '    Else
-        '        Dim lAssemblies As New List(Of Reflection.Assembly)
-        '        Dim objDoc As XDocument = XDocument.Load(strRoot)
-        '        Dim objRoot As XElement = objDoc.Element("Project")
-        '        Dim objReferences As XElement = objRoot.Element("References")
-        '        objReferences.Elements("Reference").ToList.ForEach(Sub(x)
-        '                                                               lAssemblies.Add(Reflection.Assembly.LoadFrom(x.Value))
-        '                                                           End Sub)
-        '        For Each objAssembly As Reflection.Assembly In lAssemblies
-        '            Dim objAssemblyType As Type = objAssembly.GetType(strType)
-        '            If objAssemblyType IsNot Nothing Then
-        '                objAssemblyType.GetProperties().ToList.ForEach(Sub(x)
-        '                                                                   items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
-        '                                                               End Sub)
-        '                objAssemblyType.GetMethods().ToList.ForEach(Sub(x)
-        '                                                                items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 2})
-        '                                                            End Sub)
-        '                objAssemblyType.GetNestedTypes.ToList.ForEach(Sub(x)
-        '                                                                  items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 5})
-        '                                                              End Sub)
-        '                objAssemblyType.GetFields.ToList.ForEach(Sub(x)
-        '                                                             items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
-        '                                                         End Sub)
-        '                Exit For
-        '            End If
-        '        Next
-        '    End If
-        'popupMenu.Items.SetAutocompleteItems(items)
-        'End If
+        Dim strLine As String = txtEditor.Lines.ElementAt(e.ChangedRange.ToLine)
+        items.Clear()
+        If Language = Language.CSharp Then
+            BuildCSAutocompleteMenu()
+        Else
+            BuildVBAutocompleteMenu()
+        End If
+        If strLine.Count > 0 AndAlso strLine.Last = "." Then
+            Dim strType As String = strLine.Substring(0, strLine.LastIndexOf("."))
+            Dim objType As Type = Type.GetType(strType)
+            If objType IsNot Nothing Then
+                objType.GetProperties(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                         items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                                                     End Sub)
+                objType.GetMethods(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                      items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 2})
+                                                                                  End Sub)
+                objType.GetNestedTypes(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                          items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 5})
+                                                                                      End Sub)
+                objType.GetFields(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                     items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                                                 End Sub)
+            Else
+                Dim lAssemblies As New List(Of Reflection.Assembly)
+                Dim objDoc As XDocument = XDocument.Load(strRoot)
+                Dim objRoot As XElement = objDoc.Element("Project")
+                Dim objReferences As XElement = objRoot.Element("References")
+                objReferences.Elements("Reference").ToList.ForEach(Sub(x)
+                                                                       lAssemblies.Add(Reflection.Assembly.LoadFrom(x.Value))
+                                                                   End Sub)
+                For Each objAssembly As Reflection.Assembly In lAssemblies
+                    Dim objAssemblyType As Type = objAssembly.GetType(strType)
+                    If objAssemblyType IsNot Nothing Then
+                        objAssemblyType.GetProperties(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                                         items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                                                                     End Sub)
+                        objAssemblyType.GetMethods(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                                      items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 2})
+                                                                                                  End Sub)
+                        objAssemblyType.GetNestedTypes(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                                          items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 5})
+                                                                                                      End Sub)
+                        objAssemblyType.GetFields(Reflection.BindingFlags.Static).ToList.ForEach(Sub(x)
+                                                                                                     items.Add(New MethodAutocompleteItem(x.Name) With {.ImageIndex = 4})
+                                                                                                 End Sub)
+                        Exit For
+                    End If
+                Next
+            End If
+            popupMenu.Items.SetAutocompleteItems(items)
+        End If
     End Sub
 
     Private Sub txtEditor_ToolTipNeeded(sender As Object, e As ToolTipNeededEventArgs) Handles txtEditor.ToolTipNeeded

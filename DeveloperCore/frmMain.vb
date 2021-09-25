@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports CodingCool.DeveloperCore.Editor
+Imports CodingCool.DeveloperCore.ObjectExplorer
 Imports CodingCool.DeveloperCore.Views
 
 Public Class frmMain
@@ -59,6 +60,7 @@ Public Class frmMain
         tbObjectExplorer = New ObjectExplorerTab
         tcViews.TabPages.Add(tbObjectExplorer)
         tmrObjectExplorer.Start()
+        SolutionExplorer1.Load()
     End Sub
 
     Private Sub ConfigueTaskList()

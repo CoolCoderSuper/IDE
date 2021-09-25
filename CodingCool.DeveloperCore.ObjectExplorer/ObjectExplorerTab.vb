@@ -220,6 +220,10 @@ Public Class ObjectExplorerTab
         End Try
     End Sub
 
+    Public Sub LoadVB(text As String)
+
+    End Sub
+
 #End Region
 
 #Region "Load"

@@ -25,20 +25,6 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("My Project")
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test", 3, 3)
-        Dim Reference1 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
-        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test1", 3, 3)
-        Dim Reference2 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
-        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("References", 1, 1, New System.Windows.Forms.TreeNode() {TreeNode2, TreeNode3})
-        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Test", 4, 4, New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode4})
-        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("My Project")
-        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test", 3, 3)
-        Dim Reference3 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
-        Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("/Test1", 3, 3)
-        Dim Reference4 As CodingCool.DeveloperCore.Core.Reference = New CodingCool.DeveloperCore.Core.Reference()
-        Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("References", 1, 1, New System.Windows.Forms.TreeNode() {TreeNode7, TreeNode8})
-        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Test", 4, 4, New System.Windows.Forms.TreeNode() {TreeNode6, TreeNode9})
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -370,69 +356,11 @@ Partial Class frmMain
         '
         'SolutionExplorer1
         '
-        Me.SolutionExplorer1.BackColor = System.Drawing.SystemColors.Window
         Me.SolutionExplorer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SolutionExplorer1.ImageIndex = 0
         Me.SolutionExplorer1.LabelEdit = True
         Me.SolutionExplorer1.Location = New System.Drawing.Point(3, 3)
         Me.SolutionExplorer1.Name = "SolutionExplorer1"
-        TreeNode1.Name = "Test_ProjectSettings"
-        TreeNode1.Text = "My Project"
-        TreeNode2.ImageIndex = 3
-        TreeNode2.Name = "Test_References_/Test"
-        TreeNode2.SelectedImageIndex = 3
-        Reference1.CopyLocal = False
-        Reference1.EmbedInteropTypes = False
-        Reference1.Path = "/Test"
-        Reference1.SpecificVersion = False
-        TreeNode2.Tag = Reference1
-        TreeNode2.Text = "/Test"
-        TreeNode3.ImageIndex = 3
-        TreeNode3.Name = "Test_References_/Test1"
-        TreeNode3.SelectedImageIndex = 3
-        Reference2.CopyLocal = False
-        Reference2.EmbedInteropTypes = False
-        Reference2.Path = "/Test1"
-        Reference2.SpecificVersion = False
-        TreeNode3.Tag = Reference2
-        TreeNode3.Text = "/Test1"
-        TreeNode4.ImageIndex = 1
-        TreeNode4.Name = "Test_References"
-        TreeNode4.SelectedImageIndex = 1
-        TreeNode4.Text = "References"
-        TreeNode5.ImageIndex = 4
-        TreeNode5.Name = "Test"
-        TreeNode5.SelectedImageIndex = 4
-        TreeNode5.Text = "Test"
-        TreeNode6.Name = "Test_ProjectSettings"
-        TreeNode6.Text = "My Project"
-        TreeNode7.ImageIndex = 3
-        TreeNode7.Name = "Test_References_/Test"
-        TreeNode7.SelectedImageIndex = 3
-        Reference3.CopyLocal = False
-        Reference3.EmbedInteropTypes = False
-        Reference3.Path = "/Test"
-        Reference3.SpecificVersion = False
-        TreeNode7.Tag = Reference3
-        TreeNode7.Text = "/Test"
-        TreeNode8.ImageIndex = 3
-        TreeNode8.Name = "Test_References_/Test1"
-        TreeNode8.SelectedImageIndex = 3
-        Reference4.CopyLocal = False
-        Reference4.EmbedInteropTypes = False
-        Reference4.Path = "/Test1"
-        Reference4.SpecificVersion = False
-        TreeNode8.Tag = Reference4
-        TreeNode8.Text = "/Test1"
-        TreeNode9.ImageIndex = 1
-        TreeNode9.Name = "Test_References"
-        TreeNode9.SelectedImageIndex = 1
-        TreeNode9.Text = "References"
-        TreeNode10.ImageIndex = 4
-        TreeNode10.Name = "Test"
-        TreeNode10.SelectedImageIndex = 4
-        TreeNode10.Text = "Test"
-        Me.SolutionExplorer1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode5, TreeNode10})
         Me.SolutionExplorer1.SelectedImageIndex = 0
         Me.SolutionExplorer1.Size = New System.Drawing.Size(257, 570)
         Me.SolutionExplorer1.TabIndex = 0
@@ -552,9 +480,9 @@ Partial Class frmMain
     Friend WithEvents btnErrorList As ToolStripMenuItem
     Friend WithEvents btnComment As ToolStripMenuItem
     Friend WithEvents tmrObjectExplorer As Timer
-    Friend WithEvents SolutionExplorer1 As SolutionExplorer.SolutionExplorer
     Friend WithEvents btnCut As ToolStripMenuItem
     Friend WithEvents btnCopy As ToolStripMenuItem
     Friend WithEvents btnDeleteText As ToolStripMenuItem
     Friend WithEvents btnPaste As ToolStripMenuItem
+    Friend WithEvents SolutionExplorer1 As SolutionExplorer.SolutionExplorer
 End Class
