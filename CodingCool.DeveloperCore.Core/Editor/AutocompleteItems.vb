@@ -1,5 +1,6 @@
-﻿Imports FastColoredTextBoxNS
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
+Imports FastColoredTextBoxNS
+
 ''' <summary>
 ''' This item appears when any part of snippet text is typed
 ''' </summary>

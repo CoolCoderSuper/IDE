@@ -30,7 +30,11 @@ Public Enum CopyToOutputOptions
     CopyIfNewer
 End Enum
 
+''' <summary>
+''' Represents a framework type. Mono, .NET, act.
+''' </summary>
 Public Enum FrameworkTypes
     DotNetFramework
     DotNetCore
+    Mono
 End Enum

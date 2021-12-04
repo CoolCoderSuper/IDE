@@ -1,11 +1,11 @@
-﻿
-Imports System
-Imports System.Collections.Generic
-    Imports System.ComponentModel
-    Imports System.Drawing
-    Imports System.Drawing.Text
-    Imports System.Windows.Forms
+﻿Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Drawing.Text
+Imports System.Windows.Forms
 
+''' <summary>
+''' A font dropdown control.
+''' </summary>
 Public Class FontComboBox
     Inherits ComboBox
 
@@ -15,7 +15,6 @@ Public Class FontComboBox
     Private _itemHeight As Integer
     Private _previewFontSize As Integer
     Private _stringFormat As StringFormat
-
 
 #End Region
 
@@ -30,7 +29,6 @@ Public Class FontComboBox
         CalculateLayout()
         CreateStringFormat()
     End Sub
-
 
 #End Region
 
@@ -97,7 +95,6 @@ Public Class FontComboBox
         End If
     End Sub
 
-
 #End Region
 
 #Region "Public Methods"
@@ -113,7 +110,6 @@ Public Class FontComboBox
             Cursor.Current = Cursors.Default
         End If
     End Sub
-
 
 #End Region
 
@@ -150,7 +146,6 @@ Public Class FontComboBox
         End Set
     End Property
 
-
 #End Region
 
 #Region "Private Methods"
@@ -178,7 +173,6 @@ Public Class FontComboBox
 
         Return result
     End Function
-
 
 #End Region
 

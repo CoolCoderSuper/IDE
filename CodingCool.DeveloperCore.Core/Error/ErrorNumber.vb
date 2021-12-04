@@ -2,6 +2,7 @@
 ''' Represents an error's number.
 ''' </summary>
 Public Class ErrorNumber
+
     ''' <summary>
     ''' The error's number.
     ''' </summary>
@@ -13,4 +14,5 @@ Public Class ErrorNumber
     ''' </summary>
     ''' <returns></returns>
     Public Property ErrorLink As String
+
 End Class

@@ -26,4 +26,5 @@ Public Class TaskItem
     ''' </summary>
     ''' <returns></returns>
     Public Property Line As Integer
+
 End Class

@@ -6,21 +6,26 @@ Imports CodingCool.DeveloperCore.Views
 Public Class frmMain
 
 #Region "Properties"
+
     Public Property Language As String = "vb"
     Public Property ProjectRoot As String = "C:\Users\User\Documents\Test\Test.proj"
     Public Property ProjectDir As String = "C:\Users\User\Documents\Test\"
     Public Property Output As Boolean = True
+
 #End Region
 
 #Region "Variables"
+
     WithEvents CurrentTB As FastColoredTextBoxNS.FastColoredTextBox
     WithEvents tbOutput As OutputTab
     WithEvents tbTaskList As TaskListTab
     WithEvents tbErrorList As ErrorListTab
     WithEvents tbObjectExplorer As ObjectExplorerTab
+
 #End Region
 
 #Region "Events"
+
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         btnComment.Image = Icons.Commands.My.Resources.Icons_16x16_CommentRegion
         btnComment.DisplayStyle = ToolStripItemDisplayStyle.Image
@@ -145,6 +150,7 @@ Public Class frmMain
 #End Region
 
 #Region "Build"
+
     Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
         Build()
     End Sub
@@ -183,9 +189,11 @@ Public Class frmMain
             End If
         End If
     End Sub
+
 #End Region
 
 #Region "Files"
+
     Private Sub btnNewFile_Click(sender As Object, e As EventArgs) Handles btnNewFile.Click, btnNewContext.Click
         frmNewFile.ShowDialog()
         lstFiles.Items.Clear()
@@ -218,6 +226,7 @@ Public Class frmMain
             objTab.Save()
         Next
     End Sub
+
     Private Sub LoadProjectFiles()
         lstFiles.Clear()
         Try
@@ -256,6 +265,7 @@ Public Class frmMain
 #End Region
 
 #Region "Project"
+
     Private Sub btnNewProject_Click(sender As Object, e As EventArgs) Handles btnNewProject.Click
         frmNewProject.ShowDialog()
     End Sub
@@ -272,9 +282,11 @@ Public Class frmMain
             LoadProjectFiles()
         End If
     End Sub
+
 #End Region
 
 #Region "CommandButtons"
+
     Private Sub btnUndo_Click(sender As Object, e As EventArgs) Handles btnUndo.Click
         CurrentTB.Undo()
     End Sub
@@ -300,12 +312,13 @@ Public Class frmMain
     End Sub
 
     Private Sub btnDeleteText_Click(sender As Object, e As EventArgs) Handles btnDeleteText.Click
-        CurrentTB.Text = CurrentTB.Text.Remove(CurrentTB.SelectionStart, CurrentTB.SelectionLength)
+        CurrentTB.Text.Remove(CurrentTB.SelectionStart, CurrentTB.SelectionLength)
     End Sub
 
 #End Region
 
 #Region "Views"
+
     Private Sub btnViewOutput_Click(sender As Object, e As EventArgs) Handles btnViewOutput.Click
         If Not tcTools.Items.Contains(tbOutput) Then
             tcTools.Items.Add(tbOutput)

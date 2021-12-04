@@ -20,4 +20,5 @@
     Private Sub btnCMD_Click(sender As Object, e As EventArgs) Handles btnCMD.Click
         RaiseEvent CommandClicked(Me)
     End Sub
+
 End Class

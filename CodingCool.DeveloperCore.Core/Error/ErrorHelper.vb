@@ -1,6 +1,9 @@
-﻿Imports Microsoft.CSharp
-Imports System.CodeDom.Compiler
+﻿Imports System.CodeDom.Compiler
+Imports Microsoft.CSharp
 
+''' <summary>
+''' Some crappy code to get errors from code.
+''' </summary>
 Public Class ErrorHelper
 
     Public Function GetErrors(strLanguage As String, lFiles As String(), lReferences As String()) As List(Of ErrorItem)
@@ -57,4 +60,5 @@ Public Class ErrorHelper
         End If
         Return New List(Of CompilerError)
     End Function
+
 End Class

@@ -6,9 +6,11 @@ Public Class TaskListTab
     Inherits FATabStripItem
 
 #Region "Components"
+
     Friend WithEvents tmrLoad As Timer
     Friend WithEvents dgvTasks As DataGridView
     Private components As System.ComponentModel.IContainer
+
 #End Region
 
     Public Property CommentPrefix As String
@@ -16,6 +18,7 @@ Public Class TaskListTab
     Public Property Files As String()
 
 #Region "Initialization"
+
     Public Sub New(strCommentPrefix As String, lFiles As String())
         CommentPrefix = strCommentPrefix
         Files = lFiles
@@ -54,9 +57,11 @@ Public Class TaskListTab
         Me.ResumeLayout(False)
 
     End Sub
+
 #End Region
 
 #Region "Data"
+
     Private Sub tmrLoad_Tick(sender As Object, e As EventArgs) Handles tmrLoad.Tick
         Load()
     End Sub
@@ -68,6 +73,7 @@ Public Class TaskListTab
             dgvTasks.DataSource = dtResults
         End If
     End Sub
+
 #End Region
 
 End Class

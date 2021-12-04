@@ -5,11 +5,13 @@ Imports System.Windows.Forms
 Imports CodingCool.DeveloperCore.Core
 Imports FarsiLibrary.Win
 Imports FastColoredTextBoxNS
+
 'TODO: Reference list of Assemblies instead of reading project file
 Public Class CodeTab
     Inherits FATabStripItem
 
 #Region "Components"
+
     Friend WithEvents docMap As DocumentMap
     Public WithEvents txtEditor As FastColoredTextBox
     Private components As System.ComponentModel.IContainer
@@ -174,8 +176,6 @@ Public Class CodeTab
         Me.ResumeLayout(False)
 
     End Sub
-
-
 
     Private Sub InitStylesPriority()
         txtEditor.ClearStylesBuffer()
@@ -696,7 +696,6 @@ Public Class CodeTab
         End If
         If Not String.IsNullOrEmpty(e.HoveredWord) And bGo = True Then
             If Language = Language.CSharp Then
-
             Else
                 VBToolTip(e)
             End If

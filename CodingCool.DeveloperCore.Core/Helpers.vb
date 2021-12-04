@@ -1,15 +1,25 @@
 ﻿Imports System.Reflection
 
+''' <summary>
+''' Some random helper methods I find useful.
+''' </summary>
 Public Class Helpers
+
+    ''' <summary>
+    ''' Converts a enumerable to a datatable.
+    ''' </summary>
+    ''' <typeparam name="T">The type of the enumerable object.</typeparam>
+    ''' <param name="varlist">The data to convert.</param>
+    ''' <returns></returns>
     Public Shared Function QueryableToDataTable(Of T)(ByVal varlist As IEnumerable(Of T)) As DataTable
         Dim dtReturn As DataTable = New DataTable()
 
-        ' column names 
+        ' column names
         Dim oProps As PropertyInfo() = Nothing
         If varlist Is Nothing Then Return dtReturn
 
         For Each rec As T In varlist
-            ' Use reflection to get property names, to create table, Only first time, others 
+            ' Use reflection to get property names, to create table, Only first time, others
             If oProps Is Nothing Then
                 oProps = CType(rec.GetType(), Type).GetProperties()
 
@@ -36,10 +46,17 @@ Public Class Helpers
         Return dtReturn
     End Function
 
-    Public Shared Function CompareLists(ByVal list1 As List(Of ExplorerItem), ByVal list2 As List(Of ExplorerItem)) As Boolean
+    ''' <summary>
+    ''' Compares the elemnets of a list for equality.
+    ''' </summary>
+    ''' <typeparam name="T">The type of list.</typeparam>
+    ''' <param name="list1">One of the lists to compare.</param>
+    ''' <param name="list2">The other list to compare.</param>
+    ''' <returns></returns>
+    Public Shared Function CompareLists(Of T)(ByVal list1 As List(Of T), ByVal list2 As List(Of T)) As Boolean
         If list1 Is Nothing OrElse list2 Is Nothing Then Return list1 Is list2
         If Not list1.Count = list2.Count Then Return False
-        Dim hash As Dictionary(Of Object, Integer) = New Dictionary(Of Object, Integer)()
+        Dim hash As Dictionary(Of T, Integer) = New Dictionary(Of T, Integer)()
 
         For Each employee As Object In list1
 
@@ -61,6 +78,5 @@ Public Class Helpers
 
         Return True
     End Function
-
 
 End Class

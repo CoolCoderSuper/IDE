@@ -12,4 +12,5 @@ Public Class ExplorerItemComparer
     Public Function Compare(x As ExplorerItem, y As ExplorerItem) As Integer Implements IComparer(Of ExplorerItem).Compare
         Return x.title.CompareTo(y.title)
     End Function
+
 End Class

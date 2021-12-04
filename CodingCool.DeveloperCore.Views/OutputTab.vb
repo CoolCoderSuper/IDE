@@ -6,11 +6,14 @@ Public Class OutputTab
     Inherits FATabStripItem
 
 #Region "Components"
+
     Private components As System.ComponentModel.IContainer
     Friend WithEvents txtOutput As FastColoredTextBox
+
 #End Region
 
 #Region "Intialization"
+
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -49,9 +52,11 @@ Public Class OutputTab
         Me.ResumeLayout(False)
         Me.Title = "Output"
     End Sub
+
 #End Region
 
 #Region "Methods"
+
     Public Sub Print(str As String)
         txtOutput.Text &= str
     End Sub

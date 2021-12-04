@@ -2,6 +2,7 @@
 ''' Represents an error in code.
 ''' </summary>
 Public Class ErrorItem
+
     ''' <summary>
     ''' The error's type: Error, Warning, ect.
     ''' </summary>

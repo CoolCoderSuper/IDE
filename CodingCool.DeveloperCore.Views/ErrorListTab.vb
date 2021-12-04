@@ -1,12 +1,15 @@
 ﻿Imports System.Windows.Forms
 Imports FarsiLibrary.Win
+
 Public Class ErrorListTab
     Inherits FATabStripItem
 
 #Region "Components"
+
     Friend WithEvents tmrLoad As Timer
     Friend WithEvents dgvErrors As DataGridView
     Private components As System.ComponentModel.IContainer
+
 #End Region
 
     Public Property Language As String
@@ -67,6 +70,7 @@ Public Class ErrorListTab
 #End Region
 
 #Region "Data"
+
     Private Sub tmrLoad_Tick(sender As Object, e As EventArgs) Handles tmrLoad.Tick
         Load()
     End Sub
@@ -78,6 +82,7 @@ Public Class ErrorListTab
             dgvErrors.DataSource = dtResults
         End If
     End Sub
+
 #End Region
 
 End Class

@@ -7,13 +7,16 @@ Public Class ObjectExplorerTab
     Inherits TabPage
 
 #Region "Components"
+
     WithEvents ilImages As ImageList
     WithEvents tvObjectExplorer As TreeView
+
 #End Region
 
     Public Property ExplorerList As New List(Of ExplorerItem)
 
 #Region "Initialization"
+
     Public Sub New()
         ilImages = New ImageList
         ilImages.Images.Add("Class", My.Resources.Icons_16x16_Class)
@@ -46,9 +49,11 @@ Public Class ObjectExplorerTab
         Me.ResumeLayout(False)
 
     End Sub
+
 #End Region
 
 #Region "C#"
+
     Public Sub ReCSharpBuildObjectExplorer(text As String)
         Try
             Dim list As List(Of ExplorerItem) = New List(Of ExplorerItem)()
@@ -110,9 +115,11 @@ Public Class ObjectExplorerTab
             Console.WriteLine(ex_332)
         End Try
     End Sub
+
 #End Region
 
 #Region "VB.NET"
+
     Public Sub ReBuildVBObjectExplorer(text As String)
         Try
             Dim list As List(Of ExplorerItem) = New List(Of ExplorerItem)()
@@ -227,6 +234,7 @@ Public Class ObjectExplorerTab
 #End Region
 
 #Region "Load"
+
     Private Sub LoadObject()
         tvObjectExplorer.Nodes.Clear()
         Dim lastNode As New TreeNode
@@ -272,6 +280,7 @@ Public Class ObjectExplorerTab
             End Select
         Next
     End Sub
+
 #End Region
 
 End Class

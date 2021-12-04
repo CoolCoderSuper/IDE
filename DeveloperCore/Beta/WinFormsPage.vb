@@ -1,34 +1,44 @@
 ﻿Imports FarsiLibrary.Win
+
 Public Class WinFormsPage
     Inherits FATabStripItem
 
 #Region "Components"
+
     Friend WithEvents lstToolBox As ListView
     Friend WithEvents splitterMain As SplitContainer
+
 #End Region
 
 #Region "Properties"
+
     Public Property Lanuage As FastColoredTextBoxNS.Language
 
     Public Property SelectedItem As Control
 
     Public Property ParentItem As Control
+
 #End Region
 
 #Region "Events"
+
     Public Event ControlSelected(sender As Object)
+
 #End Region
 
 #Region "Variables"
+
     Dim bInMove As Boolean = False
     Dim bInAdd As Boolean = False
     Dim bIsAddValid As Boolean = False
     Dim curMoveCursor As Cursor = Cursors.SizeAll
     Dim curInvalidLocation As Cursor = Cursors.No
     Dim MouseDownMoveLocation As Drawing.Point
+
 #End Region
 
 #Region "Initialization"
+
     Public Sub New(l As FastColoredTextBoxNS.Language)
         Lanuage = l
         InitializeComponent()
@@ -91,9 +101,11 @@ Public Class WinFormsPage
         Me.ResumeLayout(False)
 
     End Sub
+
 #End Region
 
 #Region "ControlMoveSelection"
+
     Private Sub Control_MouseDown(sender As Object, e As MouseEventArgs)
         If e.Button = MouseButtons.Left Then
             SelectedItem = CType(sender, Control)
@@ -125,9 +137,11 @@ Public Class WinFormsPage
             bInMove = False
         End If
     End Sub
+
 #End Region
 
 #Region "ControlAdd"
+
     'Private Sub lstToolBox_MouseDown(sender As Object, e As MouseEventArgs) Handles lstToolBox.MouseDown
     '    If e.Button = MouseButtons.Left Then
     '        bInAdd = True
@@ -169,6 +183,7 @@ Public Class WinFormsPage
             lstToolBox.SelectedItems(0).Tag = New Button
         End If
     End Sub
+
 #End Region
 
 End Class

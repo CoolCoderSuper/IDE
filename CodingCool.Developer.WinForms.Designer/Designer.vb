@@ -1,5 +1,3 @@
-﻿Imports System.ComponentModel
-
-Public Class Designer
+﻿Public Class Designer
 
 End Class

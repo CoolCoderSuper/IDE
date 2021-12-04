@@ -2,6 +2,7 @@
 ''' A class to load tasks from code.
 ''' </summary>
 Public Class TaskHelper
+
     ' TODO: Match with task prefixes
     ''' <summary>
     ''' Loads the tasks.
@@ -41,4 +42,5 @@ Public Class TaskHelper
         Next
         Return lTasks
     End Function
+
 End Class
