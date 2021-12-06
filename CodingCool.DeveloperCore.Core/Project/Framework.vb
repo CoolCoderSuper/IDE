@@ -13,6 +13,6 @@ Public Class Framework
     ''' The version of the framework.
     ''' </summary>
     ''' <returns></returns>
-    Public Property Version As String
+    Public Property Version As Version
 
 End Class

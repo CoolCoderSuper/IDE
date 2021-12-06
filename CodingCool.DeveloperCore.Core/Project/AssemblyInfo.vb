@@ -43,13 +43,13 @@ Public Class AssemblyInfo
     ''' The version of the assembly.
     ''' </summary>
     ''' <returns></returns>
-    Public Property AssemblyVersion As String
+    Public Property AssemblyVersion As Version
 
     ''' <summary>
     ''' The version of the file.
     ''' </summary>
     ''' <returns></returns>
-    Public Property FileVersion As String
+    Public Property FileVersion As Version
 
     ''' <summary>
     ''' The GUID of the assembly.

@@ -3,6 +3,10 @@
 ''' </summary>
 Public Class DesignableObject
 
+    Public Sub New()
+        Files = New List(Of File)
+    End Sub
+
     ''' <summary>
     ''' The name of the file.
     ''' </summary>

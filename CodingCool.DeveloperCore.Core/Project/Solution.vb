@@ -3,6 +3,11 @@
 ''' </summary>
 Public Class Solution
 
+    Public Sub New()
+        Projects = New List(Of Project)
+        Folders = New List(Of String)
+    End Sub
+
     ''' <summary>
     ''' The aboslute path of the solution.
     ''' </summary>
