@@ -38,3 +38,8 @@ Public Enum FrameworkTypes
     DotNetCore
     Mono
 End Enum
+
+Public Enum Language
+    VBDotNet
+    CSharp
+End Enum

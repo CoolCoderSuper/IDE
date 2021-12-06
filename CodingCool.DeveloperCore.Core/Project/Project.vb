@@ -71,6 +71,12 @@ Public Class Project
     Public Property StartUpObject As String
 
     ''' <summary>
+    ''' The language for the project.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Language As Language
+
+    ''' <summary>
     ''' A list of references of the project.
     ''' </summary>
     ''' <returns></returns>

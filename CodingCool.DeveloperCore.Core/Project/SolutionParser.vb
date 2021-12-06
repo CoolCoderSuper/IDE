@@ -19,6 +19,7 @@ Public Class SolutionParser
         objProject.OutputEXE = Boolean.Parse(nSettings.Element("OutputExe").Value)
         objProject.EnableApplicationFramework = Boolean.Parse(nSettings.Element("EnableApplicationFramework").Value)
         objProject.StartUpObject = nSettings.Element("StartUpObject").Value
+        objProject.Language = ParseLanguage(nSettings.Element("Language").Value)
         objProject.AssemblyInfo = GetAssemblyInfo(nSettings.Element("AssemblyInfo"))
         objProject.TargetFramework = GetTargetFramework(nSettings.Element("TargetFramework"))
         objProject.References = GetReferences(nProject.Element("References"))
@@ -35,9 +36,18 @@ Public Class SolutionParser
         Dim objDoc As New XDocument
         objDoc.Root.Name = "Project"
         Dim nSettings As New XElement("Settings")
-
+        nSettings.Add(New XElement("Name", obj.Name))
+        nSettings.Add(New XElement("AssemblyName", obj.AssemblyName))
+        nSettings.Add(New XElement("OutputExe", obj.OutputEXE.ToString))
+        nSettings.Add(New XElement("EnableApplicationFramework", obj.EnableApplicationFramework.ToString))
+        nSettings.Add(New XElement("StartUpObject", obj.StartUpObject))
+        nSettings.Add(SaveAssemblyInfo(obj.AssemblyInfo))
         objDoc.Save(strPath)
     End Sub
+
+    Private Shared Function SaveAssemblyInfo(obj As AssemblyInfo) As XElement
+
+    End Function
 
 #Region "Helpers"
 
@@ -122,6 +132,17 @@ Public Class SolutionParser
                 Return FrameworkTypes.DotNetCore
             Case "mono"
                 Return FrameworkTypes.Mono
+            Case Else
+                Return Nothing
+        End Select
+    End Function
+
+    Private Shared Function ParseLanguage(str As String) As Language
+        Select Case str.ToLower.Trim
+            Case "VB.NET"
+                Return Language.VBDotNet
+            Case "C#"
+                Return Language.CSharp
             Case Else
                 Return Nothing
         End Select
