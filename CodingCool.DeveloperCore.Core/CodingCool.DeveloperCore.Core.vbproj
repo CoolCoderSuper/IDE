@@ -83,6 +83,7 @@
     <Compile Include="Error\ErrorHelper.vb" />
     <Compile Include="Error\ErrorItem.vb" />
     <Compile Include="Error\ErrorNumber.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="Helpers.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -105,6 +106,7 @@
     <Compile Include="Project\File.vb" />
     <Compile Include="Project\DesignableObject.vb" />
     <Compile Include="Project\Framework.vb" />
+    <Compile Include="Project\ParserExtensions.vb" />
     <Compile Include="Project\Project.vb" />
     <Compile Include="Project\Reference.vb" />
     <Compile Include="Project\Solution.vb" />
