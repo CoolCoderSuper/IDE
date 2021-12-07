@@ -37,9 +37,8 @@ Public Class SolutionParser
     ''' <summary>
     ''' Saves solution object to file.
     ''' </summary>
-    ''' <param name="strPath">The location to save to.</param>
     ''' <param name="obj">The object to save.</param>
-    Public Shared Sub Save(strPath As String, obj As Project)
+    Public Shared Sub Save(obj As Project)
         Dim objDoc As New XDocument
         objDoc.Root.Name = "Project"
         Dim nSettings As New XElement("Settings")
@@ -50,7 +49,7 @@ Public Class SolutionParser
         nSettings.Add(New XElement("StartUpObject", obj.StartUpObject))
         nSettings.Add(New XElement("Language", obj.Language.GetValue))
         nSettings.Add(obj.AssemblyInfo.ToXML)
-        objDoc.Save(strPath)
+        objDoc.Save("")
     End Sub
 
 End Class
