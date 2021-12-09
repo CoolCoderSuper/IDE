@@ -119,39 +119,39 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ClassBrowser" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\PadIcons\ClassBrowser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\ClassBrowser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ErrorList" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\PadIcons\ErrorList.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ErrorList.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Class" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Class.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Class.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Enum" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Enum.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Enum.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Event" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Event.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Event.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Field" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Field.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Field.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Interface" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Interface.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Interface.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Method" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Method.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Method.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_NameSpace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.NameSpace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.NameSpace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Operator" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Operator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Operator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Property" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icons_16x16_Struct" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Struct.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\ObjectExplorer\Icons.16x16.Struct.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -119,27 +119,27 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="EmptyFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\EmptyFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\EmptyFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Form" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\Form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\Form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NewClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\NewClass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\NewClass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WPFCustomControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\WPFCustomControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\WPFCustomControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WPFPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\WPFPage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\WPFPage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WPFUserControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\WPFUserControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\WPFUserControl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WPFWindow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\WPFWindow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\WPFWindow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="_Interface" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\backendicons\VB\file\Interface.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\VB\File\Interface.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

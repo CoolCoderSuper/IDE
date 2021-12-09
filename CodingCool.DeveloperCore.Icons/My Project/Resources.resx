@@ -119,36 +119,36 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CodeBehind" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\CodeBehind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\CodeBehind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder_Closed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\Folder.Closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\Folder.Closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder_Missing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\Folder.Missing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\Folder.Missing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder_Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\Folder.Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\Folder.Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MissingFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\MissingFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\MissingFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MissingProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\MissingProject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\MissingProject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProjectWarning" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\ProjectWarning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\ProjectWarning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Reference" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ClassBrowserIcons\Icons.16x16.Reference.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\Icons.16x16.Reference.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ReferenceFolder_Closed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\ReferenceFolder.Closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\ReferenceFolder.Closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ReferenceFolder_Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\ReferenceFolder.Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\ReferenceFolder.Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Solution" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\ThirdParty\ICSharpCode\SharpDevelop\SharpDevelop\data\resources\image\BitmapResources\ProjectBrowserIcons\Solution.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\Solution.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
