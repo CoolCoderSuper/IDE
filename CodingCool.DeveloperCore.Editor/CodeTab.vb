@@ -73,7 +73,7 @@ Public Class CodeTab
 #End Region
 
     Public Property FilePath As String
-    Public Property Language As Language = Language.Custom
+    Public Property Language As FastColoredTextBoxNS.Language = FastColoredTextBoxNS.Language.Custom
 
     Public Sub Save()
         Try
@@ -86,17 +86,17 @@ Public Class CodeTab
 
 #Region "Intialization"
 
-    Public Sub New(l As Language, strPR As String)
+    Public Sub New(l As FastColoredTextBoxNS.Language, strPR As String)
         items = New List(Of AutocompleteItem)
         InitializeComponent()
         InitStylesPriority()
         Language = l
         strRoot = strPR
-        If Language = Language.CSharp Then
+        If Language = FastColoredTextBoxNS.Language.CSharp Then
             BuildCSAutocompleteMenu()
             Me.txtEditor.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(39), Global.Microsoft.VisualBasic.ChrW(39)}
             Me.txtEditor.CommentPrefix = "//"
-        ElseIf Language = Language.VB Then
+        ElseIf Language = FastColoredTextBoxNS.Language.VB Then
             BuildVBAutocompleteMenu()
             Me.txtEditor.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34)}
             Me.txtEditor.CommentPrefix = "'"

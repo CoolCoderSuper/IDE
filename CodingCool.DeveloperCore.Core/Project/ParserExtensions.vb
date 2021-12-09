@@ -119,4 +119,11 @@ Module ParserExtensions
         Return nInfo
     End Function
 
+    <Extension()>
+    Public Function ToXML(obj As List(Of File)) As XElement
+        Dim nInfo As New XElement("Files")
+
+        Return nInfo
+    End Function
+
 End Module
