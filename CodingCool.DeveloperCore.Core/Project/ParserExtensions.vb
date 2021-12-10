@@ -5,11 +5,11 @@ Module ParserExtensions
     <Extension()>
     Public Function ToCopyToOutput(str As String) As CopyToOutputOptions
         Select Case str.ToLower.Trim
-            Case "DoNotCopy"
+            Case "donotcopy"
                 Return CopyToOutputOptions.DoNotCopy
-            Case "CopyAlways"
+            Case "copyalways"
                 Return CopyToOutputOptions.CopyAlways
-            Case "CopyIfNewer"
+            Case "copyifnewer"
                 Return CopyToOutputOptions.CopyIfNewer
             Case Else
                 Return Nothing
@@ -33,9 +33,9 @@ Module ParserExtensions
     <Extension()>
     Public Function ToLanguage(str As String) As Language
         Select Case str.ToLower.Trim
-            Case "VB.NET"
+            Case "vb.net"
                 Return Language.VBDotNet
-            Case "C#"
+            Case "c#"
                 Return Language.CSharp
             Case Else
                 Return Nothing
@@ -84,7 +84,7 @@ Module ParserExtensions
     Public Function ToTargetFramework(el As XElement) As Framework
         Dim objInfo As New Framework
         objInfo.FrameworkType = el.Element("Type").Value.ToFramework
-        objInfo.Version = Version.Parse(el.Element("Verson").Value)
+        objInfo.Version = Version.Parse(el.Element("Version").Value)
         Return objInfo
     End Function
 
@@ -120,9 +120,48 @@ Module ParserExtensions
     End Function
 
     <Extension()>
+    Public Function ToXML(obj As Framework) As XElement
+        Dim nInfo As New XElement("TargetFramework")
+        nInfo.Add(New XElement("Type", obj.FrameworkType.GetString))
+        nInfo.Add(New XElement("Version", obj.Version.ToString))
+        Return nInfo
+    End Function
+
+    <Extension()>
     Public Function ToXML(obj As List(Of File)) As XElement
         Dim nInfo As New XElement("Files")
+        For Each objFile As File In obj
+            Dim nFile As New XElement("File")
+            nFile.Add(New XElement("Path"), objFile.Path)
+            nFile.Add(New XElement("CopyToOutput"), objFile.CopyToOutput.GetString())
+            nInfo.Add(nFile)
+        Next
+        Return nInfo
+    End Function
 
+    <Extension()>
+    Public Function ToXML(obj As List(Of Reference)) As XElement
+        Dim nInfo As New XElement("References")
+        For Each objRef As Reference In obj
+            Dim nRef As New XElement("Reference")
+            nRef.Add(New XElement("Path"), objRef.Path)
+            nRef.Add(New XElement("EmbedInteropTypes"), objRef.EmbedInteropTypes.ToString)
+            nRef.Add(New XElement("CopyLocal"), objRef.CopyLocal.ToString)
+            nRef.Add(New XElement("SpecificVersion"), objRef.SpecificVersion.ToString)
+            nInfo.Add(nRef)
+        Next
+        Return nInfo
+    End Function
+
+    <Extension()>
+    Public Function ToXML(obj As List(Of DesignableObject)) As XElement
+        Dim nInfo As New XElement("DesignableObjects")
+        For Each objDesign As DesignableObject In obj
+            Dim nObject As New XElement("DesignableObject")
+            nObject.Add(New XElement("Name", objDesign.Name))
+            nObject.Add(objDesign.Files.ToXML)
+            nInfo.Add(nObject)
+        Next
         Return nInfo
     End Function
 

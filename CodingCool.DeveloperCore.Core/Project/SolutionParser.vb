@@ -29,6 +29,7 @@ Public Class SolutionParser
             objProject.TargetFramework = nSettings.Element("TargetFramework").ToTargetFramework
             objProject.References = nProject.Element("References").ToReferences
             objProject.Files = nProject.Element("Files").ToFiles
+            objProject.DesignableObjects = nProject.Element("DesignableObjects").ToDesignableObjects
             objSolution.Projects.Add(objProject)
         Next
         Return objSolution
@@ -38,18 +39,28 @@ Public Class SolutionParser
     ''' Saves solution object to file.
     ''' </summary>
     ''' <param name="obj">The object to save.</param>
-    Public Shared Sub Save(obj As Project)
+    Public Shared Sub Save(obj As Solution)
         Dim objDoc As New XDocument
-        objDoc.Root.Name = "Project"
-        Dim nSettings As New XElement("Settings")
-        nSettings.Add(New XElement("Name", obj.Name))
-        nSettings.Add(New XElement("AssemblyName", obj.AssemblyName))
-        nSettings.Add(New XElement("OutputExe", obj.OutputEXE.ToString))
-        nSettings.Add(New XElement("EnableApplicationFramework", obj.EnableApplicationFramework.ToString))
-        nSettings.Add(New XElement("StartUpObject", obj.StartUpObject))
-        nSettings.Add(New XElement("Language", obj.Language.GetValue))
-        nSettings.Add(obj.AssemblyInfo.ToXML)
-        objDoc.Save("")
+        objDoc.Root.Name = "Solution"
+        objDoc.Root.Add(New XElement("NugetCache", obj.NugetCache))
+        For Each objProject As Project In obj.Projects
+            Dim nProject As New XElement("Project")
+            Dim nSettings As New XElement("Settings")
+            nSettings.Add(New XElement("Name", objProject.Name))
+            nSettings.Add(New XElement("AssemblyName", objProject.AssemblyName))
+            nSettings.Add(New XElement("OutputExe", objProject.OutputEXE.ToString))
+            nSettings.Add(New XElement("EnableApplicationFramework", objProject.EnableApplicationFramework.ToString))
+            nSettings.Add(New XElement("StartUpObject", objProject.StartUpObject))
+            nSettings.Add(New XElement("Language", objProject.Language.GetString))
+            nSettings.Add(objProject.AssemblyInfo.ToXML)
+            nSettings.Add(objProject.TargetFramework.ToXML)
+            nProject.Add(nSettings)
+            nProject.Add(objProject.References.ToXML)
+            nProject.Add(objProject.Files.ToXML)
+            nProject.Add(objProject.DesignableObjects.ToXML)
+            objDoc.Root.Add(nProject)
+        Next
+        objDoc.Save(obj.Path)
     End Sub
 
 End Class
