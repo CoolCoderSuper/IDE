@@ -2,7 +2,6 @@
 
 Module Extensions
 
-
     <Extension()>
     Public Function GetString(obj As Language) As String
         Select Case obj

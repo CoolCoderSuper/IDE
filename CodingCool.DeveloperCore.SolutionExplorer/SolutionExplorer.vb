@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Runtime.CompilerServices
+Imports System.Windows.Forms
 Imports CodingCool.DeveloperCore.Core
 
 'TODO: Get assembly name and show that instead
@@ -81,13 +82,13 @@ Public Class SolutionExplorer
             Next
         Next
         Try
-            'Maybe make this code not throw unhandled exception
+            'Set the icon
             For Each f As File In proj.Files
                 If f.Path.Split("\").Length = 1 Then
                     nProject.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
                 Else
                     Dim nFolder As TreeNode = GetNode(nProject, GetDirNodeName(f.Path))
-                    ' nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
+                    nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
                 End If
             Next
         Catch ex As Exception
@@ -96,9 +97,7 @@ Public Class SolutionExplorer
     End Sub
 
     Private Function GetDirNodeName(strPath As String) As String
-        Dim strResult As String = ""
-        strPath.Split("\").ToList.ForEach(Sub(x) strResult &= $"{x}\")
-        Return "Folder_" & IO.Path.GetDirectoryName(strResult)
+        Return "Folder_" & strPath.Split("\").GetDirName
     End Function
 
     Private Function GetNode(node As TreeNode, strKey As String) As TreeNode
@@ -130,3 +129,16 @@ Public Class SolutionExplorer
     End Sub
 
 End Class
+
+Module Ext
+
+    <Extension()>
+    Public Function GetDirName(obj As String()) As String
+        Dim strResult As String = ""
+        For i As Integer = 0 To obj.Length - 2
+            strResult &= If(i = 0, obj(i), $"\{obj(i)}")
+        Next
+        Return strResult
+    End Function
+
+End Module
