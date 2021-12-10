@@ -121,6 +121,10 @@
       <Project>{07467ca7-d4c0-4d64-9968-fa4572d15b73}</Project>
       <Name>CodingCool.DeveloperCore.Icons.SolutionExplorer.VB.Projects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodingCool.DeveloperCore.Icons.SolutionExplorer.VB\CodingCool.DeveloperCore.Icons.SolutionExplorer.VB.vbproj">
+      <Project>{de4485ae-6311-4dc6-adf9-3437caee67e0}</Project>
+      <Name>CodingCool.DeveloperCore.Icons.SolutionExplorer.VB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodingCool.DeveloperCore.Icons\CodingCool.DeveloperCore.Icons.SolutionExplorer.vbproj">
       <Project>{cd1ee5ac-12ef-429c-ad95-a6ede2ba92a5}</Project>
       <Name>CodingCool.DeveloperCore.Icons.SolutionExplorer</Name>

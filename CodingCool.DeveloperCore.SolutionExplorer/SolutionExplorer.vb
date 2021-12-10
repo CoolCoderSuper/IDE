@@ -50,7 +50,7 @@ Public Class SolutionExplorer
         il.Images.Add("Reference", Icons.SolutionExplorer.My.Resources.Reference)
         il.Images.Add("VBProject", Icons.SolutionExplorer.VB.Projects.My.Resources.FullProject)
         il.Images.Add("FolderClosed", Icons.SolutionExplorer.My.Resources.Folder_Closed)
-        'Some how get the vb file icon
+        il.Images.Add("VBFile", Icons.SolutionExplorer.VB.My.Resources.EmptyFile)
         ImageList = il
     End Sub
 
@@ -81,19 +81,14 @@ Public Class SolutionExplorer
                 End If
             Next
         Next
-        Try
-            'Set the icon
-            For Each f As File In proj.Files
-                If f.Path.Split("\").Length = 1 Then
-                    nProject.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
-                Else
-                    Dim nFolder As TreeNode = GetNode(nProject, GetDirNodeName(f.Path))
-                    nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
-                End If
-            Next
-        Catch ex As Exception
-
-        End Try
+        For Each f As File In proj.Files
+            If f.Path.Split("\").Length = 1 Then
+                nProject.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
+            Else
+                Dim nFolder As TreeNode = GetNode(nProject, GetDirNodeName(f.Path))
+                nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
+            End If
+        Next
     End Sub
 
     Private Function GetDirNodeName(strPath As String) As String
