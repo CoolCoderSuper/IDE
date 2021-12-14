@@ -43,3 +43,21 @@ Public Enum Language
     VBDotNet
     CSharp
 End Enum
+
+Public Enum ActionTypes
+    Create
+    Delete
+    ViewCode
+    Exclude
+    Cut
+    Paste
+    CopyFullPath
+    OpenInFileExplorer
+    Open
+    OpenWith
+End Enum
+
+Public Enum CopyTypes
+    Copy
+    Cut
+End Enum

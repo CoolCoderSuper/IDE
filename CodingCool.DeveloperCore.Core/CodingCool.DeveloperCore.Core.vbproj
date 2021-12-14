@@ -83,6 +83,10 @@
     <Compile Include="Error\ErrorHelper.vb" />
     <Compile Include="Error\ErrorItem.vb" />
     <Compile Include="Error\ErrorNumber.vb" />
+    <Compile Include="EventArgs\CopyItemEventArgs.vb" />
+    <Compile Include="EventArgs\MenuItemClickEventArgs.vb" />
+    <Compile Include="EventArgs\MoveItemEventArgs.vb" />
+    <Compile Include="EventArgs\RenameItemEventArgs.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Helpers.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

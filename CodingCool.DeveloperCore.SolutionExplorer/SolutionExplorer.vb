@@ -123,6 +123,14 @@ Public Class SolutionExplorer
         End If
     End Sub
 
+    Public Event Rename(sender As Object, e As RenameItemEventArgs)
+
+    Public Event MenuItemClick(sender As Object, e As MenuItemClickEventArgs)
+
+    Public Shadows Event Move(sender As Object, e As MoveItemEventArgs)
+
+    Public Event Copy(sender As Object, e As CopyItemEventArgs)
+
 End Class
 
 Module Ext
