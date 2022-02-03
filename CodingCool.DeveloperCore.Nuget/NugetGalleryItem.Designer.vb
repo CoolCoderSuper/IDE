@@ -40,10 +40,9 @@ Partial Class NugetGalleryItem
         '
         'lblDescription
         '
-        Me.lblDescription.AutoSize = True
         Me.lblDescription.Location = New System.Drawing.Point(5, 25)
         Me.lblDescription.Name = "lblDescription"
-        Me.lblDescription.Size = New System.Drawing.Size(60, 13)
+        Me.lblDescription.Size = New System.Drawing.Size(220, 37)
         Me.lblDescription.TabIndex = 1
         Me.lblDescription.Text = "Description"
         '
@@ -51,7 +50,7 @@ Partial Class NugetGalleryItem
         '
         Me.lblVersion.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.lblVersion.AutoSize = True
-        Me.lblVersion.Location = New System.Drawing.Point(241, 25)
+        Me.lblVersion.Location = New System.Drawing.Point(241, -53)
         Me.lblVersion.Name = "lblVersion"
         Me.lblVersion.Size = New System.Drawing.Size(42, 13)
         Me.lblVersion.TabIndex = 2
@@ -60,7 +59,7 @@ Partial Class NugetGalleryItem
         'btnCMD
         '
         Me.btnCMD.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnCMD.Location = New System.Drawing.Point(257, -1)
+        Me.btnCMD.Location = New System.Drawing.Point(257, -79)
         Me.btnCMD.Name = "btnCMD"
         Me.btnCMD.Size = New System.Drawing.Size(26, 23)
         Me.btnCMD.TabIndex = 3
@@ -76,7 +75,7 @@ Partial Class NugetGalleryItem
         Me.Controls.Add(Me.lblDescription)
         Me.Controls.Add(Me.lblName)
         Me.Name = "NugetGalleryItem"
-        Me.Size = New System.Drawing.Size(286, 44)
+        Me.Size = New System.Drawing.Size(286, 70)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

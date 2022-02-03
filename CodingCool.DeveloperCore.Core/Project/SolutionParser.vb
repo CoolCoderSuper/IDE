@@ -30,6 +30,7 @@ Public Class SolutionParser
             objProject.References = nProject.Element("References").ToReferences
             objProject.Files = nProject.Element("Files").ToFiles
             objProject.DesignableObjects = nProject.Element("DesignableObjects").ToDesignableObjects
+            objProject.Folders = nProject.Element("Folders").ToFolders
             objSolution.Projects.Add(objProject)
         Next
         Return objSolution
@@ -58,6 +59,7 @@ Public Class SolutionParser
             nProject.Add(objProject.References.ToXML)
             nProject.Add(objProject.Files.ToXML)
             nProject.Add(objProject.DesignableObjects.ToXML)
+            nProject.Add(objProject.Folders.ToXML)
             objDoc.Root.Add(nProject)
         Next
         objDoc.Save(obj.Path)

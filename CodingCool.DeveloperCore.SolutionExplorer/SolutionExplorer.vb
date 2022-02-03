@@ -60,7 +60,7 @@ Public Class SolutionExplorer
         nProject.Nodes.Add($"{proj.Name}_ProjectSettings", "My Project")
         nReferences = nProject.Nodes.Add($"{proj.Name}_References", "References", "RefFolderClosed", "RefFolderClosed")
         For Each r As Reference In proj.References
-            nReferences.Nodes.Add($"{proj.Name}_References_{r.Path}", r.Path, "Reference", "Reference")
+            nReferences.Nodes.Add($"{proj.Name}_References_{r.Path}", r.Path, "Reference", "Reference").Tag = r
         Next
         For Each f As String In proj.Folders
             Dim lFolders As String() = f.Split("\")
@@ -70,6 +70,7 @@ Public Class SolutionExplorer
                     Dim strName As String = $"Folder_{sf}"
                     If Not NodeExists(nProject, strName) Then
                         nLastFolder = nProject.Nodes.Add(strName, sf, "FolderClosed", "FolderClosed")
+                        nLastFolder.Tag = f
                     Else
                         nLastFolder = GetNode(nProject, strName)
                     End If
@@ -77,16 +78,17 @@ Public Class SolutionExplorer
                     Dim strName As String = $"{nLastFolder.Name}\{sf}"
                     If Not NodeExists(nProject, strName) Then
                         nLastFolder = nLastFolder.Nodes.Add(strName, sf, "FolderClosed", "FolderClosed")
+                        nLastFolder.Tag = f
                     End If
                 End If
             Next
         Next
         For Each f As File In proj.Files
             If f.Path.Split("\").Length = 1 Then
-                nProject.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
+                nProject.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile").Tag = f
             Else
                 Dim nFolder As TreeNode = GetNode(nProject, GetDirNodeName(f.Path))
-                nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile")
+                nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile").Tag = f
             End If
         Next
     End Sub
@@ -123,13 +125,33 @@ Public Class SolutionExplorer
         End If
     End Sub
 
+    Private Sub SolutionExplorer_AfterLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.AfterLabelEdit
+        Dim args As RenameItemEventArgs
+        If TypeOf e.Node.Tag Is File Then
+            args = New RenameItemEventArgs(CType(e.Node.Tag, File).Path, e.Label, False)
+        Else
+            args = New RenameItemEventArgs(e.Node.Tag.ToString, e.Label, False)
+        End If
+        RaiseEvent Rename(Me, args)
+    End Sub
+
+    Private Sub SolutionExplorer_ItemDrag(sender As Object, e As ItemDragEventArgs) Handles Me.ItemDrag
+        If e.Button = MouseButtons.Left Then
+            DoDragDrop(e.Item, DragDropEffects.Move)
+        End If
+    End Sub
+
+    Private Sub SolutionExplorer_DragEnter(sender As Object, e As DragEventArgs) Handles Me.DragEnter
+        e.Effect = DragDropEffects.Move
+    End Sub
+
+    Private Sub SolutionExplorer_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver
+        SelectedNode = GetNodeAt(PointToClient(New Drawing.Point(e.X, e.Y)))
+    End Sub
+
     Public Event Rename(sender As Object, e As RenameItemEventArgs)
 
-    Public Event MenuItemClick(sender As Object, e As MenuItemClickEventArgs)
-
     Public Shadows Event Move(sender As Object, e As MoveItemEventArgs)
-
-    Public Event Copy(sender As Object, e As CopyItemEventArgs)
 
 End Class
 

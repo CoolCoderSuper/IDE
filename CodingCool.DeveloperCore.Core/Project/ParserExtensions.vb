@@ -81,6 +81,15 @@ Module ParserExtensions
     End Function
 
     <Extension()>
+    Public Function ToFolders(el As XElement) As List(Of String)
+        Dim lDirs As New List(Of String)
+        For Each nDir As XElement In el.Elements("Folder")
+            lDirs.Add(nDir.Value)
+        Next
+        Return lDirs
+    End Function
+
+    <Extension()>
     Public Function ToTargetFramework(el As XElement) As Framework
         Dim objInfo As New Framework
         objInfo.FrameworkType = el.Element("Type").Value.ToFramework
@@ -161,6 +170,17 @@ Module ParserExtensions
             nObject.Add(New XElement("Name", objDesign.Name))
             nObject.Add(objDesign.Files.ToXML)
             nInfo.Add(nObject)
+        Next
+        Return nInfo
+    End Function
+
+    <Extension()>
+    Public Function ToXML(obj As List(Of String)) As XElement
+        Dim nInfo As New XElement("Folders")
+        For Each objDir As String In obj
+            Dim nDir As New XElement("Folder")
+            nDir.Value = objDir
+            nInfo.Add(nDir)
         Next
         Return nInfo
     End Function

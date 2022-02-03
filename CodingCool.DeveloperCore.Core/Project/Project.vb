@@ -23,7 +23,7 @@ Public Class Project
     Public Property AssemblyName As String
 
     ''' <summary>
-    ''' Th relative path of the projects data folder.
+    ''' The relative path of the projects data folder.
     ''' </summary>
     ''' <returns></returns>
     Public Property RootFolder As String

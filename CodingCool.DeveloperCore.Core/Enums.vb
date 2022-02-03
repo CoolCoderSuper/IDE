@@ -19,11 +19,17 @@ Public Enum ExplorerItemTypes
     [Namespace]
 End Enum
 
+''' <summary>
+''' Represents a projects athentication mode.
+''' </summary>
 Public Enum AuthenticationModes
     Windows
     ApplicationDefined
 End Enum
 
+''' <summary>
+''' Represents a objects copy to output rules.
+''' </summary>
 Public Enum CopyToOutputOptions
     DoNotCopy
     CopyAlways
@@ -39,11 +45,17 @@ Public Enum FrameworkTypes
     Mono
 End Enum
 
+''' <summary>
+''' Represents supported languages.
+''' </summary>
 Public Enum Language
     VBDotNet
     CSharp
 End Enum
 
+''' <summary>
+''' Represents actions that can be done in the solution explorer.
+''' </summary>
 Public Enum ActionTypes
     Create
     Delete
@@ -57,6 +69,9 @@ Public Enum ActionTypes
     OpenWith
 End Enum
 
+''' <summary>
+''' Represents different ways to copy files.
+''' </summary>
 Public Enum CopyTypes
     Copy
     Cut
