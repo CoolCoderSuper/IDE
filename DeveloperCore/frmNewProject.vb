@@ -1,7 +1,7 @@
 ﻿Public Class frmNewProject
 
     Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
-        If txtName.Text.Trim() = String.Empty Then
+        If txtName.Text.Trim = "" Then
             MsgBox("Enter a name!", MessageBoxIcon.Error, "INPUT ERROR") : Exit Sub
         End If
         If Not IO.Directory.Exists(txtPath.Text) Then
@@ -9,19 +9,19 @@
         End If
         Dim strLanguage As String
         Dim bOutput As Boolean
-        If lstTemplates.SelectedItem.ToString().Contains("C#") Then
+        If lstTemplates.SelectedItem.ToString.Contains("C#") Then
             strLanguage = "cs"
         Else
             strLanguage = "vb"
         End If
-        If lstTemplates.SelectedItem.ToString().Contains("ClassLibrary") Then
+        If lstTemplates.SelectedItem.ToString.Contains("ClassLibrary") Then
             bOutput = False
         Else
             bOutput = True
         End If
         Dim strPath As String = txtPath.Text
-        If strPath.Last() = "\" Or strPath.Last() = "/" Then
-            strPath = $"{(strPath.Remove(strPath.Count() - 1, 1))}\"
+        If strPath.Last = "\" Or strPath.Last = "/" Then
+            strPath = strPath.Remove(strPath.Count - 1, 1) & "\"
         Else
             strPath &= "\"
         End If
@@ -39,14 +39,14 @@
             objSettings.Add(objLanguage)
             objSettings.Add(objOutput)
             If bOutput Then
-                objFiles.Add(New XElement("File", $"{strPath}Program.{strLanguage}"))
+                objFiles.Add(New XElement("File", strPath & "Program." & strLanguage))
             End If
             objXMLDoc.Add(objProject)
-            objXMLDoc.Save($"{strPath}{txtName.Text}.proj")
+            objXMLDoc.Save(strPath & txtName.Text & ".proj")
             If bOutput Then
                 If strLanguage = "cs" Then
-                    If lstTemplates.SelectedItem.ToString().Contains("Console") Then
-                        IO.File.WriteAllText($"{strPath}Program.{strLanguage}", "using System;
+                    If lstTemplates.SelectedItem.ToString.Contains("Console") Then
+                        IO.File.WriteAllText(strPath & "Program." & strLanguage, "using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,8 +62,8 @@ namespace ConsoleApp1
     }
 }
 ")
-                    ElseIf lstTemplates.SelectedItem.ToString().Contains("WinForms") Then
-                        IO.File.WriteAllText($"{strPath}Program.{strLanguage}", "using System;
+                    ElseIf lstTemplates.SelectedItem.ToString.Contains("WinForms") Then
+                        IO.File.WriteAllText(strPath & "Program." & strLanguage, "using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,8 +88,8 @@ namespace WindowsFormsApp1
 ")
                     End If
                 Else
-                    If lstTemplates.SelectedItem.ToString().Contains("Console") Then
-                        IO.File.WriteAllText($"{strPath}Program.{strLanguage}", "Module Module1
+                    If lstTemplates.SelectedItem.ToString.Contains("Console") Then
+                        IO.File.WriteAllText(strPath & "Program." & strLanguage, "Module Module1
 
     Sub Main()
 
@@ -97,8 +97,8 @@ namespace WindowsFormsApp1
 
 End Module
 ")
-                    ElseIf lstTemplates.SelectedItem.ToString().Contains("WinForms") Then
-                        IO.File.WriteAllText($"{strPath}Program.{strLanguage}", "
+                    ElseIf lstTemplates.SelectedItem.ToString.Contains("WinForms") Then
+                        IO.File.WriteAllText(strPath & "Program." & strLanguage, "
 Public Class Program
     Public Sub New()
         MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
@@ -127,7 +127,7 @@ End Class")
 
     Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
         Dim fbd As New FolderBrowserDialog
-        If fbd.ShowDialog() = DialogResult.OK Then
+        If fbd.ShowDialog = DialogResult.OK Then
             txtPath.Text = fbd.SelectedPath
         End If
     End Sub

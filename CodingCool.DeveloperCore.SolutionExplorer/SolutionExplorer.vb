@@ -1,8 +1,7 @@
 ﻿Imports CodingCool.DeveloperCore.Core
 Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
-
-'TODO: Get assembly name and show that instead
+'TODO: Add solution loop to load
 Public Class SolutionExplorer
     Inherits TreeView
     Private proj As Project
@@ -38,9 +37,9 @@ Public Class SolutionExplorer
         proj.Files.Add(f6)
         proj.Files.Add(f7)
         Dim r1 As New Reference
-        r1.Path = "/Test"
+        r1.Path = "C:\CodingCool\Code\Projects\DeveloperCore\DeveloperCore\bin\Debug\CodingCool.DeveloperCore.Core.dll"
         Dim r2 As New Reference
-        r2.Path = "/Test1"
+        r2.Path = "C:\CodingCool\Code\Projects\DeveloperCore\DeveloperCore\bin\Debug\CodingCool.Developer.WinForms.Designer.dll"
         proj.Name = "Test"
         proj.References.Add(r1)
         proj.References.Add(r2)
@@ -54,13 +53,17 @@ Public Class SolutionExplorer
         ImageList = il
     End Sub
 
+#Region "Load"
+
     Public Shadows Sub Load()
+        Dim strPRPath As String = String.Empty
         Dim nProject As TreeNode = Nodes.Add(proj.Name, proj.Name, "VBProject", "VBProject")
+        nProject.Tag = {proj, strPRPath}
         Dim nReferences As TreeNode
         nProject.Nodes.Add($"{proj.Name}_ProjectSettings", "My Project")
         nReferences = nProject.Nodes.Add($"{proj.Name}_References", "References", "RefFolderClosed", "RefFolderClosed")
         For Each r As Reference In proj.References
-            nReferences.Nodes.Add($"{proj.Name}_References_{r.Path}", r.Path, "Reference", "Reference").Tag = r
+            nReferences.Nodes.Add($"{proj.Name}_References_{r.Path}", r.GetName(), "Reference", "Reference").Tag = r
         Next
         For Each f As String In proj.Folders
             Dim lFolders As String() = f.Split("\")
@@ -93,9 +96,49 @@ Public Class SolutionExplorer
         Next
     End Sub
 
-    Private Function GetDirNodeName(strPath As String) As String
-        Return $"Folder_{strPath.Split("\").GetDirName()}"
-    End Function
+#End Region
+
+#Region "Rename"
+
+    Private Sub SolutionExplorer_BeforeLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.BeforeLabelEdit
+        If TypeOf e.Node.Tag Is Reference OrElse e.Node.Name = $"{proj.Name}_References" OrElse e.Node.Name = $"{proj.Name}_ProjectSettings" Then
+            e.CancelEdit = True
+        End If
+    End Sub
+
+    Private Sub SolutionExplorer_AfterLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.AfterLabelEdit
+        Dim args As RenameItemEventArgs
+        If TypeOf e.Node.Tag Is File Then
+            args = New RenameItemEventArgs(CType(e.Node.Tag, File).Path, e.Label, False)
+        ElseIf TypeOf e.Node.Tag Is Array Then
+            args = New RenameItemEventArgs(CType(e.Node.Tag, Array)(1), e.Label, False)
+        Else
+            args = New RenameItemEventArgs(e.Node.Tag.ToString(), e.Label, False)
+        End If
+        RaiseEvent Rename(Me, args)
+    End Sub
+
+#End Region
+
+#Region "Move"
+
+    Private Sub SolutionExplorer_ItemDrag(sender As Object, e As ItemDragEventArgs) Handles Me.ItemDrag
+        If e.Button = MouseButtons.Left Then
+            DoDragDrop(e.Item, DragDropEffects.Move)
+        End If
+    End Sub
+
+    Private Sub SolutionExplorer_DragEnter(sender As Object, e As DragEventArgs) Handles Me.DragEnter
+        e.Effect = DragDropEffects.Move
+    End Sub
+
+    Private Sub SolutionExplorer_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver
+        SelectedNode = GetNodeAt(PointToClient(New Drawing.Point(e.X, e.Y)))
+    End Sub
+
+#End Region
+
+#Region "Nodes"
 
     Private Function GetNode(node As TreeNode, strKey As String) As TreeNode
         Return GetAllNodes(node).Where(Function(x) x.Name = strKey).FirstOrDefault()
@@ -119,35 +162,15 @@ Public Class SolutionExplorer
         Next
     End Function
 
-    Private Sub SolutionExplorer_BeforeLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.BeforeLabelEdit
-        If TypeOf e.Node.Tag Is Reference OrElse e.Node.Name = $"{proj.Name}_References" OrElse e.Node.Name = $"{proj.Name}_ProjectSettings" Then
-            e.CancelEdit = True
-        End If
-    End Sub
+#End Region
 
-    Private Sub SolutionExplorer_AfterLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.AfterLabelEdit
-        Dim args As RenameItemEventArgs
-        If TypeOf e.Node.Tag Is File Then
-            args = New RenameItemEventArgs(CType(e.Node.Tag, File).Path, e.Label, False)
-        Else
-            args = New RenameItemEventArgs(e.Node.Tag.ToString(), e.Label, False)
-        End If
-        RaiseEvent Rename(Me, args)
-    End Sub
+#Region "Misc"
 
-    Private Sub SolutionExplorer_ItemDrag(sender As Object, e As ItemDragEventArgs) Handles Me.ItemDrag
-        If e.Button = MouseButtons.Left Then
-            DoDragDrop(e.Item, DragDropEffects.Move)
-        End If
-    End Sub
+    Private Function GetDirNodeName(strPath As String) As String
+        Return $"Folder_{strPath.Split("\").GetDirName()}"
+    End Function
 
-    Private Sub SolutionExplorer_DragEnter(sender As Object, e As DragEventArgs) Handles Me.DragEnter
-        e.Effect = DragDropEffects.Move
-    End Sub
-
-    Private Sub SolutionExplorer_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver
-        SelectedNode = GetNodeAt(PointToClient(New Drawing.Point(e.X, e.Y)))
-    End Sub
+#End Region
 
     Public Event Rename(sender As Object, e As RenameItemEventArgs)
 
@@ -164,6 +187,11 @@ Friend Module Ext
             strResult &= If(i = 0, obj(i), $"\{obj(i)}")
         Next
         Return strResult
+    End Function
+
+    <Extension>
+    Public Function GetName(obj As Reference) As String
+        Return Reflection.Assembly.LoadFrom(obj.Path).GetName().Name
     End Function
 
 End Module

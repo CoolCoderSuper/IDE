@@ -31,12 +31,12 @@ Partial Class ReferencesView
         Me.txtCOMSearch = New System.Windows.Forms.TextBox()
         Me.dgvCOM = New System.Windows.Forms.DataGridView()
         Me.tpBrowse = New System.Windows.Forms.TabPage()
+        Me.btnBrowse = New System.Windows.Forms.Button()
         Me.dgvBrowse = New System.Windows.Forms.DataGridView()
         Me.btnSelect = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnRemove = New System.Windows.Forms.Button()
         Me.dgvSelected = New System.Windows.Forms.DataGridView()
-        Me.btnBrowse = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.tpGAC.SuspendLayout()
         CType(Me.dgvGAC, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -142,6 +142,15 @@ Partial Class ReferencesView
         Me.tpBrowse.Text = "Browse"
         Me.tpBrowse.UseVisualStyleBackColor = True
         '
+        'btnBrowse
+        '
+        Me.btnBrowse.Location = New System.Drawing.Point(6, 7)
+        Me.btnBrowse.Name = "btnBrowse"
+        Me.btnBrowse.Size = New System.Drawing.Size(448, 23)
+        Me.btnBrowse.TabIndex = 1
+        Me.btnBrowse.Text = "Browse"
+        Me.btnBrowse.UseVisualStyleBackColor = True
+        '
         'dgvBrowse
         '
         Me.dgvBrowse.AllowUserToAddRows = False
@@ -190,15 +199,6 @@ Partial Class ReferencesView
         Me.dgvSelected.ReadOnly = True
         Me.dgvSelected.Size = New System.Drawing.Size(460, 151)
         Me.dgvSelected.TabIndex = 4
-        '
-        'btnBrowse
-        '
-        Me.btnBrowse.Location = New System.Drawing.Point(6, 7)
-        Me.btnBrowse.Name = "btnBrowse"
-        Me.btnBrowse.Size = New System.Drawing.Size(448, 23)
-        Me.btnBrowse.TabIndex = 1
-        Me.btnBrowse.Text = "Browse"
-        Me.btnBrowse.UseVisualStyleBackColor = True
         '
         'ReferencesView
         '

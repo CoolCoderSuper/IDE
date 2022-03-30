@@ -76,7 +76,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorListTab.vb">
+    <Compile Include="Tabs\ErrorListTab.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FileView.Designer.vb">
@@ -101,7 +101,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="OutputTab.vb">
+    <Compile Include="Tabs\OutputTab.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ProjectView.Designer.vb">
@@ -116,12 +116,12 @@
     <Compile Include="ReferencesView.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TaskListTab.vb">
+    <Compile Include="Tabs\TaskListTab.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ErrorListTab.resx">
+    <EmbeddedResource Include="Tabs\ErrorListTab.resx">
       <DependentUpon>ErrorListTab.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileView.resx">
@@ -133,7 +133,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="OutputTab.resx">
+    <EmbeddedResource Include="Tabs\OutputTab.resx">
       <DependentUpon>OutputTab.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectView.resx">
@@ -142,7 +142,7 @@
     <EmbeddedResource Include="ReferencesView.resx">
       <DependentUpon>ReferencesView.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TaskListTab.resx">
+    <EmbeddedResource Include="Tabs\TaskListTab.resx">
       <DependentUpon>TaskListTab.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

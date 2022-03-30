@@ -31,19 +31,19 @@
         End Try
         If frmMain.Language.ToLower() = "cs" Then
             If lstTemplates.SelectedItem.ToString() = "Class" Then
-                IO.File.WriteAllText($"{frmMain.ProjectDir}{txtName.Text}.{frmMain.Language.ToLower()}", $"public class {txtName.Text}
+                IO.File.WriteAllText(frmMain.ProjectDir & txtName.Text & "." & frmMain.Language.ToLower(), $"public class {txtName.Text}
 {{
 
 }}")
             ElseIf lstTemplates.SelectedItem.ToString() = "Form" Then
-                IO.File.WriteAllText($"{frmMain.ProjectDir}{txtName.Text}.{frmMain.Language.ToLower()}", $"public class {txtName.Text} : System.Windows.Forms.Form
+                IO.File.WriteAllText(frmMain.ProjectDir & txtName.Text & "." & frmMain.Language.ToLower(), $"public class {txtName.Text} : System.Windows.Forms.Form
 {{
 
 }}")
             End If
         Else
             If lstTemplates.SelectedItem.ToString() = "Module" Then
-                IO.File.WriteAllText($"{frmMain.ProjectDir}{txtName.Text}.{frmMain.Language.ToLower()}", $"Module {txtName.Text}
+                IO.File.WriteAllText(frmMain.ProjectDir & txtName.Text & "." & frmMain.Language.ToLower(), $"Module {txtName.Text}
 
     Sub Main()
 
@@ -51,11 +51,11 @@
 
 End Module")
             ElseIf lstTemplates.SelectedItem.ToString() = "Class" Then
-                IO.File.WriteAllText($"{frmMain.ProjectDir}{txtName.Text}.{frmMain.Language.ToLower()}", $"Public Class {txtName.Text}
+                IO.File.WriteAllText(frmMain.ProjectDir & txtName.Text & "." & frmMain.Language.ToLower(), $"Public Class {txtName.Text}
 
 End Class")
             ElseIf lstTemplates.SelectedItem.ToString() = "Form" Then
-                IO.File.WriteAllText($"{frmMain.ProjectDir}{txtName.Text}.{frmMain.Language.ToLower()}", $"Public Class {txtName.Text}
+                IO.File.WriteAllText(frmMain.ProjectDir & txtName.Text & "." & frmMain.Language.ToLower(), $"Public Class {txtName.Text}
     Inherits System.Windows.Forms.Form
 
 End Class")

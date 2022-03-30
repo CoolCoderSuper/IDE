@@ -28,12 +28,12 @@ Public Class WinFormsPage
 
 #Region "Variables"
 
-    Private bInMove As Boolean = False
-    Private bInAdd As Boolean = False
-    Private bIsAddValid As Boolean = False
-    Private curMoveCursor As Cursor = Cursors.SizeAll
-    Private curInvalidLocation As Cursor = Cursors.No
-    Private MouseDownMoveLocation As Drawing.Point
+    Dim bInMove As Boolean = False
+    Dim bInAdd As Boolean = False
+    Dim bIsAddValid As Boolean = False
+    Dim curMoveCursor As Cursor = Cursors.SizeAll
+    Dim curInvalidLocation As Cursor = Cursors.No
+    Dim MouseDownMoveLocation As Drawing.Point
 
 #End Region
 
@@ -42,13 +42,13 @@ Public Class WinFormsPage
     Public Sub New(l As FastColoredTextBoxNS.Language)
         Lanuage = l
         InitializeComponent()
-        Dim frm As Form = New Form With {
+        Dim frm As Form = New Form() With {
         .TopLevel = False,
         .TopMost = True
         }
         SelectedItem = frm
         ParentItem = frm
-        splitterMain.Panel1.Controls.Add(frm)
+        Me.splitterMain.Panel1.Controls.Add(frm)
         For Each ctrl As Control In ParentItem.Controls
             AddHandler ctrl.MouseDown, AddressOf Control_MouseDown
             AddHandler ctrl.MouseMove, AddressOf Control_MouseMove
@@ -61,44 +61,44 @@ Public Class WinFormsPage
 
     Private Sub InitializeComponent()
         Dim ListViewItem1 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("Button")
-        splitterMain = New System.Windows.Forms.SplitContainer
-        lstToolBox = New System.Windows.Forms.ListView
-        CType(splitterMain, System.ComponentModel.ISupportInitialize).BeginInit()
-        splitterMain.Panel2.SuspendLayout()
-        splitterMain.SuspendLayout()
-        SuspendLayout()
+        Me.splitterMain = New System.Windows.Forms.SplitContainer()
+        Me.lstToolBox = New System.Windows.Forms.ListView()
+        CType(Me.splitterMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.splitterMain.Panel2.SuspendLayout()
+        Me.splitterMain.SuspendLayout()
+        Me.SuspendLayout()
         '
         'splitterMain
         '
-        splitterMain.Dock = System.Windows.Forms.DockStyle.Fill
-        splitterMain.Location = New System.Drawing.Point(0, 0)
-        splitterMain.Name = "splitterMain"
+        Me.splitterMain.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.splitterMain.Location = New System.Drawing.Point(0, 0)
+        Me.splitterMain.Name = "splitterMain"
         '
         'splitterMain.Panel2
         '
-        splitterMain.Panel2.Controls.Add(lstToolBox)
-        splitterMain.Size = New System.Drawing.Size(200, 100)
-        splitterMain.SplitterDistance = 66
-        splitterMain.TabIndex = 0
+        Me.splitterMain.Panel2.Controls.Add(Me.lstToolBox)
+        Me.splitterMain.Size = New System.Drawing.Size(200, 100)
+        Me.splitterMain.SplitterDistance = 66
+        Me.splitterMain.TabIndex = 0
         '
         'lstToolBox
         '
-        lstToolBox.Dock = System.Windows.Forms.DockStyle.Fill
-        lstToolBox.HideSelection = False
-        lstToolBox.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1})
-        lstToolBox.Location = New System.Drawing.Point(0, 0)
-        lstToolBox.Name = "lstToolBox"
-        lstToolBox.Size = New System.Drawing.Size(130, 100)
-        lstToolBox.TabIndex = 0
-        lstToolBox.UseCompatibleStateImageBehavior = False
+        Me.lstToolBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstToolBox.HideSelection = False
+        Me.lstToolBox.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1})
+        Me.lstToolBox.Location = New System.Drawing.Point(0, 0)
+        Me.lstToolBox.Name = "lstToolBox"
+        Me.lstToolBox.Size = New System.Drawing.Size(130, 100)
+        Me.lstToolBox.TabIndex = 0
+        Me.lstToolBox.UseCompatibleStateImageBehavior = False
         '
         'WinFormsPage
         '
-        Controls.Add(splitterMain)
-        splitterMain.Panel2.ResumeLayout(False)
-        CType(splitterMain, System.ComponentModel.ISupportInitialize).EndInit()
-        splitterMain.ResumeLayout(False)
-        ResumeLayout(False)
+        Me.Controls.Add(Me.splitterMain)
+        Me.splitterMain.Panel2.ResumeLayout(False)
+        CType(Me.splitterMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.splitterMain.ResumeLayout(False)
+        Me.ResumeLayout(False)
 
     End Sub
 

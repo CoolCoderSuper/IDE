@@ -157,8 +157,8 @@ Public Class frmMain
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         Build()
-        If IO.File.Exists($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe") Then
-            Process.Start($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe")
+        If IO.File.Exists(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe") Then
+            Process.Start(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe")
         End If
     End Sub
 
@@ -177,15 +177,15 @@ Public Class frmMain
         objReferences.Elements("Reference").ToList().ForEach(Sub(x) l.Add(x.Value))
         If Language = "cs" Then
             If b Then
-                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.CSharpCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe", files.ToArray(), b, l))
             Else
-                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.CSharpCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".dll", files.ToArray(), b, l))
             End If
         Else
             If b Then
-                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.VBCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe", files.ToArray(), b, l))
             Else
-                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.VBCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".dll", files.ToArray(), b, l))
             End If
         End If
     End Sub
@@ -206,7 +206,7 @@ Public Class frmMain
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
         Dim ofd As New OpenFileDialog
-        ofd.Filter = $"Code files (*.{Language})|*.{Language}"
+        ofd.Filter = "Code files (*." & Language & ")|*." & Language
         If ofd.ShowDialog() = DialogResult.OK Then
 
         End If
@@ -275,7 +275,7 @@ Public Class frmMain
         ofd.Multiselect = False
         ofd.Filter = "Project files (*.proj)|*.proj"
         If ofd.ShowDialog() = DialogResult.OK Then
-            ProjectDir = $"{(ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")))}\"
+            ProjectDir = ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")) & "\"
             ProjectRoot = ofd.FileName
             Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
             Language = objDoc.Root.Element("Settings").Element("Language").Value

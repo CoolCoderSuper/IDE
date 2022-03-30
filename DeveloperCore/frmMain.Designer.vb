@@ -62,11 +62,11 @@ Partial Class frmMain
         Me.btnDeleteContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnExistingContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.tpProperties = New System.Windows.Forms.TabPage()
-        Me.SolutionExplorer1 = New CodingCool.DeveloperCore.SolutionExplorer.SolutionExplorer()
         Me.tcMain = New FarsiLibrary.Win.FATabStrip()
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
         Me.tmrObjectExplorer = New System.Windows.Forms.Timer(Me.components)
+        Me.SolutionExplorer1 = New CodingCool.DeveloperCore.SolutionExplorer.SolutionExplorer()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.tcTools, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tcViews.SuspendLayout()
@@ -354,17 +354,6 @@ Partial Class frmMain
         Me.tpProperties.Text = "Properties"
         Me.tpProperties.UseVisualStyleBackColor = True
         '
-        'SolutionExplorer1
-        '
-        Me.SolutionExplorer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SolutionExplorer1.ImageIndex = 0
-        Me.SolutionExplorer1.LabelEdit = True
-        Me.SolutionExplorer1.Location = New System.Drawing.Point(3, 3)
-        Me.SolutionExplorer1.Name = "SolutionExplorer1"
-        Me.SolutionExplorer1.SelectedImageIndex = 0
-        Me.SolutionExplorer1.Size = New System.Drawing.Size(257, 570)
-        Me.SolutionExplorer1.TabIndex = 0
-        '
         'tcMain
         '
         Me.tcMain.Dock = System.Windows.Forms.DockStyle.Fill
@@ -412,6 +401,17 @@ Partial Class frmMain
         'tmrObjectExplorer
         '
         Me.tmrObjectExplorer.Interval = 1000
+        '
+        'SolutionExplorer1
+        '
+        Me.SolutionExplorer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SolutionExplorer1.ImageIndex = 0
+        Me.SolutionExplorer1.LabelEdit = True
+        Me.SolutionExplorer1.Location = New System.Drawing.Point(3, 3)
+        Me.SolutionExplorer1.Name = "SolutionExplorer1"
+        Me.SolutionExplorer1.SelectedImageIndex = 0
+        Me.SolutionExplorer1.Size = New System.Drawing.Size(257, 570)
+        Me.SolutionExplorer1.TabIndex = 0
         '
         'frmMain
         '
