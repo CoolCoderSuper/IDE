@@ -4,7 +4,7 @@
         Dim ofd As New OpenFileDialog
         ofd.Multiselect = False
         ofd.Filter = "DLL files (*.dll)|*.dll"
-        If ofd.ShowDialog = DialogResult.OK Then
+        If ofd.ShowDialog() = DialogResult.OK Then
             lstReferences.Items.Add(ofd.FileName)
         End If
     End Sub

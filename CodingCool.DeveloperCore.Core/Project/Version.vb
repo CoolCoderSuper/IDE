@@ -43,7 +43,7 @@ Public Class Version
     Public Shared Function Parse(str As String) As Version
         Dim lValues As String() = str.Split("."c)
         Dim objInfo As New Version
-        If lValues.Count = 4 Then
+        If lValues.Count() = 4 Then
             For i As Integer = 0 To lValues.Length Step 1
                 Dim strItem As String = lValues(i)
                 Dim intNum As Integer

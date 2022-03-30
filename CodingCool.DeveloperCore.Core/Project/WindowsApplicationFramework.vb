@@ -1,4 +1,5 @@
-﻿Public Class WindowsApplicationFramework
+﻿'TODO: Add documentation
+Public Class WindowsApplicationFramework
     Public Property XPVisualStyles As Boolean
 
     Public Property SingleInstance As Boolean

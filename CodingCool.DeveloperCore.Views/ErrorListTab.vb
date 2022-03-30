@@ -1,5 +1,5 @@
-﻿Imports System.Windows.Forms
-Imports FarsiLibrary.Win
+﻿Imports FarsiLibrary.Win
+Imports System.Windows.Forms
 
 Public Class ErrorListTab
     Inherits FATabStripItem
@@ -34,36 +34,36 @@ Public Class ErrorListTab
     End Sub
 
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
-        Me.tmrLoad = New System.Windows.Forms.Timer(Me.components)
-        Me.dgvErrors = New System.Windows.Forms.DataGridView()
-        CType(Me.dgvErrors, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        components = New System.ComponentModel.Container
+        tmrLoad = New System.Windows.Forms.Timer(components)
+        dgvErrors = New System.Windows.Forms.DataGridView
+        CType(dgvErrors, System.ComponentModel.ISupportInitialize).BeginInit()
+        SuspendLayout()
         '
         'tmrLoad
         '
-        Me.tmrLoad.Interval = 3000
+        tmrLoad.Interval = 3000
         '
         'dgvErrors
         '
-        Me.dgvErrors.AllowUserToAddRows = False
-        Me.dgvErrors.AllowUserToDeleteRows = False
-        Me.dgvErrors.AllowUserToResizeRows = False
-        Me.dgvErrors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvErrors.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvErrors.Location = New System.Drawing.Point(0, 0)
-        Me.dgvErrors.MultiSelect = False
-        Me.dgvErrors.Name = "dgvErrors"
-        Me.dgvErrors.ReadOnly = True
-        Me.dgvErrors.Size = New System.Drawing.Size(240, 150)
-        Me.dgvErrors.TabIndex = 0
+        dgvErrors.AllowUserToAddRows = False
+        dgvErrors.AllowUserToDeleteRows = False
+        dgvErrors.AllowUserToResizeRows = False
+        dgvErrors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvErrors.Dock = System.Windows.Forms.DockStyle.Fill
+        dgvErrors.Location = New System.Drawing.Point(0, 0)
+        dgvErrors.MultiSelect = False
+        dgvErrors.Name = "dgvErrors"
+        dgvErrors.ReadOnly = True
+        dgvErrors.Size = New System.Drawing.Size(240, 150)
+        dgvErrors.TabIndex = 0
         '
         'ErrorListTab
         '
-        Me.Title = "Error List"
-        CType(Me.dgvErrors, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
-        Me.Controls.Add(dgvErrors)
+        Title = "Error List"
+        CType(dgvErrors, System.ComponentModel.ISupportInitialize).EndInit()
+        ResumeLayout(False)
+        Controls.Add(dgvErrors)
 
     End Sub
 

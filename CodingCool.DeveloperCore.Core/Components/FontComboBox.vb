@@ -21,7 +21,7 @@ Public Class FontComboBox
 #Region "Public Constructors"
 
     Public Sub New()
-        _fontCache = New Dictionary(Of String, Font)()
+        _fontCache = New Dictionary(Of String, Font)
         DrawMode = DrawMode.OwnerDrawVariable
         Sorted = True
         PreviewFontSize = 12
@@ -49,13 +49,13 @@ Public Class FontComboBox
     Protected Overrides Sub OnDrawItem(ByVal e As DrawItemEventArgs)
         MyBase.OnDrawItem(e)
 
-        If e.Index > -1 AndAlso e.Index < Me.Items.Count Then
+        If e.Index > -1 AndAlso e.Index < Items.Count Then
             e.DrawBackground()
             If (e.State And DrawItemState.Focus) = DrawItemState.Focus Then e.DrawFocusRectangle()
 
             Using textBrush As SolidBrush = New SolidBrush(e.ForeColor)
                 Dim fontFamilyName As String
-                fontFamilyName = Me.Items(e.Index).ToString()
+                fontFamilyName = Items(e.Index).ToString()
                 e.Graphics.DrawString(fontFamilyName, GetFont(fontFamilyName), textBrush, e.Bounds, _stringFormat)
             End Using
         End If
@@ -74,7 +74,7 @@ Public Class FontComboBox
     Protected Overrides Sub OnMeasureItem(ByVal e As MeasureItemEventArgs)
         MyBase.OnMeasureItem(e)
 
-        If e.Index > -1 AndAlso e.Index < Me.Items.Count Then
+        If e.Index > -1 AndAlso e.Index < Items.Count Then
             e.ItemHeight = _itemHeight
         End If
     End Sub
@@ -87,10 +87,10 @@ Public Class FontComboBox
     Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
         MyBase.OnTextChanged(e)
 
-        If Me.Items.Count = 0 Then
+        If Items.Count = 0 Then
             Dim selectedIndex As Integer
             LoadFontFamilies()
-            selectedIndex = Me.FindStringExact(Me.Text)
+            selectedIndex = FindStringExact(Text)
             If selectedIndex <> -1 Then Me.SelectedIndex = selectedIndex
         End If
     End Sub
@@ -100,11 +100,11 @@ Public Class FontComboBox
 #Region "Public Methods"
 
     Public Overridable Sub LoadFontFamilies()
-        If Me.Items.Count = 0 Then
+        If Items.Count = 0 Then
             Cursor.Current = Cursors.WaitCursor
 
             For Each fontFamily As FontFamily In FontFamily.Families
-                Me.Items.Add(fontFamily.Name)
+                Items.Add(fontFamily.Name)
             Next
 
             Cursor.Current = Cursors.Default
@@ -115,7 +115,9 @@ Public Class FontComboBox
 
 #Region "Public Properties"
 
-    <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), EditorBrowsable(EditorBrowsableState.Never)>
+    <Browsable(False)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    <EditorBrowsable(EditorBrowsableState.Never)>
     Public Overloads Property DrawMode As DrawMode
         Get
             Return MyBase.DrawMode
@@ -125,7 +127,8 @@ Public Class FontComboBox
         End Set
     End Property
 
-    <Category("Appearance"), DefaultValue(12)>
+    <Category("Appearance")>
+    <DefaultValue(12)>
     Public Property PreviewFontSize As Integer
         Get
             Return _previewFontSize
@@ -136,7 +139,9 @@ Public Class FontComboBox
         End Set
     End Property
 
-    <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), EditorBrowsable(EditorBrowsableState.Never)>
+    <Browsable(False)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    <EditorBrowsable(EditorBrowsableState.Never)>
     Public Overloads Property Sorted As Boolean
         Get
             Return MyBase.Sorted
@@ -196,7 +201,7 @@ Public Class FontComboBox
         _stringFormat.HotkeyPrefix = HotkeyPrefix.None
         _stringFormat.Alignment = StringAlignment.Near
         _stringFormat.LineAlignment = StringAlignment.Center
-        If Me.IsUsingRTL(Me) Then _stringFormat.FormatFlags = _stringFormat.FormatFlags Or StringFormatFlags.DirectionRightToLeft
+        If IsUsingRTL(Me) Then _stringFormat.FormatFlags = _stringFormat.FormatFlags Or StringFormatFlags.DirectionRightToLeft
     End Sub
 
     Protected Overridable Function GetFont(ByVal fontFamilyName As String) As Font

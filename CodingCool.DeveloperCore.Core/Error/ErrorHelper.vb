@@ -1,5 +1,5 @@
-﻿Imports System.CodeDom.Compiler
-Imports Microsoft.CSharp
+﻿Imports Microsoft.CSharp
+Imports System.CodeDom.Compiler
 
 ''' <summary>
 ''' Some crappy code to get errors from code.
@@ -31,13 +31,13 @@ Public Class ErrorHelper
         Return lErrors
     End Function
 
-    ReadOnly references As String() = {"mscorlib.dll", "System.Core.dll", "System.Windows.dll", "System.Windows.Forms.dll", "System.dll", "System.Drawing.dll", "System.Data.dll", "System.Xml.dll", "System.Xml.Linq.dll", "System.Deployment.dll"}
+    Private ReadOnly references As String() = {"mscorlib.dll", "System.Core.dll", "System.Windows.dll", "System.Windows.Forms.dll", "System.dll", "System.Drawing.dll", "System.Data.dll", "System.Xml.dll", "System.Xml.Linq.dll", "System.Deployment.dll"}
 
     Private Function CSharpCompile(files As String(), lReferences As String()) As List(Of CompilerError)
-        Dim CSCode As New CSharpCodeProvider(New Dictionary(Of String, String)() From {
+        Dim CSCode As New CSharpCodeProvider(New Dictionary(Of String, String) From {
                  {"ComplilerVersion", "4.8"}
     })
-        Dim compilerParameters As New CompilerParameters(references.Concat(lReferences.ToList).ToArray, "", True)
+        Dim compilerParameters As New CompilerParameters(references.Concat(lReferences.ToList()).ToArray(), String.Empty, True)
         compilerParameters.GenerateExecutable = False
         Dim results As CompilerResults = CSCode.CompileAssemblyFromFile(compilerParameters, files)
 
@@ -48,10 +48,10 @@ Public Class ErrorHelper
     End Function
 
     Private Function VBCompile(files As String(), lReferences As String()) As List(Of CompilerError)
-        Dim VBCode As New VBCodeProvider(New Dictionary(Of String, String)() From {
+        Dim VBCode As New VBCodeProvider(New Dictionary(Of String, String) From {
                  {"ComplilerVersion", "4.8"}
     })
-        Dim compilerParameters As New CompilerParameters(references.Concat(lReferences.ToList).ToArray, "", True)
+        Dim compilerParameters As New CompilerParameters(references.Concat(lReferences.ToList()).ToArray(), String.Empty, True)
         compilerParameters.GenerateExecutable = False
         Dim results As CompilerResults = VBCode.CompileAssemblyFromFile(compilerParameters, files)
 

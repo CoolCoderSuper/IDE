@@ -1,7 +1,7 @@
-﻿Imports System.IO
-Imports CodingCool.DeveloperCore.Editor
+﻿Imports CodingCool.DeveloperCore.Editor
 Imports CodingCool.DeveloperCore.ObjectExplorer
 Imports CodingCool.DeveloperCore.Views
+Imports System.IO
 
 Public Class frmMain
 
@@ -16,11 +16,11 @@ Public Class frmMain
 
 #Region "Variables"
 
-    WithEvents CurrentTB As FastColoredTextBoxNS.FastColoredTextBox
-    WithEvents tbOutput As OutputTab
-    WithEvents tbTaskList As TaskListTab
-    WithEvents tbErrorList As ErrorListTab
-    WithEvents tbObjectExplorer As ObjectExplorerTab
+    Private WithEvents CurrentTB As FastColoredTextBoxNS.FastColoredTextBox
+    Private WithEvents tbOutput As OutputTab
+    Private WithEvents tbTaskList As TaskListTab
+    Private WithEvents tbErrorList As ErrorListTab
+    Private WithEvents tbObjectExplorer As ObjectExplorerTab
 
 #End Region
 
@@ -77,9 +77,9 @@ Public Class frmMain
             For Each objEl As XElement In objFiles.Elements("File")
                 l.Add(objEl.Value)
             Next
-            tbTaskList = New TaskListTab("", l.ToArray)
+            tbTaskList = New TaskListTab(String.Empty, l.ToArray())
         Catch ex As Exception
-            tbTaskList = New TaskListTab("", {})
+            tbTaskList = New TaskListTab(String.Empty, {})
         End Try
         If Language = "cs" Then
             tbTaskList.CommentPrefix = "//"
@@ -98,7 +98,7 @@ Public Class frmMain
             For Each objEl As XElement In objFiles.Elements("File")
                 l.Add(objEl.Value)
             Next
-            tbErrorList.Files = l.ToArray
+            tbErrorList.Files = l.ToArray()
         Catch ex As Exception
             tbErrorList.Files = {}
         End Try
@@ -110,7 +110,7 @@ Public Class frmMain
             For Each objEl As XElement In objFiles.Elements("Reference")
                 l.Add(objEl.Value)
             Next
-            tbErrorList.References = l.ToArray
+            tbErrorList.References = l.ToArray()
         Catch ex As Exception
             tbErrorList.References = {}
         End Try
@@ -132,7 +132,7 @@ Public Class frmMain
     End Sub
 
     Private Sub tcMain_TabStripItemSelectionChanged(e As FarsiLibrary.Win.TabStripItemChangedEventArgs) Handles tcMain.TabStripItemSelectionChanged
-        CurrentTB = CType(e.Item, CodeTab).txtEditor
+        CurrentTB = CType(e.Item, CodeTab).TxtEditor
     End Sub
 
     Private Sub frmMain_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -157,8 +157,8 @@ Public Class frmMain
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         Build()
-        If IO.File.Exists(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe") Then
-            Process.Start(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe")
+        If IO.File.Exists($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe") Then
+            Process.Start($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe")
         End If
     End Sub
 
@@ -171,21 +171,21 @@ Public Class frmMain
         Dim objReferences As XElement = objRoot.Element("References")
         Dim objOutput As XElement = objRoot.Element("Settings").Element("Output")
         Dim files As New List(Of String)
-        objFiles.Elements("File").ToList.ForEach(Sub(x) files.Add(x.Value))
+        objFiles.Elements("File").ToList().ForEach(Sub(x) files.Add(x.Value))
         Dim b As Boolean = Boolean.Parse(objOutput.Value)
         Dim l As New List(Of String)
-        objReferences.Elements("Reference").ToList.ForEach(Sub(x) l.Add(x.Value))
+        objReferences.Elements("Reference").ToList().ForEach(Sub(x) l.Add(x.Value))
         If Language = "cs" Then
             If b Then
-                tbOutput.Print(objCompiler.CSharpCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe", files.ToArray, b, l))
+                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
             Else
-                tbOutput.Print(objCompiler.CSharpCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".dll", files.ToArray, b, l))
+                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
             End If
         Else
             If b Then
-                tbOutput.Print(objCompiler.VBCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe", files.ToArray, b, l))
+                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
             Else
-                tbOutput.Print(objCompiler.VBCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".dll", files.ToArray, b, l))
+                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
             End If
         End If
     End Sub
@@ -206,8 +206,8 @@ Public Class frmMain
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
         Dim ofd As New OpenFileDialog
-        ofd.Filter = "Code files (*." & Language & ")|*." & Language
-        If ofd.ShowDialog = DialogResult.OK Then
+        ofd.Filter = $"Code files (*.{Language})|*.{Language}"
+        If ofd.ShowDialog() = DialogResult.OK Then
 
         End If
     End Sub
@@ -249,7 +249,7 @@ Public Class frmMain
         If Not lstFiles.SelectedItems.Count = 0 Then
             Dim objItem As ListViewItem = lstFiles.SelectedItems(0)
             Dim objTab As CodeTab
-            If Language.ToLower = "cs" Then
+            If Language.ToLower() = "cs" Then
                 objTab = New CodeTab(FastColoredTextBoxNS.Language.CSharp, ProjectRoot)
             Else
                 objTab = New CodeTab(FastColoredTextBoxNS.Language.VB, ProjectRoot)
@@ -274,8 +274,8 @@ Public Class frmMain
         Dim ofd As New OpenFileDialog
         ofd.Multiselect = False
         ofd.Filter = "Project files (*.proj)|*.proj"
-        If ofd.ShowDialog = DialogResult.OK Then
-            ProjectDir = ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")) & "\"
+        If ofd.ShowDialog() = DialogResult.OK Then
+            ProjectDir = $"{(ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")))}\"
             ProjectRoot = ofd.FileName
             Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
             Language = objDoc.Root.Element("Settings").Element("Language").Value

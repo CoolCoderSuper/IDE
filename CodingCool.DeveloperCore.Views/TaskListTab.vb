@@ -1,6 +1,6 @@
-﻿Imports System.Windows.Forms
-Imports CodingCool.DeveloperCore.Core
+﻿Imports CodingCool.DeveloperCore.Core
 Imports FarsiLibrary.Win
+Imports System.Windows.Forms
 
 Public Class TaskListTab
     Inherits FATabStripItem
@@ -30,31 +30,31 @@ Public Class TaskListTab
     End Sub
 
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
-        Me.tmrLoad = New System.Windows.Forms.Timer(Me.components)
-        Me.dgvTasks = New System.Windows.Forms.DataGridView()
-        CType(Me.dgvTasks, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        components = New System.ComponentModel.Container
+        tmrLoad = New System.Windows.Forms.Timer(components)
+        dgvTasks = New System.Windows.Forms.DataGridView
+        CType(dgvTasks, System.ComponentModel.ISupportInitialize).BeginInit()
+        SuspendLayout()
         '
         'tmrLoad
         '
-        Me.tmrLoad.Interval = 5000
+        tmrLoad.Interval = 5000
         '
         'dgvTasks
         '
-        Me.dgvTasks.AllowUserToAddRows = False
-        Me.dgvTasks.AllowUserToDeleteRows = False
-        Me.dgvTasks.AllowUserToResizeRows = False
-        Me.dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvTasks.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvTasks.Location = New System.Drawing.Point(0, 0)
-        Me.dgvTasks.MultiSelect = False
-        Me.dgvTasks.Name = "dgvTasks"
-        Me.dgvTasks.ReadOnly = True
-        Me.dgvTasks.Size = New System.Drawing.Size(240, 150)
-        Me.dgvTasks.TabIndex = 0
-        CType(Me.dgvTasks, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
+        dgvTasks.AllowUserToAddRows = False
+        dgvTasks.AllowUserToDeleteRows = False
+        dgvTasks.AllowUserToResizeRows = False
+        dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTasks.Dock = System.Windows.Forms.DockStyle.Fill
+        dgvTasks.Location = New System.Drawing.Point(0, 0)
+        dgvTasks.MultiSelect = False
+        dgvTasks.Name = "dgvTasks"
+        dgvTasks.ReadOnly = True
+        dgvTasks.Size = New System.Drawing.Size(240, 150)
+        dgvTasks.TabIndex = 0
+        CType(dgvTasks, System.ComponentModel.ISupportInitialize).EndInit()
+        ResumeLayout(False)
 
     End Sub
 
@@ -68,7 +68,7 @@ Public Class TaskListTab
 
     Public Sub Load()
         Dim objHelper As New TaskHelper
-        Dim dtResults As DataTable = Helpers.QueryableToDataTable(objHelper.GetTasks(Files, CommentPrefix).AsQueryable)
+        Dim dtResults As DataTable = Helpers.QueryableToDataTable(objHelper.GetTasks(Files, CommentPrefix).AsQueryable())
         If dgvTasks.DataSource IsNot dtResults Then
             dgvTasks.DataSource = dtResults
         End If

@@ -1,5 +1,5 @@
-﻿Imports System.Text.RegularExpressions
-Imports FastColoredTextBoxNS
+﻿Imports FastColoredTextBoxNS
+Imports System.Text.RegularExpressions
 
 ''' <summary>
 ''' This item appears when any part of snippet text is typed
@@ -13,7 +13,7 @@ Public Class DeclarationSnippet
 
     Public Overrides Function Compare(ByVal fragmentText As String) As CompareResult
         Dim pattern = Regex.Escape(fragmentText)
-        If Regex.IsMatch(Text, "\b" & pattern, RegexOptions.IgnoreCase) Then
+        If Regex.IsMatch(Text, $"\b{pattern}", RegexOptions.IgnoreCase) Then
             Return CompareResult.Visible
         End If
         Return CompareResult.Hidden
@@ -61,7 +61,7 @@ Public Class InsertEnterSnippet
         r.Start = enterPlace
         r.[End] = r.[End]
         'insert line break
-        Return Environment.NewLine + r.Text
+        Return $"{Environment.NewLine}{r.Text}"
     End Function
 
     Public Overrides Sub OnSelected(ByVal popupMenu As AutocompleteMenu, ByVal e As SelectedEventArgs)
@@ -82,7 +82,7 @@ Public Class InsertSpaceSnippet
     Private pattern As String
 
     Public Sub New(ByVal pattern As String)
-        MyBase.New("")
+        MyBase.New(String.Empty)
         Me.pattern = pattern
     End Sub
 
@@ -113,10 +113,10 @@ Public Class InsertSpaceSnippet
         If m Is Nothing Then
             Return fragment
         End If
-        If m.Groups(1).Value = "" AndAlso m.Groups(3).Value = "" Then
+        If m.Groups(1).Value = String.Empty AndAlso m.Groups(3).Value = String.Empty Then
             Return fragment
         End If
-        Return (m.Groups(1).Value & " " & m.Groups(2).Value & " " & m.Groups(3).Value).Trim()
+        Return ($"{m.Groups(1).Value} {m.Groups(2).Value} {m.Groups(3).Value}").Trim()
     End Function
 
 End Class

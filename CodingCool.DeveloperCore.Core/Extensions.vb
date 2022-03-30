@@ -1,8 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 
-Module Extensions
+Friend Module Extensions
 
-    <Extension()>
+    <Extension>
     Public Function GetString(obj As Language) As String
         Select Case obj
             Case Language.VBDotNet
@@ -14,7 +14,7 @@ Module Extensions
         End Select
     End Function
 
-    <Extension()>
+    <Extension>
     Public Function GetString(obj As CopyToOutputOptions) As String
         Select Case obj
             Case CopyToOutputOptions.CopyAlways
@@ -28,7 +28,7 @@ Module Extensions
         End Select
     End Function
 
-    <Extension()>
+    <Extension>
     Public Function GetString(obj As FrameworkTypes) As String
         Select Case obj
             Case FrameworkTypes.DotNetCore

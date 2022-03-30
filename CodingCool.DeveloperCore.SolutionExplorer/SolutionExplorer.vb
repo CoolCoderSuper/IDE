@@ -1,12 +1,12 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports CodingCool.DeveloperCore.Core
+Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
-Imports CodingCool.DeveloperCore.Core
 
 'TODO: Get assembly name and show that instead
 Public Class SolutionExplorer
     Inherits TreeView
-    Dim proj As Project
-    Dim il As ImageList
+    Private proj As Project
+    Private il As ImageList
 
     Public Sub New()
         il = New ImageList
@@ -94,19 +94,19 @@ Public Class SolutionExplorer
     End Sub
 
     Private Function GetDirNodeName(strPath As String) As String
-        Return "Folder_" & strPath.Split("\").GetDirName
+        Return $"Folder_{strPath.Split("\").GetDirName()}"
     End Function
 
     Private Function GetNode(node As TreeNode, strKey As String) As TreeNode
-        Return GetAllNodes(node).Where(Function(x) x.Name = strKey).FirstOrDefault
+        Return GetAllNodes(node).Where(Function(x) x.Name = strKey).FirstOrDefault()
     End Function
 
     Private Function NodeExists(node As TreeNode, strKey As String) As Boolean
-        Return GetAllNodes(node).Where(Function(x) x.Name = strKey).Count > 0
+        Return GetAllNodes(node).Where(Function(x) x.Name = strKey).Count() > 0
     End Function
 
     Private Function GetAllNodes(node As TreeNode) As IEnumerable(Of TreeNode)
-        Return node.Nodes.Cast(Of TreeNode)().SelectMany(New Func(Of TreeNode, IEnumerable(Of TreeNode))(AddressOf Me.GetNodeBranch))
+        Return node.Nodes.Cast(Of TreeNode)().SelectMany(New Func(Of TreeNode, IEnumerable(Of TreeNode))(AddressOf GetNodeBranch))
     End Function
 
     Private Iterator Function GetNodeBranch(ByVal node As TreeNode) As IEnumerable(Of TreeNode)
@@ -130,7 +130,7 @@ Public Class SolutionExplorer
         If TypeOf e.Node.Tag Is File Then
             args = New RenameItemEventArgs(CType(e.Node.Tag, File).Path, e.Label, False)
         Else
-            args = New RenameItemEventArgs(e.Node.Tag.ToString, e.Label, False)
+            args = New RenameItemEventArgs(e.Node.Tag.ToString(), e.Label, False)
         End If
         RaiseEvent Rename(Me, args)
     End Sub
@@ -155,11 +155,11 @@ Public Class SolutionExplorer
 
 End Class
 
-Module Ext
+Friend Module Ext
 
-    <Extension()>
+    <Extension>
     Public Function GetDirName(obj As String()) As String
-        Dim strResult As String = ""
+        Dim strResult As String = String.Empty
         For i As Integer = 0 To obj.Length - 2
             strResult &= If(i = 0, obj(i), $"\{obj(i)}")
         Next

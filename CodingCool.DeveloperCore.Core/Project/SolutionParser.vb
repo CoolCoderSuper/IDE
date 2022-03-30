@@ -24,13 +24,13 @@ Public Class SolutionParser
             objProject.OutputEXE = Boolean.Parse(nSettings.Element("OutputExe").Value)
             objProject.EnableApplicationFramework = Boolean.Parse(nSettings.Element("EnableApplicationFramework").Value)
             objProject.StartUpObject = nSettings.Element("StartUpObject").Value
-            objProject.Language = nSettings.Element("Language").Value.ToLanguage
-            objProject.AssemblyInfo = nSettings.Element("AssemblyInfo").ToAssemblyInfo
-            objProject.TargetFramework = nSettings.Element("TargetFramework").ToTargetFramework
-            objProject.References = nProject.Element("References").ToReferences
-            objProject.Files = nProject.Element("Files").ToFiles
-            objProject.DesignableObjects = nProject.Element("DesignableObjects").ToDesignableObjects
-            objProject.Folders = nProject.Element("Folders").ToFolders
+            objProject.Language = nSettings.Element("Language").Value.ToLanguage()
+            objProject.AssemblyInfo = nSettings.Element("AssemblyInfo").ToAssemblyInfo()
+            objProject.TargetFramework = nSettings.Element("TargetFramework").ToTargetFramework()
+            objProject.References = nProject.Element("References").ToReferences()
+            objProject.Files = nProject.Element("Files").ToFiles()
+            objProject.DesignableObjects = nProject.Element("DesignableObjects").ToDesignableObjects()
+            objProject.Folders = nProject.Element("Folders").ToFolders()
             objSolution.Projects.Add(objProject)
         Next
         Return objSolution
@@ -49,17 +49,17 @@ Public Class SolutionParser
             Dim nSettings As New XElement("Settings")
             nSettings.Add(New XElement("Name", objProject.Name))
             nSettings.Add(New XElement("AssemblyName", objProject.AssemblyName))
-            nSettings.Add(New XElement("OutputExe", objProject.OutputEXE.ToString))
-            nSettings.Add(New XElement("EnableApplicationFramework", objProject.EnableApplicationFramework.ToString))
+            nSettings.Add(New XElement("OutputExe", objProject.OutputEXE.ToString()))
+            nSettings.Add(New XElement("EnableApplicationFramework", objProject.EnableApplicationFramework.ToString()))
             nSettings.Add(New XElement("StartUpObject", objProject.StartUpObject))
-            nSettings.Add(New XElement("Language", objProject.Language.GetString))
-            nSettings.Add(objProject.AssemblyInfo.ToXML)
-            nSettings.Add(objProject.TargetFramework.ToXML)
+            nSettings.Add(New XElement("Language", objProject.Language.GetString()))
+            nSettings.Add(objProject.AssemblyInfo.ToXML())
+            nSettings.Add(objProject.TargetFramework.ToXML())
             nProject.Add(nSettings)
-            nProject.Add(objProject.References.ToXML)
-            nProject.Add(objProject.Files.ToXML)
-            nProject.Add(objProject.DesignableObjects.ToXML)
-            nProject.Add(objProject.Folders.ToXML)
+            nProject.Add(objProject.References.ToXML())
+            nProject.Add(objProject.Files.ToXML())
+            nProject.Add(objProject.DesignableObjects.ToXML())
+            nProject.Add(objProject.Folders.ToXML())
             objDoc.Root.Add(nProject)
         Next
         objDoc.Save(obj.Path)

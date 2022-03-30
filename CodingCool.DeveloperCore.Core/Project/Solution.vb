@@ -9,7 +9,7 @@ Public Class Solution
     End Sub
 
     ''' <summary>
-    ''' The aboslute path of the solution.
+    ''' The absolute path of the solution.
     ''' </summary>
     ''' <returns></returns>
     Public Property Path As String
@@ -27,9 +27,9 @@ Public Class Solution
     Public Property Folders As List(Of String)
 
     ''' <summary>
-    ''' Relative path to the nuget cache for this solution.
+    ''' Relative path to the NuGet cache for this solution.
     ''' </summary>
     ''' <returns></returns>
-    Public Property NugetCache As String
+    Public Property NuGetCache As String
 
 End Class

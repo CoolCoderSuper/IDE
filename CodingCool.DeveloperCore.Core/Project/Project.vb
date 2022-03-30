@@ -53,13 +53,13 @@ Public Class Project
     Public Property TargetFramework As Framework
 
     ''' <summary>
-    ''' Informatio about this assembly.
+    ''' Information about this assembly.
     ''' </summary>
     ''' <returns></returns>
     Public Property AssemblyInfo As AssemblyInfo
 
     ''' <summary>
-    ''' States wheher Application Framework is enabled.
+    ''' States whether Application Framework is enabled.
     ''' </summary>
     ''' <returns></returns>
     Public Property EnableApplicationFramework As Boolean
