@@ -19,7 +19,7 @@ Public Class ProjectTemplateManager
     ''' The list of available templates.
     ''' </summary>
     ''' <returns></returns>
-    Public Property Templates As List(Of ProjectTemplate)
+    Public ReadOnly Property Templates As List(Of ProjectTemplate)
 
     ''' <summary>
     ''' Loads all the templates.
@@ -30,6 +30,7 @@ Public Class ProjectTemplateManager
             Dim objTemplate As New ProjectTemplate
             objTemplate.Id = el.Element("Id").Value
             objTemplate.Name = el.Element("Name").Value
+            objTemplate.Category = el.Element("Category").Value
             objTemplate.Icon = Image.FromFile(el.Element("Icon").Value)
             objTemplate.Project = SolutionParser.ParseProject(el.Element("Project"))
             objTemplate.Folders = el.Element("Folders").ToFolders

@@ -19,7 +19,7 @@ Public Class FileTemplateManager
     ''' The list of available templates.
     ''' </summary>
     ''' <returns></returns>
-    Public Property Templates As List(Of FileTemplate)
+    Public ReadOnly Property Templates As List(Of FileTemplate)
 
     ''' <summary>
     ''' Loads all the templates.
@@ -30,6 +30,7 @@ Public Class FileTemplateManager
             Dim objTemplate As New FileTemplate
             objTemplate.Id = el.Element("Id").Value
             objTemplate.Name = el.Element("Name").Value
+            objTemplate.Category = el.Element("Category").Value
             objTemplate.Icon = Image.FromFile(el.Element("Icon").Value)
             objTemplate.Files = el.Element("Files").ToFileValueSet
             Templates.Add(objTemplate)

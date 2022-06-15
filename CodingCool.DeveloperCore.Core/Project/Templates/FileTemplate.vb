@@ -22,6 +22,12 @@ Public Class FileTemplate
     Public Property Name As String
 
     ''' <summary>
+    ''' The category for this template.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Category As String
+
+    ''' <summary>
     ''' The icon for the template.
     ''' </summary>
     ''' <returns></returns>

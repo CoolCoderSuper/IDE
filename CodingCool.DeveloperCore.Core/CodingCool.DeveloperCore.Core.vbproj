@@ -119,6 +119,8 @@
     <Compile Include="Project\Templates\FileTemplateManager.vb" />
     <Compile Include="Project\Templates\ProjectTemplate.vb" />
     <Compile Include="Project\Templates\ProjectTemplateManager.vb" />
+    <Compile Include="Project\Templates\TemplateCategory.vb" />
+    <Compile Include="Project\Templates\TemplateCategoryManager.vb" />
     <Compile Include="Project\Version.vb" />
     <Compile Include="Project\WindowsApplicationFramework.vb" />
     <Compile Include="Task\TaskHelper.vb" />
