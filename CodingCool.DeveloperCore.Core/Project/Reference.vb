@@ -4,7 +4,7 @@
 Public Class Reference
 
     ''' <summary>
-    ''' Path to the refernece file.
+    ''' Path to the reference file.
     ''' </summary>
     ''' <returns></returns>
     Public Property Path As String

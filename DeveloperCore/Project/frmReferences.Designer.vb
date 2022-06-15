@@ -22,82 +22,52 @@ Partial Class frmReferences
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.lstReferences = New System.Windows.Forms.ListBox()
-        Me.btnOk = New System.Windows.Forms.Button()
-        Me.btnCancel = New System.Windows.Forms.Button()
-        Me.btnBrowse = New System.Windows.Forms.Button()
-        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.ReferencesView1 = New CodingCool.DeveloperCore.Views.ReferencesView()
+        Me.btOk = New System.Windows.Forms.Button()
+        Me.btCancel = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
-        'lstReferences
+        'ReferencesView1
         '
-        Me.lstReferences.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lstReferences.FormattingEnabled = True
-        Me.lstReferences.Location = New System.Drawing.Point(0, 0)
-        Me.lstReferences.Name = "lstReferences"
-        Me.lstReferences.Size = New System.Drawing.Size(457, 459)
-        Me.lstReferences.TabIndex = 0
+        Me.ReferencesView1.Location = New System.Drawing.Point(12, 12)
+        Me.ReferencesView1.Name = "ReferencesView1"
+        Me.ReferencesView1.Size = New System.Drawing.Size(555, 400)
+        Me.ReferencesView1.TabIndex = 0
         '
-        'btnOk
+        'btOk
         '
-        Me.btnOk.Location = New System.Drawing.Point(292, 465)
-        Me.btnOk.Name = "btnOk"
-        Me.btnOk.Size = New System.Drawing.Size(75, 23)
-        Me.btnOk.TabIndex = 1
-        Me.btnOk.Text = "Ok"
-        Me.btnOk.UseVisualStyleBackColor = True
+        Me.btOk.Location = New System.Drawing.Point(390, 418)
+        Me.btOk.Name = "btOk"
+        Me.btOk.Size = New System.Drawing.Size(75, 23)
+        Me.btOk.TabIndex = 1
+        Me.btOk.Text = "Ok"
+        Me.btOk.UseVisualStyleBackColor = True
         '
-        'btnCancel
+        'btCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(373, 465)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(75, 23)
-        Me.btnCancel.TabIndex = 2
-        Me.btnCancel.Text = "Cancel"
-        Me.btnCancel.UseVisualStyleBackColor = True
-        '
-        'btnBrowse
-        '
-        Me.btnBrowse.Location = New System.Drawing.Point(13, 465)
-        Me.btnBrowse.Name = "btnBrowse"
-        Me.btnBrowse.Size = New System.Drawing.Size(75, 23)
-        Me.btnBrowse.TabIndex = 3
-        Me.btnBrowse.Text = "Browse"
-        Me.btnBrowse.UseVisualStyleBackColor = True
-        '
-        'btnDelete
-        '
-        Me.btnDelete.Location = New System.Drawing.Point(95, 465)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(75, 23)
-        Me.btnDelete.TabIndex = 4
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.UseVisualStyleBackColor = True
+        Me.btCancel.Location = New System.Drawing.Point(481, 418)
+        Me.btCancel.Name = "btCancel"
+        Me.btCancel.Size = New System.Drawing.Size(75, 23)
+        Me.btCancel.TabIndex = 2
+        Me.btCancel.Text = "Cancel"
+        Me.btCancel.UseVisualStyleBackColor = True
         '
         'frmReferences
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(457, 497)
-        Me.Controls.Add(Me.btnDelete)
-        Me.Controls.Add(Me.btnBrowse)
-        Me.Controls.Add(Me.btnCancel)
-        Me.Controls.Add(Me.btnOk)
-        Me.Controls.Add(Me.lstReferences)
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
+        Me.ClientSize = New System.Drawing.Size(568, 451)
+        Me.Controls.Add(Me.btCancel)
+        Me.Controls.Add(Me.btOk)
+        Me.Controls.Add(Me.ReferencesView1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "frmReferences"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "References"
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents lstReferences As ListBox
-    Friend WithEvents btnOk As Button
-    Friend WithEvents btnCancel As Button
-    Friend WithEvents btnBrowse As Button
-    Friend WithEvents btnDelete As Button
+    Friend WithEvents ReferencesView1 As Views.ReferencesView
+    Friend WithEvents btOk As Button
+    Friend WithEvents btCancel As Button
 End Class

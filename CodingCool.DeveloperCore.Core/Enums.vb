@@ -17,6 +17,8 @@ Public Enum ExplorerItemTypes
     [Interface]
     Struct
     [Namespace]
+    [Enum]
+    [Module]
 End Enum
 
 ''' <summary>

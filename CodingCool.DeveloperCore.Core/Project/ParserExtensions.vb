@@ -90,6 +90,15 @@ Friend Module ParserExtensions
     End Function
 
     <Extension>
+    Public Function ToFileValueSet(el As XElement) As Dictionary(Of String, Byte())
+        Dim lFiles As New Dictionary(Of String, Byte())
+        For Each nFile As XElement In el.Elements("File")
+            lFiles.Add(nFile.Element("Path").Value, Convert.FromBase64String(nFile.Element("Value").Value))
+        Next
+        Return lFiles
+    End Function
+
+    <Extension>
     Public Function ToTargetFramework(el As XElement) As Framework
         Dim objInfo As New Framework
         objInfo.FrameworkType = el.Element("Type").Value.ToFramework()

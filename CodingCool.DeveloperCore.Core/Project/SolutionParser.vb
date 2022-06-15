@@ -16,24 +16,28 @@ Public Class SolutionParser
         objSolution.Path = strPath
         objSolution.NugetCache = nSolution.Element("NugetCache").Value
         For Each nProject As XElement In nSolution.Elements("Project")
-            Dim nSettings As XElement = nProject.Element("Settings")
-            Dim objProject As New Project
-            objProject.Name = nSettings.Element("Name").Value
-            objProject.AssemblyName = nSettings.Element("AssemblyName").Value
-            objProject.RootNamespace = nSettings.Element("RootNamespace").Value
-            objProject.OutputEXE = Boolean.Parse(nSettings.Element("OutputExe").Value)
-            objProject.EnableApplicationFramework = Boolean.Parse(nSettings.Element("EnableApplicationFramework").Value)
-            objProject.StartUpObject = nSettings.Element("StartUpObject").Value
-            objProject.Language = nSettings.Element("Language").Value.ToLanguage()
-            objProject.AssemblyInfo = nSettings.Element("AssemblyInfo").ToAssemblyInfo()
-            objProject.TargetFramework = nSettings.Element("TargetFramework").ToTargetFramework()
-            objProject.References = nProject.Element("References").ToReferences()
-            objProject.Files = nProject.Element("Files").ToFiles()
-            objProject.DesignableObjects = nProject.Element("DesignableObjects").ToDesignableObjects()
-            objProject.Folders = nProject.Element("Folders").ToFolders()
-            objSolution.Projects.Add(objProject)
+            objSolution.Projects.Add(ParseProject(nProject))
         Next
         Return objSolution
+    End Function
+
+    Public Shared Function ParseProject(nProject As XElement) As Project
+        Dim nSettings As XElement = nProject.Element("Settings")
+        Dim objProject As New Project
+        objProject.Name = nSettings.Element("Name").Value
+        objProject.AssemblyName = nSettings.Element("AssemblyName").Value
+        objProject.RootNamespace = nSettings.Element("RootNamespace").Value
+        objProject.OutputEXE = Boolean.Parse(nSettings.Element("OutputExe").Value)
+        objProject.EnableApplicationFramework = Boolean.Parse(nSettings.Element("EnableApplicationFramework").Value)
+        objProject.StartUpObject = nSettings.Element("StartUpObject").Value
+        objProject.Language = nSettings.Element("Language").Value.ToLanguage()
+        objProject.AssemblyInfo = nSettings.Element("AssemblyInfo").ToAssemblyInfo()
+        objProject.TargetFramework = nSettings.Element("TargetFramework").ToTargetFramework()
+        objProject.References = nProject.Element("References").ToReferences()
+        objProject.Files = nProject.Element("Files").ToFiles()
+        objProject.DesignableObjects = nProject.Element("DesignableObjects").ToDesignableObjects()
+        objProject.Folders = nProject.Element("Folders").ToFolders()
+        Return objProject
     End Function
 
     ''' <summary>

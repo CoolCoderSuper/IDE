@@ -22,12 +22,12 @@ Partial Class ProjectView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim TreeNode61 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
-        Dim TreeNode62 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
-        Dim TreeNode63 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("VB", New System.Windows.Forms.TreeNode() {TreeNode61, TreeNode62})
-        Dim TreeNode64 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
-        Dim TreeNode65 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
-        Dim TreeNode66 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("C#", New System.Windows.Forms.TreeNode() {TreeNode64, TreeNode65})
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("VB", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
+        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("C#", New System.Windows.Forms.TreeNode() {TreeNode4, TreeNode5})
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.tvCategories = New System.Windows.Forms.TreeView()
         Me.lvTemplates = New System.Windows.Forms.ListView()
@@ -71,19 +71,19 @@ Partial Class ProjectView
         Me.tvCategories.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tvCategories.Location = New System.Drawing.Point(0, 0)
         Me.tvCategories.Name = "tvCategories"
-        TreeNode61.Name = "NVWIN"
-        TreeNode61.Text = "Windows application"
-        TreeNode62.Name = "NVBWPF"
-        TreeNode62.Text = "WPF"
-        TreeNode63.Name = "NVB"
-        TreeNode63.Text = "VB"
-        TreeNode64.Name = "NCWIN"
-        TreeNode64.Text = "Windows application"
-        TreeNode65.Name = "NCWPF"
-        TreeNode65.Text = "WPF"
-        TreeNode66.Name = "NCS"
-        TreeNode66.Text = "C#"
-        Me.tvCategories.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode63, TreeNode66})
+        TreeNode1.Name = "NVBWIN"
+        TreeNode1.Text = "Windows application"
+        TreeNode2.Name = "NVBWPF"
+        TreeNode2.Text = "WPF"
+        TreeNode3.Name = "NVB"
+        TreeNode3.Text = "VB"
+        TreeNode4.Name = "NCWIN"
+        TreeNode4.Text = "Windows application"
+        TreeNode5.Name = "NCWPF"
+        TreeNode5.Text = "WPF"
+        TreeNode6.Name = "NCS"
+        TreeNode6.Text = "C#"
+        Me.tvCategories.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6})
         Me.tvCategories.Size = New System.Drawing.Size(188, 296)
         Me.tvCategories.TabIndex = 0
         '

@@ -66,6 +66,7 @@ Public Class frmMain
         tcViews.TabPages.Add(tbObjectExplorer)
         tmrObjectExplorer.Start()
         SolutionExplorer1.Load()
+        'Test
     End Sub
 
     Private Sub ConfigueTaskList()
@@ -201,7 +202,7 @@ Public Class frmMain
     End Sub
 
     Private Sub btnReferences_Click(sender As Object, e As EventArgs) Handles btnReferences.Click
-        frmReferences.ShowDialog()
+        frmReferences_OLD.ShowDialog()
     End Sub
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click

@@ -1,4 +1,5 @@
 ﻿Imports CodingCool.DeveloperCore.Core
+Imports Microsoft.CodeAnalysis.VisualBasic
 Imports System.Drawing
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
@@ -228,7 +229,35 @@ Public Class ObjectExplorerTab
     End Sub
 
     Public Sub LoadVB(text As String)
-
+        Dim tree As Microsoft.CodeAnalysis.SyntaxTree = VisualBasicSyntaxTree.ParseText(text)
+        Dim root As Microsoft.CodeAnalysis.SyntaxNode = tree.GetRoot()
+        Dim list As List(Of ExplorerItem) = New List(Of ExplorerItem)
+        Dim lastClassIndex As Integer = -1
+        root.DescendantNodes().ToList().ForEach(Sub(x)
+                                                    If x.Kind() = SyntaxKind.ClassBlock OrElse x.Kind() = SyntaxKind.StructureBlock OrElse x.Kind() = SyntaxKind.EnumBlock OrElse x.Kind() = SyntaxKind.InterfaceBlock OrElse x.Kind() = SyntaxKind.ModuleBlock Then
+                                                        Dim item As ExplorerItem = New ExplorerItem With {.title = x.TryGetInferredMemberName(), .position = x.SpanStart}
+                                                        If x.Kind() = SyntaxKind.ClassBlock Then
+                                                            item.type = ExplorerItemTypes.[Class]
+                                                        ElseIf x.Kind() = SyntaxKind.StructureBlock Then
+                                                            item.type = ExplorerItemTypes.Struct
+                                                        ElseIf x.Kind() = SyntaxKind.EnumBlock Then
+                                                            item.type = ExplorerItemTypes.Enum
+                                                        ElseIf x.Kind() = SyntaxKind.InterfaceBlock Then
+                                                            item.type = ExplorerItemTypes.Interface
+                                                        ElseIf x.Kind() = SyntaxKind.ModuleBlock Then
+                                                            item.type = ExplorerItemTypes.Module
+                                                        End If
+                                                        list.Add(item)
+                                                        lastClassIndex = list.Count
+                                                        'list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer)
+                                                        If Helpers.CompareLists(list, ExplorerList) Then
+                                                            MyBase.BeginInvoke(Sub()
+                                                                                   ExplorerList = list
+                                                                               End Sub)
+                                                            LoadObject()
+                                                        End If
+                                                    End If
+                                                End Sub)
     End Sub
 
 #End Region
