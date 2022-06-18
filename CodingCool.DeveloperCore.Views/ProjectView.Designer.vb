@@ -22,6 +22,7 @@ Partial Class ProjectView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
         Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
         Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("VB", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
@@ -44,6 +45,7 @@ Partial Class ProjectView
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.ilTemplates = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -91,6 +93,7 @@ Partial Class ProjectView
         '
         Me.lvTemplates.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lvTemplates.HideSelection = False
+        Me.lvTemplates.LargeImageList = Me.ilTemplates
         Me.lvTemplates.Location = New System.Drawing.Point(0, 0)
         Me.lvTemplates.Name = "lvTemplates"
         Me.lvTemplates.Size = New System.Drawing.Size(386, 296)
@@ -207,6 +210,12 @@ Partial Class ProjectView
         Me.Label5.TabIndex = 13
         Me.Label5.Text = "Solution name: "
         '
+        'ilTemplates
+        '
+        Me.ilTemplates.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit
+        Me.ilTemplates.ImageSize = New System.Drawing.Size(16, 16)
+        Me.ilTemplates.TransparentColor = System.Drawing.Color.Transparent
+        '
         'ProjectView
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -252,4 +261,5 @@ Partial Class ProjectView
     Friend WithEvents Label3 As Windows.Forms.Label
     Friend WithEvents Label4 As Windows.Forms.Label
     Friend WithEvents Label5 As Windows.Forms.Label
+    Friend WithEvents ilTemplates As Windows.Forms.ImageList
 End Class
