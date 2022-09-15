@@ -31,9 +31,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CodingCool.DeveloeprCore.Nu
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CodingCool.DeveloperCore.Icons.Commands", "CodingCool.DeveloperCore.Icons.Commands\CodingCool.DeveloperCore.Icons.Commands.vbproj", "{203943AE-D821-409A-8AB3-9D8929FAC0CB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CodingCool.DeveloperCore.ObjectExplorer", "CodingCool.DeveloperCore.ObjectExplorer\CodingCool.DeveloperCore.ObjectExplorer.vbproj", "{3DCE28C7-09F6-49C6-B26F-62B56E9A2F59}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{550BA905-BAC4-4226-9FEC-0D60AB3627DE}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CodingCool.DeveloperCore.Structure", "CodingCool.DeveloperCore.ObjectExplorer\CodingCool.DeveloperCore.Structure.vbproj", "{3DCE28C7-09F6-49C6-B26F-62B56E9A2F59}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CodingCool.DeveloperCore.Projects", "CodingCool.DeveloperCore.Projects\CodingCool.DeveloperCore.Projects.vbproj", "{CBB64223-546E-4126-B2AA-2BE0F108B803}"
 EndProject
@@ -93,10 +91,6 @@ Global
 		{3DCE28C7-09F6-49C6-B26F-62B56E9A2F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DCE28C7-09F6-49C6-B26F-62B56E9A2F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DCE28C7-09F6-49C6-B26F-62B56E9A2F59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{550BA905-BAC4-4226-9FEC-0D60AB3627DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{550BA905-BAC4-4226-9FEC-0D60AB3627DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{550BA905-BAC4-4226-9FEC-0D60AB3627DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{550BA905-BAC4-4226-9FEC-0D60AB3627DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBB64223-546E-4126-B2AA-2BE0F108B803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBB64223-546E-4126-B2AA-2BE0F108B803}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB64223-546E-4126-B2AA-2BE0F108B803}.Release|Any CPU.ActiveCfg = Release|Any CPU

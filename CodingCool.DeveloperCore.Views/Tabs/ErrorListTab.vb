@@ -1,4 +1,5 @@
-﻿Imports FarsiLibrary.Win
+﻿Imports CodingCool.DeveloperCore.Core
+Imports FarsiLibrary.Win
 Imports System.Windows.Forms
 
 Public Class ErrorListTab
@@ -13,23 +14,12 @@ Public Class ErrorListTab
 #End Region
 
     Public Property Language As String
-
-    Public Property Files As String()
-
-    Public Property References As String()
+    Public Property Errors As New List(Of ErrorItem)
 
 #Region "Intialization"
 
     Public Sub New()
         InitializeComponent()
-        tmrLoad.Start()
-    End Sub
-
-    Public Sub New(strLanguage As String, lFiles As String(), lReferences As String())
-        InitializeComponent()
-        Files = lFiles
-        References = lReferences
-        Language = strLanguage
         tmrLoad.Start()
     End Sub
 
@@ -49,8 +39,8 @@ Public Class ErrorListTab
         dgvErrors.AllowUserToAddRows = False
         dgvErrors.AllowUserToDeleteRows = False
         dgvErrors.AllowUserToResizeRows = False
-        dgvErrors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvErrors.Dock = System.Windows.Forms.DockStyle.Fill
+        dgvErrors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvErrors.Dock = DockStyle.Fill
         dgvErrors.Location = New System.Drawing.Point(0, 0)
         dgvErrors.MultiSelect = False
         dgvErrors.Name = "dgvErrors"
@@ -71,16 +61,24 @@ Public Class ErrorListTab
 
 #Region "Data"
 
+    Public Sub LoadErrors(lErrors As List(Of ErrorItem))
+        Errors = lErrors.Concat(Errors).ToList
+    End Sub
+
+    Public Sub Reload
+        dgvErrors.DataSource = Helpers.QueryableToDataTable(Errors)
+    End Sub
+
     Private Sub tmrLoad_Tick(sender As Object, e As EventArgs) Handles tmrLoad.Tick
         Load()
     End Sub
 
     Private Sub Load()
-        Dim objHelper As New Core.ErrorHelper
-        Dim dtResults As DataTable = Core.Helpers.QueryableToDataTable(objHelper.GetErrors(Language, Files, References))
-        If dgvErrors.DataSource IsNot dtResults Then
-            dgvErrors.DataSource = dtResults
-        End If
+        'Dim objHelper As New Core.ErrorHelper
+        '
+        'If dgvErrors.DataSource IsNot dtResults Then
+        '    dgvErrors.DataSource = dtResults
+        'End If
     End Sub
 
 #End Region

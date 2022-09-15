@@ -32,7 +32,7 @@ Public Class FileTemplateManager
             objTemplate.Name = el.Element("Name").Value
             objTemplate.Category = el.Element("Category").Value
             objTemplate.Icon = Image.FromFile(el.Element("Icon").Value)
-            objTemplate.Files = el.Element("Files").ToFileValueSet
+            'objTemplate.Files = el.Element("Files").ToFileValueSet
             Templates.Add(objTemplate)
         Next
     End Sub

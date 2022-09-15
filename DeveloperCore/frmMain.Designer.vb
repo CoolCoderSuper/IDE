@@ -56,7 +56,6 @@ Partial Class frmMain
         Me.tcTools = New FarsiLibrary.Win.FATabStrip()
         Me.tcViews = New System.Windows.Forms.TabControl()
         Me.tbSolution = New System.Windows.Forms.TabPage()
-        Me.lstFiles = New System.Windows.Forms.ListView()
         Me.menuFiles = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.btnNewContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnDeleteContext = New System.Windows.Forms.ToolStripMenuItem()
@@ -66,23 +65,24 @@ Partial Class frmMain
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
         Me.tmrObjectExplorer = New System.Windows.Forms.Timer(Me.components)
-        Me.SolutionExplorer1 = New CodingCool.DeveloperCore.SolutionExplorer.SolutionExplorer()
-        Me.MenuStrip1.SuspendLayout()
-        CType(Me.tcTools, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tcViews.SuspendLayout()
-        Me.tbSolution.SuspendLayout()
-        Me.menuFiles.SuspendLayout()
-        Me.tpProperties.SuspendLayout()
-        CType(Me.tcMain, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.splitterMain, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.splitterMain.Panel1.SuspendLayout()
-        Me.splitterMain.Panel2.SuspendLayout()
-        Me.splitterMain.SuspendLayout()
-        CType(Me.splitterEdit, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.splitterEdit.Panel1.SuspendLayout()
-        Me.splitterEdit.Panel2.SuspendLayout()
-        Me.splitterEdit.SuspendLayout()
-        Me.SuspendLayout()
+        Me.lstFiles = New System.Windows.Forms.ListView()
+        Me.seExplorer = New CodingCool.DeveloperCore.SolutionExplorer.RoslynSolutionExplorer()
+        Me.MenuStrip1.SuspendLayout
+        CType(Me.tcTools,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.tcViews.SuspendLayout
+        Me.tbSolution.SuspendLayout
+        Me.menuFiles.SuspendLayout
+        Me.tpProperties.SuspendLayout
+        CType(Me.tcMain,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.splitterMain,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.splitterMain.Panel1.SuspendLayout
+        Me.splitterMain.Panel2.SuspendLayout
+        Me.splitterMain.SuspendLayout
+        CType(Me.splitterEdit,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.splitterEdit.Panel1.SuspendLayout
+        Me.splitterEdit.Panel2.SuspendLayout
+        Me.splitterEdit.SuspendLayout
+        Me.SuspendLayout
         '
         'MenuStrip1
         '
@@ -90,7 +90,7 @@ Partial Class frmMain
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.MenuStrip1.ShowItemToolTips = True
+        Me.MenuStrip1.ShowItemToolTips = true
         Me.MenuStrip1.Size = New System.Drawing.Size(1090, 24)
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
@@ -162,36 +162,36 @@ Partial Class frmMain
         'btnSave
         '
         Me.btnSave.Name = "btnSave"
-        Me.btnSave.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.btnSave.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S),System.Windows.Forms.Keys)
         Me.btnSave.Size = New System.Drawing.Size(43, 20)
         Me.btnSave.Text = "Save"
         '
         'btnSaveAll
         '
         Me.btnSaveAll.Name = "btnSaveAll"
-        Me.btnSaveAll.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
-            Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.btnSaveAll.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift)  _
+            Or System.Windows.Forms.Keys.S),System.Windows.Forms.Keys)
         Me.btnSaveAll.Size = New System.Drawing.Size(57, 20)
         Me.btnSaveAll.Text = "SaveAll"
         '
         'btnCut
         '
         Me.btnCut.Name = "btnCut"
-        Me.btnCut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+        Me.btnCut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X),System.Windows.Forms.Keys)
         Me.btnCut.Size = New System.Drawing.Size(38, 20)
         Me.btnCut.Text = "Cut"
         '
         'btnCopy
         '
         Me.btnCopy.Name = "btnCopy"
-        Me.btnCopy.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.btnCopy.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C),System.Windows.Forms.Keys)
         Me.btnCopy.Size = New System.Drawing.Size(47, 20)
         Me.btnCopy.Text = "Copy"
         '
         'btnPaste
         '
         Me.btnPaste.Name = "btnPaste"
-        Me.btnPaste.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.btnPaste.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V),System.Windows.Forms.Keys)
         Me.btnPaste.Size = New System.Drawing.Size(47, 20)
         Me.btnPaste.Text = "Paste"
         '
@@ -205,14 +205,14 @@ Partial Class frmMain
         'btnUndo
         '
         Me.btnUndo.Name = "btnUndo"
-        Me.btnUndo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
+        Me.btnUndo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z),System.Windows.Forms.Keys)
         Me.btnUndo.Size = New System.Drawing.Size(48, 20)
         Me.btnUndo.Text = "Undo"
         '
         'btnRedo
         '
         Me.btnRedo.Name = "btnRedo"
-        Me.btnRedo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
+        Me.btnRedo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y),System.Windows.Forms.Keys)
         Me.btnRedo.Size = New System.Drawing.Size(46, 20)
         Me.btnRedo.Text = "Redo"
         '
@@ -232,8 +232,8 @@ Partial Class frmMain
         'btnBuild
         '
         Me.btnBuild.Name = "btnBuild"
-        Me.btnBuild.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
-            Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
+        Me.btnBuild.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift)  _
+            Or System.Windows.Forms.Keys.B),System.Windows.Forms.Keys)
         Me.btnBuild.Size = New System.Drawing.Size(46, 20)
         Me.btnBuild.Text = "Build"
         '
@@ -297,26 +297,14 @@ Partial Class frmMain
         '
         'tbSolution
         '
-        Me.tbSolution.Controls.Add(Me.lstFiles)
+        Me.tbSolution.Controls.Add(Me.seExplorer)
         Me.tbSolution.Location = New System.Drawing.Point(4, 22)
         Me.tbSolution.Name = "tbSolution"
         Me.tbSolution.Padding = New System.Windows.Forms.Padding(3)
         Me.tbSolution.Size = New System.Drawing.Size(263, 576)
         Me.tbSolution.TabIndex = 0
         Me.tbSolution.Text = "Solution Explorer"
-        Me.tbSolution.UseVisualStyleBackColor = True
-        '
-        'lstFiles
-        '
-        Me.lstFiles.ContextMenuStrip = Me.menuFiles
-        Me.lstFiles.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lstFiles.HideSelection = False
-        Me.lstFiles.Location = New System.Drawing.Point(3, 3)
-        Me.lstFiles.Name = "lstFiles"
-        Me.lstFiles.Size = New System.Drawing.Size(257, 570)
-        Me.lstFiles.TabIndex = 4
-        Me.lstFiles.UseCompatibleStateImageBehavior = False
-        Me.lstFiles.View = System.Windows.Forms.View.List
+        Me.tbSolution.UseVisualStyleBackColor = true
         '
         'menuFiles
         '
@@ -345,14 +333,14 @@ Partial Class frmMain
         '
         'tpProperties
         '
-        Me.tpProperties.Controls.Add(Me.SolutionExplorer1)
+        Me.tpProperties.Controls.Add(Me.lstFiles)
         Me.tpProperties.Location = New System.Drawing.Point(4, 22)
         Me.tpProperties.Name = "tpProperties"
         Me.tpProperties.Padding = New System.Windows.Forms.Padding(3)
         Me.tpProperties.Size = New System.Drawing.Size(263, 576)
         Me.tpProperties.TabIndex = 2
         Me.tpProperties.Text = "Properties"
-        Me.tpProperties.UseVisualStyleBackColor = True
+        Me.tpProperties.UseVisualStyleBackColor = true
         '
         'tcMain
         '
@@ -402,20 +390,32 @@ Partial Class frmMain
         '
         Me.tmrObjectExplorer.Interval = 1000
         '
-        'SolutionExplorer1
+        'lstFiles
         '
-        Me.SolutionExplorer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SolutionExplorer1.ImageIndex = 0
-        Me.SolutionExplorer1.LabelEdit = True
-        Me.SolutionExplorer1.Location = New System.Drawing.Point(3, 3)
-        Me.SolutionExplorer1.Name = "SolutionExplorer1"
-        Me.SolutionExplorer1.SelectedImageIndex = 0
-        Me.SolutionExplorer1.Size = New System.Drawing.Size(257, 570)
-        Me.SolutionExplorer1.TabIndex = 0
+        Me.lstFiles.ContextMenuStrip = Me.menuFiles
+        Me.lstFiles.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstFiles.HideSelection = false
+        Me.lstFiles.Location = New System.Drawing.Point(3, 3)
+        Me.lstFiles.Name = "lstFiles"
+        Me.lstFiles.Size = New System.Drawing.Size(257, 570)
+        Me.lstFiles.TabIndex = 5
+        Me.lstFiles.UseCompatibleStateImageBehavior = false
+        Me.lstFiles.View = System.Windows.Forms.View.List
+        '
+        'seExplorer
+        '
+        Me.seExplorer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.seExplorer.ImageIndex = 0
+        Me.seExplorer.LabelEdit = true
+        Me.seExplorer.Location = New System.Drawing.Point(3, 3)
+        Me.seExplorer.Name = "seExplorer"
+        Me.seExplorer.SelectedImageIndex = 0
+        Me.seExplorer.Size = New System.Drawing.Size(257, 570)
+        Me.seExplorer.TabIndex = 1
         '
         'frmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1090, 626)
         Me.Controls.Add(Me.splitterMain)
@@ -423,26 +423,26 @@ Partial Class frmMain
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "frmMain"
         Me.Text = "DeveloperCore"
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
-        CType(Me.tcTools, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tcViews.ResumeLayout(False)
-        Me.tbSolution.ResumeLayout(False)
-        Me.menuFiles.ResumeLayout(False)
-        Me.tpProperties.ResumeLayout(False)
-        CType(Me.tcMain, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.splitterMain.Panel1.ResumeLayout(False)
-        Me.splitterMain.Panel2.ResumeLayout(False)
-        CType(Me.splitterMain, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.splitterMain.ResumeLayout(False)
-        Me.splitterEdit.Panel1.ResumeLayout(False)
-        Me.splitterEdit.Panel2.ResumeLayout(False)
-        CType(Me.splitterEdit, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.splitterEdit.ResumeLayout(False)
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        Me.MenuStrip1.ResumeLayout(false)
+        Me.MenuStrip1.PerformLayout
+        CType(Me.tcTools,System.ComponentModel.ISupportInitialize).EndInit
+        Me.tcViews.ResumeLayout(false)
+        Me.tbSolution.ResumeLayout(false)
+        Me.menuFiles.ResumeLayout(false)
+        Me.tpProperties.ResumeLayout(false)
+        CType(Me.tcMain,System.ComponentModel.ISupportInitialize).EndInit
+        Me.splitterMain.Panel1.ResumeLayout(false)
+        Me.splitterMain.Panel2.ResumeLayout(false)
+        CType(Me.splitterMain,System.ComponentModel.ISupportInitialize).EndInit
+        Me.splitterMain.ResumeLayout(false)
+        Me.splitterEdit.Panel1.ResumeLayout(false)
+        Me.splitterEdit.Panel2.ResumeLayout(false)
+        CType(Me.splitterEdit,System.ComponentModel.ISupportInitialize).EndInit
+        Me.splitterEdit.ResumeLayout(false)
+        Me.ResumeLayout(false)
+        Me.PerformLayout
 
-    End Sub
+End Sub
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
@@ -460,7 +460,6 @@ Partial Class frmMain
     Friend WithEvents btnBuild As ToolStripMenuItem
     Friend WithEvents tcViews As TabControl
     Friend WithEvents tbSolution As TabPage
-    Friend WithEvents lstFiles As ListView
     Friend WithEvents tcMain As FATabStrip
     Friend WithEvents tcTools As FATabStrip
     Friend WithEvents menuFiles As ContextMenuStrip
@@ -484,5 +483,6 @@ Partial Class frmMain
     Friend WithEvents btnCopy As ToolStripMenuItem
     Friend WithEvents btnDeleteText As ToolStripMenuItem
     Friend WithEvents btnPaste As ToolStripMenuItem
-    Friend WithEvents SolutionExplorer1 As SolutionExplorer.SolutionExplorer
+    Friend WithEvents seExplorer As SolutionExplorer.RoslynSolutionExplorer
+    Friend WithEvents lstFiles As ListView
 End Class

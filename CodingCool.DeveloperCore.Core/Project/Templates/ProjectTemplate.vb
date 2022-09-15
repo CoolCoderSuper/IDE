@@ -38,7 +38,7 @@ Public Class ProjectTemplate
     ''' The bare-bones project entity the template creates.
     ''' </summary>
     ''' <returns></returns>
-    Public Property Project As Project
+    Public Property Project As Object'Project
 
     ''' <summary>
     ''' The folders which to create. Not necessarily part of the project.
@@ -58,7 +58,7 @@ Public Class ProjectTemplate
     ''' <param name="path">The projects root path.</param>
     ''' <param name="sln">The solution which to add the project to.</param>
     ''' <returns>The updated solution.</returns>
-    Public Function Create(path As String, sln As Solution) As Solution
+    Public Function Create(path As String, sln As Object) As Object'Solution) As Solution
         IO.Directory.CreateDirectory(path)
         For Each dir As String In Folders
             IO.Directory.CreateDirectory(dir)
@@ -67,7 +67,7 @@ Public Class ProjectTemplate
             IO.File.WriteAllBytes(f.Key, f.Value)
         Next
         sln.Projects.Add(Project)
-        SolutionParser.Save(sln)
+        'SolutionParser.Save(sln)
         Return sln
     End Function
 

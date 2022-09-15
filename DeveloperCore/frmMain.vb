@@ -1,7 +1,10 @@
 ﻿Imports System.IO
+Imports CodingCool.DeveloperCore.Core
 Imports CodingCool.DeveloperCore.Editor
-Imports CodingCool.DeveloperCore.ObjectExplorer
+Imports CodingCool.DeveloperCore.Structure
 Imports CodingCool.DeveloperCore.Views
+Imports Microsoft.CodeAnalysis
+Imports Microsoft.CodeAnalysis.Emit
 
 Public Class frmMain
 
@@ -11,6 +14,7 @@ Public Class frmMain
     Public Property ProjectRoot As String = "C:\Users\User\Documents\Test\Test.proj"
     Public Property ProjectDir As String = "C:\Users\User\Documents\Test\"
     Public Property Output As Boolean = True
+    Public Property CurrentSolution As Solution
 
 #End Region
 
@@ -20,7 +24,7 @@ Public Class frmMain
     Private WithEvents tbOutput As OutputTab
     Private WithEvents tbTaskList As TaskListTab
     Private WithEvents tbErrorList As ErrorListTab
-    Private WithEvents tbObjectExplorer As RoslynObjectExplorerTab
+    Private WithEvents tbStructure As RoslynStructureTab
 
 #End Region
 
@@ -55,19 +59,17 @@ Public Class frmMain
         tcTools.BackColor = ColorTranslator.FromHtml("#8a8a88")
         tcMain.BackColor = ColorTranslator.FromHtml("#8a8a88")
         BackColor = ColorTranslator.FromHtml("#888888")
+        seExplorer.BackColor = ColorTranslator.FromHtml("#8a8a88")
         LoadProjectFiles()
-        'ConfigureErrorList()
-        'tcTools.Items.Add(tbErrorList)
+        ConfigureErrorList()
+        tcTools.Items.Add(tbErrorList)
         'ConfigueTaskList()
         'tcTools.Items.Add(tbTaskList)
         tbOutput = New OutputTab
         tcTools.Items.Add(tbOutput)
-        tbObjectExplorer = New RoslynObjectExplorerTab
-        tcViews.TabPages.Add(tbObjectExplorer)
+        tbStructure = New RoslynStructureTab
+        tcViews.TabPages.Add(tbStructure)
         tmrObjectExplorer.Start()
-        SolutionExplorer1.Load()
-        'Test
-        frmTest.Show()
     End Sub
 
     Private Sub ConfigueTaskList()
@@ -92,31 +94,6 @@ Public Class frmMain
 
     Private Sub ConfigureErrorList()
         tbErrorList = New ErrorListTab
-        Try
-            Dim l As New List(Of String)
-            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-            Dim objRoot As XElement = objDoc.Element("Project")
-            Dim objFiles As XElement = objRoot.Element("Files")
-            For Each objEl As XElement In objFiles.Elements("File")
-                l.Add(objEl.Value)
-            Next
-            tbErrorList.Files = l.ToArray()
-        Catch ex As Exception
-            tbErrorList.Files = {}
-        End Try
-        Try
-            Dim l As New List(Of String)
-            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-            Dim objRoot As XElement = objDoc.Element("Project")
-            Dim objFiles As XElement = objRoot.Element("References")
-            For Each objEl As XElement In objFiles.Elements("Reference")
-                l.Add(objEl.Value)
-            Next
-            tbErrorList.References = l.ToArray()
-        Catch ex As Exception
-            tbErrorList.References = {}
-        End Try
-        tbErrorList.Language = Language
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
@@ -126,9 +103,9 @@ Public Class frmMain
     Private Sub tmrObjectExplorer_Tick(sender As Object, e As EventArgs) Handles tmrObjectExplorer.Tick
         If CurrentTB IsNot Nothing Then
             If Language = "cs" Then
-                tbObjectExplorer.ReCSharpBuildObjectExplorer(CurrentTB.Text)
+                tbStructure.ReCSharpBuildObjectExplorer(CurrentTB.Text)
             Else
-                tbObjectExplorer.LoadVb(CurrentTB.Text)
+                tbStructure.LoadVb(CurrentTB.Text)
             End If
         End If
     End Sub
@@ -140,7 +117,7 @@ Public Class frmMain
     Private Sub frmMain_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.S Then
             btnSave.PerformClick()
-        ElseIf e.KeyCode = Keys.S And e.Shift Then
+        ElseIf e.KeyCode = Keys.S AndAlso e.Shift Then
             btnSaveAll.PerformClick()
         End If
     End Sub
@@ -153,48 +130,37 @@ Public Class frmMain
 
 #Region "Build"
 
-    Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
-        Build()
+    Private Async Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
+       Await Build()
     End Sub
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         Build()
-        If IO.File.Exists($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe") Then
+        'TODO: Update this
+        If File.Exists($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe") Then
             Process.Start($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe")
         End If
     End Sub
 
-    Private Sub Build()
+    Private Async Function Build() As Task(Of Boolean)
         btnSaveAll.PerformClick()
-        Dim objCompiler As New Compile
-        Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-        Dim objRoot As XElement = objDoc.Element("Project")
-        Dim objFiles As XElement = objRoot.Element("Files")
-        Dim objReferences As XElement = objRoot.Element("References")
-        Dim objOutput As XElement = objRoot.Element("Settings").Element("Output")
-        Dim files As New List(Of String)
-        objFiles.Elements("File").ToList().ForEach(Sub(x) files.Add(x.Value))
-        Dim b As Boolean = Boolean.Parse(objOutput.Value)
-        Dim l As New List(Of String)
-        objReferences.Elements("Reference").ToList().ForEach(Sub(x) l.Add(x.Value))
-        If Language = "cs" Then
-            If b Then
-                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
-            Else
-                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
-            End If
-        Else
-            If b Then
-                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
-            Else
-                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
-            End If
-        End If
-    End Sub
+        Dim lResults As List(Of EmitResult) = (Await SolutionBuild.Build(CurrentSolution)).tolist
+        tbErrorList.Errors.Clear
+        For Each res As EmitResult In lResults
+            tbErrorList.LoadErrors(ErrorHelper.ConvertDiagnostic(res.Diagnostics.ToList))
+        Next
+        tbErrorList.Reload
+        Return lResults.All(Function(x) x.Success)
+    End Function
 
 #End Region
 
 #Region "Files"
+
+    Private Sub tbObjectExplorer_Naviagte(sender As Object, e As Integer) Handles tbStructure.Naviagte
+        CurrentTB.SelectionStart = e
+        CurrentTB.OnSelectionChanged()
+    End Sub
 
     Private Sub btnNewFile_Click(sender As Object, e As EventArgs) Handles btnNewFile.Click, btnNewContext.Click
         frmNewFile.ShowDialog()
@@ -247,7 +213,7 @@ Public Class frmMain
         End Try
     End Sub
 
-    Private Sub lstFiles_DoubleClick(sender As Object, e As EventArgs) Handles lstFiles.SelectedIndexChanged
+    Private Sub lstFiles_DoubleClick(sender As Object, e As EventArgs) Handles seExplorer.DoubleClick
         If Not lstFiles.SelectedItems.Count = 0 Then
             Dim objItem As ListViewItem = lstFiles.SelectedItems(0)
             Dim objTab As CodeTab
@@ -264,6 +230,20 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub seExplorer_Open(sender As Object, e As Document) Handles seExplorer.Open
+        Dim objTab As CodeTab
+        If Path.GetExtension(e.FilePath) = "cs" Then
+            objTab = New CodeTab(FastColoredTextBoxNS.Language.CSharp, ProjectRoot)
+        Else
+            objTab = New CodeTab(FastColoredTextBoxNS.Language.VB, ProjectRoot)
+        End If
+        objTab.FilePath = e.FilePath
+        objTab.Init()
+        tcMain.Items.Add(objTab)
+        tcMain.SelectedItem = objTab
+        CurrentTB.ClearUndo()
+    End Sub
+
 #End Region
 
 #Region "Project"
@@ -272,16 +252,13 @@ Public Class frmMain
         frmNewProject.ShowDialog()
     End Sub
 
-    Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
+    Private Async Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
         Dim ofd As New OpenFileDialog
         ofd.Multiselect = False
-        ofd.Filter = "Project files (*.proj)|*.proj"
+        ofd.Filter = "Solution files (*.sln)|*.sln"
         If ofd.ShowDialog() = DialogResult.OK Then
-            ProjectDir = $"{(ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")))}\"
-            ProjectRoot = ofd.FileName
-            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-            Language = objDoc.Root.Element("Settings").Element("Language").Value
-            LoadProjectFiles()
+            CurrentSolution = Await SolutionParser.LoadSolution(ofd.FileName)
+            seExplorer.Load(CurrentSolution)
         End If
     End Sub
 

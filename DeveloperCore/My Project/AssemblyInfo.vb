@@ -7,10 +7,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("IDEDemo")>
+<Assembly: AssemblyTitle("DeveloperCore")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("IDEDemo")>
+<Assembly: AssemblyProduct("DeveloperCore")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>
 <Assembly: AssemblyTrademark("")>
 

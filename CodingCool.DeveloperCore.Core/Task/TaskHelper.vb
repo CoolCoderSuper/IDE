@@ -44,7 +44,7 @@ Public Class TaskHelper
             Dim lLines As String() = IO.File.ReadAllLines(lFiles(i))
             For y As Integer = 0 To lLines.Length - 1
                 Dim s As String = lLines(y).Trim()
-                If s = String.Empty OrElse Not s.First() = strCommentPrefix Then
+                If s = String.Empty OrElse s.First() <> strCommentPrefix Then
                     Continue For
                 End If
                 s = s.Remove(0, 1).Trim()

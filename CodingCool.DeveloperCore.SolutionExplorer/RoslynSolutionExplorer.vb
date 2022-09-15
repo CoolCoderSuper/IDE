@@ -1,103 +1,67 @@
 ﻿Imports System.Windows.Forms
 Imports CodingCool.DeveloperCore.Core
+Imports Microsoft.CodeAnalysis
 
+'TODO: .NET Core
+'TODO: My project stuff
+'TODO: None code documents
+'TODO: Nested files
 Public Class RoslynSolutionExplorer
     Inherits TreeView
 
-    Private proj As Project
-    Private sln As Microsoft.CodeAnalysis.Solution
+    Private sln As Solution
     Private il As ImageList
 
     Public Sub New()
         il = New ImageList
-        proj = New Project
-        proj.Folders = New List(Of String) From {
-           "Test1\Hello",
-           "Test2\Test\Test",
-           "Test1\Test"
-        }
-        Dim f1 As New File
-        f1.Path = "Test1\Sample.vb"
-        Dim f2 As New File
-        f2.Path = "Test1\Hello\Sample.vb"
-        Dim f3 As New File
-        f3.Path = "Test1\Test\Sample.vb"
-        Dim f4 As New File
-        f4.Path = "Test2\Sample.vb"
-        Dim f5 As New File
-        f5.Path = "Test2\Test\Sample.vb"
-        Dim f6 As New File
-        f6.Path = "Test2\Test\Test\Sample.vb"
-        Dim f7 As New File
-        f7.Path = "Sample.vb"
-        proj.Files.Add(f1)
-        proj.Files.Add(f2)
-        proj.Files.Add(f3)
-        proj.Files.Add(f4)
-        proj.Files.Add(f5)
-        proj.Files.Add(f6)
-        proj.Files.Add(f7)
-        Dim r1 As New Reference
-        r1.Path = "C:\CodingCool\Code\Projects\DeveloperCore\DeveloperCore\bin\Debug\CodingCool.DeveloperCore.Core.dll"
-        Dim r2 As New Reference
-        r2.Path = "C:\CodingCool\Code\Projects\DeveloperCore\DeveloperCore\bin\Debug\CodingCool.DeveloperCore.Editor.dll"
-        proj.Name = "Test"
-        proj.References.Add(r1)
-        proj.References.Add(r2)
         LabelEdit = True
         il.Images.Add("Solution", Icons.SolutionExplorer.My.Resources.Solution)
-        il.Images.Add("RefFolderClosed", Icons.SolutionExplorer.My.Resources.ReferenceFolder_Closed)
         il.Images.Add("Reference", Icons.SolutionExplorer.My.Resources.Reference)
         il.Images.Add("VBProject", Icons.SolutionExplorer.VB.Projects.My.Resources.FullProject)
-        il.Images.Add("FolderClosed", Icons.SolutionExplorer.My.Resources.Folder_Closed)
         il.Images.Add("VBFile", Icons.SolutionExplorer.VB.My.Resources.EmptyFile)
+        il.Images.Add("Folder", Icons.SolutionExplorer.My.Resources.Folder_Closed)
         ImageList = il
     End Sub
 
 #Region "Load"
 
-    Public Sub LoadRoslyn
-        'Dim nSolution As TreeNode = Nodes.Add(sln.)
-    End Sub
-
-    Public Shadows Sub Load()
-        Dim strPRPath As String = String.Empty
-        Dim nProject As TreeNode = Nodes.Add(proj.Name, proj.Name, "VBProject", "VBProject")
-        nProject.Tag = {proj, strPRPath}
-        Dim nReferences As TreeNode
-        nProject.Nodes.Add($"{proj.Name}_ProjectSettings", "My Project")
-        nReferences = nProject.Nodes.Add($"{proj.Name}_References", "References", "RefFolderClosed", "RefFolderClosed")
-        For Each r As Reference In proj.References
-            nReferences.Nodes.Add($"{proj.Name}_References_{r.Path}", r.GetName(), "Reference", "Reference").Tag = r
-        Next
-        For Each f As String In proj.Folders
-            Dim lFolders As String() = f.Split("\")
-            Dim nLastFolder As TreeNode = Nothing
-            For Each sf As String In lFolders
-                If nLastFolder Is Nothing Then
-                    Dim strName As String = $"Folder_{sf}"
-                    If Not NodeExists(nProject, strName) Then
-                        nLastFolder = nProject.Nodes.Add(strName, sf, "FolderClosed", "FolderClosed")
-                        nLastFolder.Tag = f
-                    Else
-                        nLastFolder = GetNode(nProject, strName)
-                    End If
-                Else
-                    Dim strName As String = $"{nLastFolder.Name}\{sf}"
-                    If Not NodeExists(nProject, strName) Then
-                        nLastFolder = nLastFolder.Nodes.Add(strName, sf, "FolderClosed", "FolderClosed")
-                        nLastFolder.Tag = f
-                    End If
-                End If
-            Next
-        Next
-        For Each f As File In proj.Files
-            If f.Path.Split("\").Length = 1 Then
-                nProject.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile").Tag = f
+    Public Shadows Sub Load(sln As Solution)
+        Nodes.Clear()
+        Me.sln = sln
+        Dim nSolution As TreeNode = Nodes.Add("Solution", IO.Path.GetFileNameWithoutExtension(sln.FilePath), "Solution", "Solution")
+        nSolution.Tag = SolutionItemType.Solution
+        For Each proj As Project In sln.Projects
+            Dim nProject As TreeNode
+            If proj.Language = "Visual Basic" Then
+                nProject = nSolution.Nodes.Add($"Project_{proj.Name}", proj.Name, "VBProject", "VBProject")
+            ElseIf proj.Language = "C#" Then
+                Continue For
             Else
-                Dim nFolder As TreeNode = GetNode(nProject, GetDirNodeName(f.Path))
-                nFolder.Nodes.Add($"File_{f.Path}", IO.Path.GetFileName(f.Path), "VBFile", "VBFile").Tag = f
+                Continue For
             End If
+            nProject.Tag = SolutionItemType.Project
+            Dim nSettings As TreeNode = nProject.Nodes.Add($"PRSettings_{proj.Id.Id}_Settings", "My Project")
+            nSettings.Tag = SolutionItemType.Properties
+            Dim nReferences As TreeNode = nProject.Nodes.Add($"Reference_{proj.Id.Id}", "References", "Reference", "Reference")
+            For Each ref As ProjectReference In proj.ProjectReferences
+                nReferences.Nodes.Add($"PRReference_{proj.Id.Id}_{ref.ProjectId.Id}", sln.GetProject(ref.ProjectId).Name, "Reference", "Reference").Tag = SolutionItemType.Reference
+            Next
+            For Each ref As MetadataReference In proj.MetadataReferences
+                nReferences.Nodes.Add($"PRReference_{proj.Id.Id}_{ref.Display}", Reflection.Assembly.LoadFrom(ref.Display).GetName().Name, "Reference", "Reference").Tag = SolutionItemType.Reference
+            Next
+            For Each doc As Document In proj.Documents
+                Dim nLastFolder As TreeNode = nProject
+                For Each f As String In doc.Folders
+                    Dim strKey As String = $"PRFolder_{proj.Id.Id}_{f}"
+                    If Nodes.Find(strKey, True).Any Then
+                        nLastFolder = Nodes.Find(strKey, True).First
+                    Else
+                        nLastFolder = nLastFolder.Nodes.Add(strKey, f, "Folder", "Folder")
+                        nLastFolder.Tag = SolutionItemType.Folder
+                    End If
+                Next
+                nLastFolder.Nodes.Add($"PRFile_{proj.Id.Id}_{doc.Id.Id}", doc.Name, "VBFile", "VBFile").Tag = SolutionItemType.File
+            Next
         Next
     End Sub
 
@@ -106,21 +70,21 @@ Public Class RoslynSolutionExplorer
 #Region "Rename"
 
     Private Sub SolutionExplorer_BeforeLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.BeforeLabelEdit
-        If TypeOf e.Node.Tag Is Reference OrElse e.Node.Name = $"{proj.Name}_References" OrElse e.Node.Name = $"{proj.Name}_ProjectSettings" Then
-            e.CancelEdit = True
-        End If
+        'If TypeOf e.Node.Tag Is Reference OrElse e.Node.Name = $"{proj.Name}_References" OrElse e.Node.Name = $"{proj.Name}_ProjectSettings" Then
+        '    e.CancelEdit = True
+        'End If
     End Sub
 
     Private Sub SolutionExplorer_AfterLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.AfterLabelEdit
-        Dim args As RenameItemEventArgs
-        If TypeOf e.Node.Tag Is File Then
-            args = New RenameItemEventArgs(CType(e.Node.Tag, File).Path, e.Label, False)
-        ElseIf TypeOf e.Node.Tag Is Array Then
-            args = New RenameItemEventArgs(CType(e.Node.Tag, Array)(1), e.Label, False)
-        Else
-            args = New RenameItemEventArgs(e.Node.Tag.ToString(), e.Label, False)
-        End If
-        RaiseEvent Rename(Me, args)
+        'Dim args As RenameItemEventArgs
+        'If TypeOf e.Node.Tag Is File Then
+        '    args = New RenameItemEventArgs(CType(e.Node.Tag, File).Path, e.Label, False)
+        'ElseIf TypeOf e.Node.Tag Is Array Then
+        '    args = New RenameItemEventArgs(CType(e.Node.Tag, Array)(1), e.Label, False)
+        'Else
+        '    args = New RenameItemEventArgs(e.Node.Tag.ToString(), e.Label, False)
+        'End If
+        'RaiseEvent Rename(Me, args)
     End Sub
 
 #End Region
@@ -143,41 +107,26 @@ Public Class RoslynSolutionExplorer
 
 #End Region
 
-#Region "Nodes"
+    Private Sub RoslynSolutionExplorer_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles Me.NodeMouseDoubleClick
+        If e.Node.Tag = SolutionItemType.File Then
+            Dim prId As ProjectId = ProjectId.CreateFromSerialized(Guid.Parse(e.Node.Name.Substring(e.Node.Name.IndexOf("_") + 1, e.Node.Name.Length - e.Node.Name.LastIndexOf("_") - 1)))
+            RaiseEvent Open(Me, sln.GetDocument(DocumentId.CreateFromSerialized(prId, Guid.Parse(e.Node.Name.Substring(e.Node.Name.LastIndexOf("_") + 1)))))
+        End If
+    End Sub
 
-    Private Function GetNode(node As TreeNode, strKey As String) As TreeNode
-        Return GetAllNodes(node).Where(Function(x) x.Name = strKey).FirstOrDefault()
-    End Function
-
-    Private Function NodeExists(node As TreeNode, strKey As String) As Boolean
-        Return GetAllNodes(node).Where(Function(x) x.Name = strKey).Count() > 0
-    End Function
-
-    Private Function GetAllNodes(node As TreeNode) As IEnumerable(Of TreeNode)
-        Return node.Nodes.Cast(Of TreeNode)().SelectMany(New Func(Of TreeNode, IEnumerable(Of TreeNode))(AddressOf GetNodeBranch))
-    End Function
-
-    Private Iterator Function GetNodeBranch(ByVal node As TreeNode) As IEnumerable(Of TreeNode)
-        Yield node
-        For Each child As TreeNode In node.Nodes
-
-            For Each childChild In Me.GetNodeBranch(child)
-                Yield childChild
-            Next
-        Next
-    End Function
-
-#End Region
-
-#Region "Misc"
-
-    Private Function GetDirNodeName(strPath As String) As String
-        Return $"Folder_{strPath.Split("\").GetDirName()}"
-    End Function
-
-#End Region
+    Public Event Open(sender As Object, e As Document)
 
     Public Event Rename(sender As Object, e As RenameItemEventArgs)
 
     Public Shadows Event Move(sender As Object, e As MoveItemEventArgs)
+
 End Class
+
+Public Enum SolutionItemType
+    Solution
+    Project
+    Folder
+    File
+    Reference
+    Properties
+End Enum

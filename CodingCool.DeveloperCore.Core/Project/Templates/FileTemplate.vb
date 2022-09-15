@@ -37,7 +37,7 @@ Public Class FileTemplate
     ''' The bare-bones file entity the template creates.
     ''' </summary>
     ''' <returns></returns>
-    Public Property File As File
+    Public Property File As Object'File
 
     ''' <summary>
     ''' The files which to create.
@@ -50,7 +50,7 @@ Public Class FileTemplate
     ''' </summary>
     ''' <param name="pr">The project to add the file to.</param>
     ''' <returns>The updated project.</returns>
-    Public Function Create(pr As Project) As Project
+    Public Function Create(pr As Object) As Object'Project) As Project
         For Each f As KeyValuePair(Of String, Byte()) In Files
             IO.File.WriteAllBytes(f.Key, f.Value)
         Next

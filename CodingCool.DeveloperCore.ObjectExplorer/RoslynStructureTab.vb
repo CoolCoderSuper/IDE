@@ -6,28 +6,29 @@ Imports Microsoft.CodeAnalysis
 Imports Microsoft.CodeAnalysis.VisualBasic
 Imports Microsoft.CodeAnalysis.VisualBasic.Syntax
 
-Public Class RoslynObjectExplorerTab
+'TODO: Regions; reorganize members
+Public Class RoslynStructureTab
     Inherits TabPage
 
 #Region "Components"
 
     Private WithEvents ilImages As ImageList
-    Private WithEvents tvObjectExplorer As TreeView
-    Dim lResults As List(Of ObjectExplorerItem)
+    Private WithEvents tvStructure As TreeView
+    Dim lResults As List(Of StructureItem)
 
 #End Region
 
 #Region "Common"
 
-    Public Property ExplorerList As New List(Of ExplorerItem)
+    Public Property ExplorerList As New List(Of StructureItem_Old)
 
     Public Sub New()
-        Text = "Object Explorer"
+        Text = "Structure"
         InitializeComponent()
     End Sub
 
     Private Sub InitializeComponent()
-        tvObjectExplorer = New TreeView
+        tvStructure = New TreeView
         ilImages = New ImageList
         SuspendLayout()
         ilImages.Images.Add("Class", My.Resources.Icons_16x16_Class)
@@ -43,22 +44,30 @@ Public Class RoslynObjectExplorerTab
         '
         'tvObjectExplorer
         '
-        tvObjectExplorer.Dock = System.Windows.Forms.DockStyle.Fill
-        tvObjectExplorer.LineColor = System.Drawing.Color.Empty
-        tvObjectExplorer.Location = New System.Drawing.Point(0, 0)
-        tvObjectExplorer.Name = "tvObjectExplorer"
-        tvObjectExplorer.Size = New System.Drawing.Size(200, 100)
-        tvObjectExplorer.TabIndex = 0
-        tvObjectExplorer.BackColor = ColorTranslator.FromHtml("#8a8a88")
-        tvObjectExplorer.ForeColor = Color.White
-        tvObjectExplorer.ImageList = ilImages
+        tvStructure.Dock = System.Windows.Forms.DockStyle.Fill
+        tvStructure.LineColor = System.Drawing.Color.Empty
+        tvStructure.Location = New System.Drawing.Point(0, 0)
+        tvStructure.Name = "tvStructure"
+        tvStructure.Size = New System.Drawing.Size(200, 100)
+        tvStructure.TabIndex = 0
+        tvStructure.BackColor = ColorTranslator.FromHtml("#8a8a88")
+        tvStructure.ForeColor = Color.White
+        tvStructure.ImageList = ilImages
         '
         'ObjectExplorerTab
         '
-        Controls.Add(tvObjectExplorer)
+        Controls.Add(tvStructure)
         ResumeLayout(False)
 
     End Sub
+
+    Private Sub tvObjectExplorer_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvStructure.AfterSelect
+        If e.Action = TreeViewAction.ByMouse Then
+            RaiseEvent Naviagte(Me, e.Node.Tag.Position)
+        End If
+    End Sub
+
+    Public Event Naviagte(sender As Object, e As Integer)
 
 #End Region
 
@@ -66,7 +75,7 @@ Public Class RoslynObjectExplorerTab
 
     Public Sub ReCSharpBuildObjectExplorer(text As String)
         Try
-            Dim list As List(Of ExplorerItem) = New List(Of ExplorerItem)
+            Dim list As List(Of StructureItem_Old) = New List(Of StructureItem_Old)
             Dim lastClassIndex As Integer = -1
             Dim regex As Regex = New Regex("^(?<range>[\w\s]+\b(class|struct|enum|interface)\s+[\w<>,\s]+)|^\s*(public|private|internal|protected)[^\n]+(\n?\s*{|;)?", RegexOptions.Multiline)
             For Each r As Match In regex.Matches(text)
@@ -77,11 +86,11 @@ Public Class RoslynObjectExplorerTab
                         s = s.Substring(0, i)
                     End If
                     s = s.Trim()
-                    Dim item As ExplorerItem = New ExplorerItem With {.title = s, .position = r.Index}
+                    Dim item As StructureItem_Old = New StructureItem_Old With {.title = s, .position = r.Index}
                     If Regex.IsMatch(item.title, "\b(class|struct|enum|interface)\b") Then
                         item.title = item.title.Substring(item.title.LastIndexOf(" ")).Trim()
                         item.type = ExplorerItemTypes.[Class]
-                        list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer)
+                        list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New StructureItemComparer)
                         lastClassIndex = list.Count
                     Else
                         If item.title.Contains(" event ") Then
@@ -114,7 +123,7 @@ Public Class RoslynObjectExplorerTab
                     Console.WriteLine(ex_2BF)
                 End Try
             Next
-            list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New ExplorerItemComparer)
+            list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), New StructureItemComparer)
             If list IsNot ExplorerList Then
                 MyBase.BeginInvoke(Sub()
                                        ExplorerList = list
@@ -127,16 +136,16 @@ Public Class RoslynObjectExplorerTab
     End Sub
 
     Private Sub LoadObject()
-        tvObjectExplorer.Nodes.Clear()
+        tvStructure.Nodes.Clear()
         Dim lastNode As New TreeNode
-        For Each item As ExplorerItem In ExplorerList
+        For Each item As StructureItem_Old In ExplorerList
             Select Case item.type
                 Case ExplorerItemTypes.Class
                     Dim node As New TreeNode
                     node.Text = item.title
                     node.ImageKey = "Class"
                     node.SelectedImageKey = "Class"
-                    tvObjectExplorer.Nodes.Add(node)
+                    tvStructure.Nodes.Add(node)
                     lastNode = node
                 Case ExplorerItemTypes.Variable
                     Dim node As New TreeNode
@@ -179,7 +188,7 @@ Public Class RoslynObjectExplorerTab
     Public Sub LoadVb(code As String)
         Dim tree As VisualBasicSyntaxTree = SyntaxFactory.ParseSyntaxTree(code)
         Dim root As VisualBasicSyntaxNode = tree.GetRoot()
-        Dim list As New List(Of ObjectExplorerItem)
+        Dim list As New List(Of StructureItem)
         Dim i As Integer = 1
         WalkVbTree(root.ChildNodes(), Nothing, i, list)
         LoadResults(list)
@@ -189,14 +198,14 @@ Public Class RoslynObjectExplorerTab
         Next
     End Sub
 
-    Private Sub WalkVbTree(nodes As IEnumerable(Of SyntaxNode), parentId As Integer, ByRef i As Integer, ByRef list As List(Of ObjectExplorerItem))
+    Private Sub WalkVbTree(nodes As IEnumerable(Of SyntaxNode), parentId As Integer, ByRef i As Integer, ByRef list As List(Of StructureItem))
         For Each n As VisualBasicSyntaxNode In nodes
-            Dim objItem As New ObjectExplorerItem
+            Dim objItem As New StructureItem
             If TypeOf n Is ClassBlockSyntax Then
                 Dim nC As ClassBlockSyntax = n
                 objItem.Id = i
                 objItem.Title = nC.ClassStatement.Identifier.ValueText
-                objItem.Type = ObjectExplorerType.Class
+                objItem.Type = StructureType.Class
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -205,7 +214,7 @@ Public Class RoslynObjectExplorerTab
                 Dim nI As InterfaceBlockSyntax = n
                 objItem.Id = i
                 objItem.Title = nI.InterfaceStatement.Identifier.ValueText
-                objItem.Type = ObjectExplorerType.Interface
+                objItem.Type = StructureType.Interface
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -214,7 +223,7 @@ Public Class RoslynObjectExplorerTab
                 Dim nS As StructureBlockSyntax = n
                 objItem.Id = i
                 objItem.Title = nS.StructureStatement.Identifier.ValueText
-                objItem.Type = ObjectExplorerType.Structure
+                objItem.Type = StructureType.Structure
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -224,27 +233,27 @@ Public Class RoslynObjectExplorerTab
                 Dim eParent As Integer = i
                 objItem.Id = i
                 objItem.Title = nE.EnumStatement.Identifier.ValueText
-                objItem.Type = ObjectExplorerType.Enum
+                objItem.Type = StructureType.Enum
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
-                objItem = New ObjectExplorerItem
+                objItem = New StructureItem
                 i += 1
                 For Each e As EnumMemberDeclarationSyntax In nE.Members.OfType(Of EnumMemberDeclarationSyntax)
                     objItem.Id = i
                     objItem.Title = e.Identifier.ValueText
-                    objItem.Type = ObjectExplorerType.Enum
+                    objItem.Type = StructureType.Enum
                     objItem.ParentId = eParent
                     list.Add(objItem)
                     objItem.Position = n.SpanStart
-                    objItem = New ObjectExplorerItem
+                    objItem = New StructureItem
                     i += 1
                 Next
             ElseIf TypeOf n Is NamespaceBlockSyntax Then
                 Dim nN As NamespaceBlockSyntax = n
                 objItem.Id = i
                 objItem.Title = nN.NamespaceStatement.Name.ToFullString
-                objItem.Type = ObjectExplorerType.Namespace
+                objItem.Type = StructureType.Namespace
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -253,7 +262,7 @@ Public Class RoslynObjectExplorerTab
                 Dim nR As RegionDirectiveTriviaSyntax = n
                 objItem.Id = i
                 objItem.Title = nR.Name.ValueText
-                objItem.Type = ObjectExplorerType.Region
+                objItem.Type = StructureType.Region
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -263,7 +272,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nM.Identifier.ValueText}{FormatParameters(nM.ParameterList)}"
                 If nM.AsClause IsNot Nothing Then objItem.Title &= $" As {nM.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Method
+                objItem.Type = StructureType.Method
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -272,7 +281,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nM.Identifier.ValueText}{FormatParameters(nM.ParameterList)}"
                 If nM.AsClause IsNot Nothing Then objItem.Title &= $" As {nM.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Method
+                objItem.Type = StructureType.Method
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -280,7 +289,7 @@ Public Class RoslynObjectExplorerTab
                 Dim nM As SubNewStatementSyntax = CType(n, ConstructorBlockSyntax).SubNewStatement
                 objItem.Id = i
                 objItem.Title = $"New{FormatParameters(nM.ParameterList)}"
-                objItem.Type = ObjectExplorerType.Method
+                objItem.Type = StructureType.Method
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -289,7 +298,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nP.Identifier.ValueText}{FormatParameters(nP.ParameterList)}"
                 If nP.AsClause IsNot Nothing Then objItem.Title &= $" As {nP.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Property
+                objItem.Type = StructureType.Property
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -298,7 +307,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nP.Identifier.ValueText}{FormatParameters(nP.ParameterList)}"
                 If nP.AsClause IsNot Nothing Then objItem.Title &= $" As {nP.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Property
+                objItem.Type = StructureType.Property
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -307,7 +316,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nE.Identifier.ValueText}{FormatParameters(nE.ParameterList)}"
                 If nE.AsClause IsNot Nothing Then objItem.Title &= $" As {nE.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Event
+                objItem.Type = StructureType.Event
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -316,7 +325,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nE.Identifier.ValueText}{FormatParameters(nE.ParameterList)}"
                 If nE.AsClause IsNot Nothing Then objItem.Title &= $" As {nE.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Event
+                objItem.Type = StructureType.Event
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -325,7 +334,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nO.OperatorToken.ValueText}{FormatParameters(nO.ParameterList)}"
                 If nO.AsClause IsNot Nothing Then objItem.Title &= $" As {nO.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Operator
+                objItem.Type = StructureType.Operator
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -334,7 +343,7 @@ Public Class RoslynObjectExplorerTab
                 objItem.Id = i
                 objItem.Title = $"{nO.OperatorToken.ValueText}{FormatParameters(nO.ParameterList)}"
                 If nO.AsClause IsNot Nothing Then objItem.Title &= $" As {nO.AsClause.Type}"
-                objItem.Type = ObjectExplorerType.Operator
+                objItem.Type = StructureType.Operator
                 objItem.ParentId = parentId
                 objItem.Position = n.SpanStart
                 list.Add(objItem)
@@ -344,11 +353,11 @@ Public Class RoslynObjectExplorerTab
                     objItem.Id = i
                     objItem.Title = dec.Names.First.ToString
                     If dec.AsClause IsNot Nothing Then objItem.Title &= $" As {dec.AsClause.Type}"
-                    objItem.Type = ObjectExplorerType.Variable
+                    objItem.Type = StructureType.Variable
                     objItem.ParentId = parentId
                     objItem.Position = n.SpanStart
                     list.Add(objItem)
-                    objItem = New ObjectExplorerItem
+                    objItem = New StructureItem
                     i += 1
                 Next
             End If
@@ -374,23 +383,16 @@ Public Class RoslynObjectExplorerTab
         Return strResult
     End Function
 
-    Private Sub tvObjectExplorer_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvObjectExplorer.AfterSelect
-        If e.Action = TreeViewAction.ByMouse Then
-            Dim intPosition As Integer = e.Node.Tag.Position
-            'TODO: Go to the spot
-        End If
-    End Sub
-
 #End Region
 
 #Region "Load"
 
-    Private Sub LoadResults(list As List(Of ObjectExplorerItem))
+    Private Sub LoadResults(list As List(Of StructureItem))
         If lResults Is Nothing OrElse Not IsListEqual(list, lResults) Then
             Dim dState As Dictionary(Of String, Boolean) = GetExpandState()
-            tvObjectExplorer.Nodes.Clear()
-            For Each item As ObjectExplorerItem In list.Where(Function(x) x.ParentId = Nothing)
-                Dim nItem As TreeNode = tvObjectExplorer.Nodes.Add(item.Id.ToString, item.Title, GetImageKey(item.Type), GetImageKey(item.Type))
+            tvStructure.Nodes.Clear()
+            For Each item As StructureItem In list.Where(Function(x) x.ParentId = Nothing)
+                Dim nItem As TreeNode = tvStructure.Nodes.Add(item.Id.ToString, item.Title, GetImageKey(item.Type), GetImageKey(item.Type))
                 nItem.Tag = item
                 WalkExplorerItem(nItem, list.Where(Function(x) x.ParentId = item.Id).ToList, list)
             Next
@@ -401,7 +403,7 @@ Public Class RoslynObjectExplorerTab
 
     Private Function GetExpandState() As Dictionary(Of String, Boolean)
         Dim dResults As New Dictionary(Of String, Boolean)
-        WalkTreeViewGet(tvObjectExplorer.Nodes, dResults)
+        WalkTreeViewGet(tvStructure.Nodes, dResults)
         Return dResults
     End Function
 
@@ -413,7 +415,7 @@ Public Class RoslynObjectExplorerTab
     End Sub
 
     Private Sub RestoreState(dState As Dictionary(Of String, Boolean))
-        WalkTreeViewSet(tvObjectExplorer.Nodes, dState)
+        WalkTreeViewSet(tvStructure.Nodes, dState)
     End Sub
 
     Private Sub WalkTreeViewSet(nodes As TreeNodeCollection, dState As Dictionary(Of String, Boolean))
@@ -423,39 +425,39 @@ Public Class RoslynObjectExplorerTab
         Next
     End Sub
 
-    Private Function IsListEqual(list1 As List(Of ObjectExplorerItem), list2 As List(Of ObjectExplorerItem))
+    Private Function IsListEqual(list1 As List(Of StructureItem), list2 As List(Of StructureItem))
         Return list1.All(Function(item) list2.Any(Function(x) x.Id = item.Id AndAlso x.Title = item.Title AndAlso x.Type = item.Type)) AndAlso list2.All(Function(item) list1.Any(Function(x) x.Id = item.Id AndAlso x.Title = item.Title AndAlso x.Type = item.Type))
     End Function
 
-    Private Sub WalkExplorerItem(n As TreeNode, items As List(Of ObjectExplorerItem), mainList As List(Of ObjectExplorerItem))
-        For Each item As ObjectExplorerItem In items
+    Private Sub WalkExplorerItem(n As TreeNode, items As List(Of StructureItem), mainList As List(Of StructureItem))
+        For Each item As StructureItem In items
             Dim nItem As TreeNode = n.Nodes.Add(item.Id.ToString, item.Title, GetImageKey(item.Type), GetImageKey(item.Type))
             nItem.Tag = item
             WalkExplorerItem(nItem, mainList.Where(Function(x) x.ParentId = item.Id).ToList, mainList)
         Next
     End Sub
 
-    Private Function GetImageKey(type As ObjectExplorerType) As String
+    Private Function GetImageKey(type As StructureType) As String
         Select Case type
-            Case ObjectExplorerType.Class
+            Case StructureType.Class
                 Return "Class"
-            Case ObjectExplorerType.Enum
+            Case StructureType.Enum
                 Return "Enum"
-            Case ObjectExplorerType.Event
+            Case StructureType.Event
                 Return "Event"
-            Case ObjectExplorerType.Interface
+            Case StructureType.Interface
                 Return "Interface"
-            Case ObjectExplorerType.Method
+            Case StructureType.Method
                 Return "Method"
-            Case ObjectExplorerType.Namespace
+            Case StructureType.Namespace
                 Return "Namespace"
-            Case ObjectExplorerType.Operator
+            Case StructureType.Operator
                 Return "Operator"
-            Case ObjectExplorerType.Property
+            Case StructureType.Property
                 Return "Property"
-            Case ObjectExplorerType.Structure
+            Case StructureType.Structure
                 Return "Structure"
-            Case ObjectExplorerType.Variable
+            Case StructureType.Variable
                 Return "Variable"
             Case Else
                 Return String.Empty

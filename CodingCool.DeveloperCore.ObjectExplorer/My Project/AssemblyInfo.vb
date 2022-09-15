@@ -7,10 +7,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CodingCool.DeveloperCore.ObjectExplorer")>
+<Assembly: AssemblyTitle("CodingCool.DeveloperCore.Structure")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CodingCool.DeveloperCore.ObjectExplorer")>
+<Assembly: AssemblyProduct("CodingCool.DeveloperCore.Structure")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>
 <Assembly: AssemblyTrademark("")>
 
