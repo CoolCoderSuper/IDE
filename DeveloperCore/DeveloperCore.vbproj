@@ -60,7 +60,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
@@ -98,6 +100,12 @@
       <DependentUpon>frmOptions.vb</DependentUpon>
     </Compile>
     <Compile Include="frmOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTest.Designer.vb">
+      <DependentUpon>frmTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTest.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
@@ -147,9 +155,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Beta\WinFormsPage.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Types\Project.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +164,10 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmTest.resx">
+      <DependentUpon>frmTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Project\frmNewFile.resx">
       <DependentUpon>frmNewFile.vb</DependentUpon>
     </EmbeddedResource>
@@ -177,9 +186,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Beta\WinFormsPage.resx">
-      <DependentUpon>WinFormsPage.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
@@ -194,9 +200,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodingCool.Developer.WinForms.Designer\CodingCool.Developer.WinForms.Designer.vbproj">
-      <Project>{080f91cb-d488-40af-a1b7-d8fc27125b27}</Project>
-      <Name>CodingCool.Developer.WinForms.Designer</Name>
+    <ProjectReference Include="..\CodingCool.DeveloperCore.Code.Common\CodingCool.DeveloperCore.Code.vbproj">
+      <Project>{d759b67d-e06b-4795-83d1-538b6fa92d2d}</Project>
+      <Name>CodingCool.DeveloperCore.Code</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodingCool.DeveloperCore.Core\CodingCool.DeveloperCore.Core.vbproj">
       <Project>{E13EE95D-015B-42A5-9CE2-2EE3F378A17C}</Project>
@@ -222,6 +228,9 @@
       <Project>{aa191046-8570-4809-beef-1ee9020534dd}</Project>
       <Name>CodingCool.DeveloperCore.Views</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Beta\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

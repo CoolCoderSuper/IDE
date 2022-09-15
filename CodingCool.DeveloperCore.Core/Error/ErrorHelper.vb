@@ -1,64 +1,68 @@
-﻿Imports Microsoft.CSharp
-Imports System.CodeDom.Compiler
+﻿Imports System.IO
+Imports Microsoft.CodeAnalysis
+Imports Microsoft.CodeAnalysis.Emit
 
 ''' <summary>
-''' Some crappy code to get errors from code.
+''' Get's errors from a list of files and references.
 ''' </summary>
 Public Class ErrorHelper
 
+    Private ReadOnly references As String() = {"mscorlib.dll", "System.Core.dll", "System.Windows.dll", "System.Windows.Forms.dll", "System.dll", "System.Drawing.dll", "System.Data.dll", "System.Xml.dll", "System.Xml.Linq.dll", "System.Deployment.dll"}
+
+    ''' <summary>
+    ''' Loads the errors.
+    ''' </summary>
+    ''' <param name="strLanguage">The language of the files.</param>
+    ''' <param name="lFiles">The files.</param>
+    ''' <param name="lReferences">The references.</param>
+    ''' <returns></returns>
     Public Function GetErrors(strLanguage As String, lFiles As String(), lReferences As String()) As List(Of ErrorItem)
         Dim lErrors As New List(Of ErrorItem)
-        Dim l As New List(Of CompilerError)
+        Dim l As New List(Of Diagnostic)
         If strLanguage = "cs" Then
-            l = CSharpCompile(lFiles, lReferences)
+            l = GetCSErrors(lFiles.Select(Function(x) IO.File.ReadAllText(x)).ToArray, lReferences)
         Else
-            l = VBCompile(lFiles, lReferences)
+            l = GetVBErrors(lFiles, lReferences)
         End If
-        For Each objError As CompilerError In l
+        For Each objError As Diagnostic In l
             Dim objItem As New ErrorItem
-            objItem.Description = objError.ErrorText
-            objItem.File = objError.FileName
-            objItem.Line = objItem.Line
-            If objError.IsWarning Then
-                objItem.ErrorType = ErrorTypes.Warning
-            Else
-                objItem.ErrorType = ErrorTypes.Error
-            End If
+            objItem.Description = objError.Descriptor.Description.ToString
+            objItem.File = objError.Location.GetLineSpan.Path
+            objItem.Line = objError.Location.GetLineSpan.StartLinePosition.Line
+            Select Case objError.Descriptor.DefaultSeverity
+                Case DiagnosticSeverity.Error
+                    objItem.ErrorType = ErrorTypes.Error
+                Case DiagnosticSeverity.Warning
+                    objItem.ErrorType = ErrorTypes.Warning
+                Case DiagnosticSeverity.Info
+                    objItem.ErrorType = ErrorTypes.Suggestion
+                Case DiagnosticSeverity.Hidden
+                    objItem.ErrorType = ErrorTypes.Hidden
+            End Select
             objItem.ErrorNumber = New ErrorNumber
-            objItem.ErrorNumber.ErrorNumber = objError.ErrorNumber
+            objItem.ErrorNumber.ErrorLink = objError.Descriptor.HelpLinkUri
+            objItem.ErrorNumber.ErrorNumber = objError.Descriptor.Title.ToString
             lErrors.Add(objItem)
         Next
         Return lErrors
     End Function
 
-    Private ReadOnly references As String() = {"mscorlib.dll", "System.Core.dll", "System.Windows.dll", "System.Windows.Forms.dll", "System.dll", "System.Drawing.dll", "System.Data.dll", "System.Xml.dll", "System.Xml.Linq.dll", "System.Deployment.dll"}
-
-    Private Function CSharpCompile(files As String(), lReferences As String()) As List(Of CompilerError)
-        Dim CSCode As New CSharpCodeProvider(New Dictionary(Of String, String) From {
-                 {"ComplilerVersion", "4.8"}
-    })
-        Dim compilerParameters As New CompilerParameters(references.Concat(lReferences.ToList()).ToArray(), String.Empty, True)
-        compilerParameters.GenerateExecutable = False
-        Dim results As CompilerResults = CSCode.CompileAssemblyFromFile(compilerParameters, files)
-
-        If results.Errors.HasErrors Then
-            Return results.Errors.Cast(Of CompilerError)().ToList()
-        End If
-        Return New List(Of CompilerError)
+    Private Function GetCSErrors(code As String(), refs As String()) As List(Of Diagnostic)
+        Dim compiler As CSharp.CSharpCompilation = CSharp.CSharpCompilation.Create("DeveloperCoreErrors.dll", {}, refs.Concat(references.ToList).Select(Function(x) MetadataReference.CreateFromFile(x)))
+        For Each c As String In code
+            compiler.AddSyntaxTrees({CSharp.SyntaxFactory.ParseSyntaxTree(c)})
+        Next
+        Dim res As EmitResult = compiler.Emit(New MemoryStream)
+        Return res.Diagnostics.ToList
     End Function
 
-    Private Function VBCompile(files As String(), lReferences As String()) As List(Of CompilerError)
-        Dim VBCode As New VBCodeProvider(New Dictionary(Of String, String) From {
-                 {"ComplilerVersion", "4.8"}
-    })
-        Dim compilerParameters As New CompilerParameters(references.Concat(lReferences.ToList()).ToArray(), String.Empty, True)
-        compilerParameters.GenerateExecutable = False
-        Dim results As CompilerResults = VBCode.CompileAssemblyFromFile(compilerParameters, files)
-
-        If results.Errors.HasErrors Then
-            Return results.Errors.Cast(Of CompilerError)().ToList()
-        End If
-        Return New List(Of CompilerError)
+    Private Function GetVBErrors(code As String(), refs As String()) As List(Of Diagnostic)
+        Dim compiler As VisualBasic.VisualBasicCompilation = VisualBasic.VisualBasicCompilation.Create("DeveloperCoreErrors.dll", {}, refs.Concat(references.ToList).Select(Function(x) MetadataReference.CreateFromFile(x)))
+        For Each c As String In code
+            compiler.AddSyntaxTrees({VisualBasic.SyntaxFactory.ParseSyntaxTree(c)})
+        Next
+        Dim res As EmitResult = compiler.Emit(New MemoryStream)
+        Return res.Diagnostics.ToList
     End Function
 
 End Class

@@ -155,7 +155,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ObjectExplorerTab.vb">
+    <Compile Include="RoslynObjectExplorerTab.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -165,9 +165,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ObjectExplorerTab.resx">
-      <DependentUpon>ObjectExplorerTab.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

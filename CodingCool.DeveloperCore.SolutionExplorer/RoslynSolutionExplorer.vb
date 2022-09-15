@@ -1,10 +1,11 @@
-﻿Imports System.Runtime.CompilerServices
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 Imports CodingCool.DeveloperCore.Core
-'TODO: Add solution loop to load
-Public Class SolutionExplorer
+
+Public Class RoslynSolutionExplorer
     Inherits TreeView
+
     Private proj As Project
+    Private sln As Microsoft.CodeAnalysis.Solution
     Private il As ImageList
 
     Public Sub New()
@@ -54,6 +55,10 @@ Public Class SolutionExplorer
     End Sub
 
 #Region "Load"
+
+    Public Sub LoadRoslyn
+        'Dim nSolution As TreeNode = Nodes.Add(sln.)
+    End Sub
 
     Public Shadows Sub Load()
         Dim strPRPath As String = String.Empty
@@ -175,23 +180,4 @@ Public Class SolutionExplorer
     Public Event Rename(sender As Object, e As RenameItemEventArgs)
 
     Public Shadows Event Move(sender As Object, e As MoveItemEventArgs)
-
 End Class
-
-Friend Module Ext
-
-    <Extension>
-    Public Function GetDirName(obj As String()) As String
-        Dim strResult As String = String.Empty
-        For i As Integer = 0 To obj.Length - 2
-            strResult &= If(i = 0, obj(i), $"\{obj(i)}")
-        Next
-        Return strResult
-    End Function
-
-    <Extension>
-    Public Function GetName(obj As Reference) As String
-        Return Reflection.Assembly.LoadFrom(obj.Path).GetName().Name
-    End Function
-
-End Module

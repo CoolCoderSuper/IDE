@@ -4,7 +4,8 @@
 Public Enum ErrorTypes
     [Error]
     Warning
-    Info
+    Suggestion
+    Hidden
 End Enum
 
 Public Enum ExplorerItemTypes

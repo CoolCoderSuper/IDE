@@ -1,7 +1,7 @@
-﻿Imports CodingCool.DeveloperCore.Editor
+﻿Imports System.IO
+Imports CodingCool.DeveloperCore.Editor
 Imports CodingCool.DeveloperCore.ObjectExplorer
 Imports CodingCool.DeveloperCore.Views
-Imports System.IO
 
 Public Class frmMain
 
@@ -20,7 +20,7 @@ Public Class frmMain
     Private WithEvents tbOutput As OutputTab
     Private WithEvents tbTaskList As TaskListTab
     Private WithEvents tbErrorList As ErrorListTab
-    Private WithEvents tbObjectExplorer As ObjectExplorerTab
+    Private WithEvents tbObjectExplorer As RoslynObjectExplorerTab
 
 #End Region
 
@@ -56,17 +56,18 @@ Public Class frmMain
         tcMain.BackColor = ColorTranslator.FromHtml("#8a8a88")
         BackColor = ColorTranslator.FromHtml("#888888")
         LoadProjectFiles()
-        ConfigureErrorList()
-        tcTools.Items.Add(tbErrorList)
-        ConfigueTaskList()
-        tcTools.Items.Add(tbTaskList)
+        'ConfigureErrorList()
+        'tcTools.Items.Add(tbErrorList)
+        'ConfigueTaskList()
+        'tcTools.Items.Add(tbTaskList)
         tbOutput = New OutputTab
         tcTools.Items.Add(tbOutput)
-        tbObjectExplorer = New ObjectExplorerTab
+        tbObjectExplorer = New RoslynObjectExplorerTab
         tcViews.TabPages.Add(tbObjectExplorer)
         tmrObjectExplorer.Start()
         SolutionExplorer1.Load()
         'Test
+        frmTest.Show()
     End Sub
 
     Private Sub ConfigueTaskList()
@@ -127,7 +128,7 @@ Public Class frmMain
             If Language = "cs" Then
                 tbObjectExplorer.ReCSharpBuildObjectExplorer(CurrentTB.Text)
             Else
-                tbObjectExplorer.ReBuildVBObjectExplorer(CurrentTB.Text)
+                tbObjectExplorer.LoadVb(CurrentTB.Text)
             End If
         End If
     End Sub
@@ -158,8 +159,8 @@ Public Class frmMain
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         Build()
-        If IO.File.Exists(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe") Then
-            Process.Start(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe")
+        If IO.File.Exists($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe") Then
+            Process.Start($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe")
         End If
     End Sub
 
@@ -178,15 +179,15 @@ Public Class frmMain
         objReferences.Elements("Reference").ToList().ForEach(Sub(x) l.Add(x.Value))
         If Language = "cs" Then
             If b Then
-                tbOutput.Print(objCompiler.CSharpCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
             Else
-                tbOutput.Print(objCompiler.CSharpCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".dll", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.CSharpCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
             End If
         Else
             If b Then
-                tbOutput.Print(objCompiler.VBCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".exe", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe", files.ToArray(), b, l))
             Else
-                tbOutput.Print(objCompiler.VBCompile(ProjectDir & "bin\" & Path.GetFileNameWithoutExtension(ProjectRoot) & ".dll", files.ToArray(), b, l))
+                tbOutput.Print(objCompiler.VBCompile($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.dll", files.ToArray(), b, l))
             End If
         End If
     End Sub
@@ -207,7 +208,7 @@ Public Class frmMain
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
         Dim ofd As New OpenFileDialog
-        ofd.Filter = "Code files (*." & Language & ")|*." & Language
+        ofd.Filter = $"Code files (*.{Language})|*.{Language}"
         If ofd.ShowDialog() = DialogResult.OK Then
 
         End If
@@ -276,7 +277,7 @@ Public Class frmMain
         ofd.Multiselect = False
         ofd.Filter = "Project files (*.proj)|*.proj"
         If ofd.ShowDialog() = DialogResult.OK Then
-            ProjectDir = ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")) & "\"
+            ProjectDir = $"{(ofd.FileName.Substring(0, ofd.FileName.LastIndexOf("\")))}\"
             ProjectRoot = ofd.FileName
             Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
             Language = objDoc.Root.Element("Settings").Element("Language").Value

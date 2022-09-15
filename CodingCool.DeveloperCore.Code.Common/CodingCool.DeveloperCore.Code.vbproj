@@ -1,19 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AA191046-8570-4809-BEEF-1EE9020534DD}</ProjectGuid>
+    <ProjectGuid>{D759B67D-E06B-4795-83D1-538B6FA92D2D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CodingCool.DeveloperCore.Views</RootNamespace>
-    <AssemblyName>CodingCool.DeveloperCore.Views</AssemblyName>
+    <RootNamespace>CodingCool.DeveloperCore.Code</RootNamespace>
+    <AssemblyName>CodingCool.DeveloperCore.Code</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,9 +19,8 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>CodingCool.DeveloperCore.Views.xml</DocumentationFile>
+    <DocumentationFile>CodingCool.DeveloperCore.Code.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,9 +28,8 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>CodingCool.DeveloperCore.Views.xml</DocumentationFile>
+    <DocumentationFile>CodingCool.DeveloperCore.Code.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -48,21 +44,13 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastColoredTextBox">
-      <HintPath>..\FastColoredTextBox.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TabStrip">
-      <HintPath>..\TabStrip.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -76,15 +64,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tabs\ErrorListTab.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FileView.Designer.vb">
-      <DependentUpon>FileView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="FileView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Language\ICodeBlockRule.vb" />
+    <Compile Include="Language\ILanguage.vb" />
+    <Compile Include="Language\IKeyword.vb" />
+    <Compile Include="Search\ChunkMatch.vb" />
+    <Compile Include="Search\ChunkSearchSetting.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -101,53 +85,25 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Tabs\OutputTab.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ProjectView.Designer.vb">
-      <DependentUpon>ProjectView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ReferencesView.Designer.vb">
-      <DependentUpon>ReferencesView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ReferencesView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Tabs\TaskListTab.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="RegexBuilder.vb" />
+    <Compile Include="Search\WordMatch.vb" />
+    <Compile Include="Search\Searcher.vb" />
+    <Compile Include="Search\WordSearchSetting.vb" />
+    <Compile Include="VB\VBCodeGroup.vb" />
+    <Compile Include="VB\VBKeyword.vb" />
+    <Compile Include="VB\VBInfoList.vb" />
+    <Compile Include="VB\VBLang.vb" />
+    <Compile Include="VB\VBSymbolType.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tabs\ErrorListTab.resx">
-      <DependentUpon>ErrorListTab.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FileView.resx">
-      <DependentUpon>FileView.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tabs\OutputTab.resx">
-      <DependentUpon>OutputTab.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProjectView.resx">
-      <DependentUpon>ProjectView.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferencesView.resx">
-      <DependentUpon>ReferencesView.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tabs\TaskListTab.resx">
-      <DependentUpon>TaskListTab.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -157,15 +113,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodingCool.DeveloperCore.Core\CodingCool.DeveloperCore.Core.vbproj">
-      <Project>{e13ee95d-015b-42a5-9ce2-2ee3f378a17c}</Project>
-      <Name>CodingCool.DeveloperCore.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
