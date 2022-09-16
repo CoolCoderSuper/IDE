@@ -10,11 +10,8 @@ Public Class frmMain
 
 #Region "Properties"
 
-    Public Property Language As String = "vb"
-    Public Property ProjectRoot As String = "C:\Users\User\Documents\Test\Test.proj"
-    Public Property ProjectDir As String = "C:\Users\User\Documents\Test\"
-    Public Property Output As Boolean = True
     Public Property CurrentSolution As Solution
+    Public Property Projects As List(Of Microsoft.Build.Evaluation.Project)
 
 #End Region
 
@@ -59,8 +56,6 @@ Public Class frmMain
         tcTools.BackColor = ColorTranslator.FromHtml("#8a8a88")
         tcMain.BackColor = ColorTranslator.FromHtml("#8a8a88")
         BackColor = ColorTranslator.FromHtml("#888888")
-        seExplorer.BackColor = ColorTranslator.FromHtml("#8a8a88")
-        LoadProjectFiles()
         ConfigureErrorList()
         tcTools.Items.Add(tbErrorList)
         'ConfigueTaskList()
@@ -73,23 +68,23 @@ Public Class frmMain
     End Sub
 
     Private Sub ConfigueTaskList()
-        Try
-            Dim l As New List(Of String)
-            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-            Dim objRoot As XElement = objDoc.Element("Project")
-            Dim objFiles As XElement = objRoot.Element("Files")
-            For Each objEl As XElement In objFiles.Elements("File")
-                l.Add(objEl.Value)
-            Next
-            tbTaskList = New TaskListTab(String.Empty, l.ToArray())
-        Catch ex As Exception
-            tbTaskList = New TaskListTab(String.Empty, {})
-        End Try
-        If Language = "cs" Then
-            tbTaskList.CommentPrefix = "//"
-        Else
-            tbTaskList.CommentPrefix = "'"
-        End If
+        'Try
+        '    Dim l As New List(Of String)
+        '    Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
+        '    Dim objRoot As XElement = objDoc.Element("Project")
+        '    Dim objFiles As XElement = objRoot.Element("Files")
+        '    For Each objEl As XElement In objFiles.Elements("File")
+        '        l.Add(objEl.Value)
+        '    Next
+        '    tbTaskList = New TaskListTab(String.Empty, l.ToArray())
+        'Catch ex As Exception
+        '    tbTaskList = New TaskListTab(String.Empty, {})
+        'End Try
+        'If Language = "cs" Then
+        '    tbTaskList.CommentPrefix = "//"
+        'Else
+        '    tbTaskList.CommentPrefix = "'"
+        'End If
     End Sub
 
     Private Sub ConfigureErrorList()
@@ -102,11 +97,7 @@ Public Class frmMain
 
     Private Sub tmrObjectExplorer_Tick(sender As Object, e As EventArgs) Handles tmrObjectExplorer.Tick
         If CurrentTB IsNot Nothing Then
-            If Language = "cs" Then
-                tbStructure.ReCSharpBuildObjectExplorer(CurrentTB.Text)
-            Else
-                tbStructure.LoadVb(CurrentTB.Text)
-            End If
+            tbStructure.LoadVb(CurrentTB.Text)
         End If
     End Sub
 
@@ -131,25 +122,26 @@ Public Class frmMain
 #Region "Build"
 
     Private Async Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
-       Await Build()
+        If Not Await Build() Then
+            MessageBox.Show("Build failed!")
+        End If
     End Sub
 
-    Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
-        Build()
-        'TODO: Update this
-        If File.Exists($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe") Then
-            Process.Start($"{ProjectDir}bin\{Path.GetFileNameWithoutExtension(ProjectRoot)}.exe")
+    Private Async Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
+        If Not Await Build() Then
+            MessageBox.Show("Build failed!")
         End If
+        'TODO: Start the program
     End Sub
 
     Private Async Function Build() As Task(Of Boolean)
         btnSaveAll.PerformClick()
-        Dim lResults As List(Of EmitResult) = (Await SolutionBuild.Build(CurrentSolution)).tolist
-        tbErrorList.Errors.Clear
+        Dim lResults As List(Of EmitResult) = (Await SolutionBuild.Build(CurrentSolution)).ToList
+        tbErrorList.Errors.Clear()
         For Each res As EmitResult In lResults
             tbErrorList.LoadErrors(ErrorHelper.ConvertDiagnostic(res.Diagnostics.ToList))
         Next
-        tbErrorList.Reload
+        tbErrorList.Reload()
         Return lResults.All(Function(x) x.Success)
     End Function
 
@@ -165,7 +157,6 @@ Public Class frmMain
     Private Sub btnNewFile_Click(sender As Object, e As EventArgs) Handles btnNewFile.Click, btnNewContext.Click
         frmNewFile.ShowDialog()
         lstFiles.Items.Clear()
-        LoadProjectFiles()
     End Sub
 
     Private Sub btnReferences_Click(sender As Object, e As EventArgs) Handles btnReferences.Click
@@ -173,11 +164,11 @@ Public Class frmMain
     End Sub
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
-        Dim ofd As New OpenFileDialog
-        ofd.Filter = $"Code files (*.{Language})|*.{Language}"
-        If ofd.ShowDialog() = DialogResult.OK Then
+        'Dim ofd As New OpenFileDialog
+        'ofd.Filter = $"Code files (*.{Language})|*.{Language}"
+        'If ofd.ShowDialog() = DialogResult.OK Then
 
-        End If
+        'End If
     End Sub
 
     Private Sub btnDeleteContext_Click(sender As Object, e As EventArgs) Handles btnDeleteContext.Click
@@ -195,49 +186,17 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub LoadProjectFiles()
-        lstFiles.Clear()
-        Try
-            Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-            Dim objRoot As XElement = objDoc.Element("Project")
-            Dim objFiles As XElement = objRoot.Element("Files")
-            For Each objEl As XElement In objFiles.Elements("File")
-                Dim objItem As New ListViewItem
-                objItem.Tag = objEl.Value
-                objItem.Text = IO.Path.GetFileName(objEl.Value)
-                objItem.ToolTipText = objItem.Tag
-                lstFiles.Items.Add(objItem)
-            Next
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Private Sub lstFiles_DoubleClick(sender As Object, e As EventArgs) Handles seExplorer.DoubleClick
-        If Not lstFiles.SelectedItems.Count = 0 Then
-            Dim objItem As ListViewItem = lstFiles.SelectedItems(0)
-            Dim objTab As CodeTab
-            If Language.ToLower() = "cs" Then
-                objTab = New CodeTab(FastColoredTextBoxNS.Language.CSharp, ProjectRoot)
-            Else
-                objTab = New CodeTab(FastColoredTextBoxNS.Language.VB, ProjectRoot)
-            End If
-            objTab.FilePath = objItem.Tag
-            objTab.Init()
-            tcMain.Items.Add(objTab)
-            tcMain.SelectedItem = objTab
-            CurrentTB.ClearUndo()
-        End If
-    End Sub
-
-    Private Sub seExplorer_Open(sender As Object, e As Document) Handles seExplorer.Open
+    Private Sub seExplorer_Open(sender As Object, e As String) Handles seExplorer.Open
         Dim objTab As CodeTab
-        If Path.GetExtension(e.FilePath) = "cs" Then
-            objTab = New CodeTab(FastColoredTextBoxNS.Language.CSharp, ProjectRoot)
+        Dim strExt As String = Path.GetExtension(e)
+        If strExt = ".cs" Then
+            objTab = New CodeTab(FastColoredTextBoxNS.Language.CSharp, "")
+        ElseIf strExt = ".vb" Then
+            objTab = New CodeTab(FastColoredTextBoxNS.Language.VB, "")
         Else
-            objTab = New CodeTab(FastColoredTextBoxNS.Language.VB, ProjectRoot)
+            objTab = New CodeTab(FastColoredTextBoxNS.Language.Custom, "")
         End If
-        objTab.FilePath = e.FilePath
+        objTab.FilePath = e
         objTab.Init()
         tcMain.Items.Add(objTab)
         tcMain.SelectedItem = objTab
@@ -258,7 +217,7 @@ Public Class frmMain
         ofd.Filter = "Solution files (*.sln)|*.sln"
         If ofd.ShowDialog() = DialogResult.OK Then
             CurrentSolution = Await SolutionParser.LoadSolution(ofd.FileName)
-            seExplorer.Load(CurrentSolution)
+            seExplorer.LoadMSBuild(CurrentSolution.FilePath)
         End If
     End Sub
 

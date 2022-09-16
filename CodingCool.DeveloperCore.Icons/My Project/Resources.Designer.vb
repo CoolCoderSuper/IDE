@@ -73,6 +73,36 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property ConfigFile() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ConfigFile", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CSFile() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CSFile", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CSProject() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CSProject", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property Folder_Closed() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Folder_Closed", resourceCulture)
@@ -93,9 +123,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Public ReadOnly Property Folder_Open() As System.Drawing.Bitmap
+        Public ReadOnly Property JsonFile() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Folder_Open", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("JsonFile", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -133,6 +163,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property PropertyFolder_Closed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PropertyFolder_Closed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property Reference() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Reference", resourceCulture)
@@ -153,9 +193,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Public ReadOnly Property ReferenceFolder_Open() As System.Drawing.Bitmap
+        Public ReadOnly Property Settings() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("ReferenceFolder_Open", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Settings", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

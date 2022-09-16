@@ -122,13 +122,25 @@
     <value>..\..\data\Images\Common\SolutionExplorer\CodeBehind.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder_Closed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\data\Images\Common\SolutionExplorer\Folder.Closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\FolderClosed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\data\Images\Common\SolutionExplorer\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="JsonFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\data\Images\Common\SolutionExplorer\JsonFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+	<data name="ConfigFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+		<value>..\..\data\Images\Common\SolutionExplorer\ConfigurationFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+	</data>
+	<data name="CSProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
+		<value>..\..\data\Images\Common\SolutionExplorer\CSProjectNode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+	</data>
+  <data name="CSFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\data\Images\Common\SolutionExplorer\CSFileNode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder_Missing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\data\Images\Common\SolutionExplorer\Folder.Missing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Folder_Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\data\Images\Common\SolutionExplorer\Folder.Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MissingFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\data\Images\Common\SolutionExplorer\MissingFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,14 +151,14 @@
   <data name="ProjectWarning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\data\Images\Common\SolutionExplorer\ProjectWarning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PropertyFolder_Closed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\data\Images\Common\SolutionExplorer\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Reference" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\data\Images\Common\SolutionExplorer\Icons.16x16.Reference.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\Reference.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ReferenceFolder_Closed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\data\Images\Common\SolutionExplorer\ReferenceFolder.Closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ReferenceFolder_Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\data\Images\Common\SolutionExplorer\ReferenceFolder.Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\data\Images\Common\SolutionExplorer\ReferenceGroup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Solution" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\data\Images\Common\SolutionExplorer\Solution.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

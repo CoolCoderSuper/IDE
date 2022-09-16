@@ -409,7 +409,7 @@ Public Class RoslynStructureTab
 
     Private Sub WalkTreeViewGet(nodes As TreeNodeCollection, ByRef dResults As Dictionary(Of String, Boolean))
         For Each node As TreeNode In nodes
-            dResults.Add(node.Text, node.IsExpanded)
+            If Not dResults.ContainsKey(node.Text) Then dResults.Add(node.Text, node.IsExpanded)
             WalkTreeViewGet(node.Nodes, dResults)
         Next
     End Sub
