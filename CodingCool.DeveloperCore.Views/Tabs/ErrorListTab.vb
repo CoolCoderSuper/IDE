@@ -24,38 +24,38 @@ Public Class ErrorListTab
     End Sub
 
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
-        tmrLoad = New System.Windows.Forms.Timer(components)
-        dgvErrors = New System.Windows.Forms.DataGridView
-        CType(dgvErrors, System.ComponentModel.ISupportInitialize).BeginInit()
-        SuspendLayout()
+        Me.components = New System.ComponentModel.Container()
+        Me.tmrLoad = New System.Windows.Forms.Timer(Me.components)
+        Me.dgvErrors = New System.Windows.Forms.DataGridView()
+        CType(Me.dgvErrors,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'tmrLoad
         '
-        tmrLoad.Interval = 3000
+        Me.tmrLoad.Interval = 3000
         '
         'dgvErrors
         '
-        dgvErrors.AllowUserToAddRows = False
-        dgvErrors.AllowUserToDeleteRows = False
-        dgvErrors.AllowUserToResizeRows = False
-        dgvErrors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvErrors.Dock = DockStyle.Fill
-        dgvErrors.Location = New System.Drawing.Point(0, 0)
-        dgvErrors.MultiSelect = False
-        dgvErrors.Name = "dgvErrors"
-        dgvErrors.ReadOnly = True
-        dgvErrors.Size = New System.Drawing.Size(240, 150)
-        dgvErrors.TabIndex = 0
+        Me.dgvErrors.AllowUserToAddRows = false
+        Me.dgvErrors.AllowUserToDeleteRows = false
+        Me.dgvErrors.AllowUserToResizeRows = false
+        Me.dgvErrors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvErrors.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvErrors.Location = New System.Drawing.Point(0, 0)
+        Me.dgvErrors.MultiSelect = false
+        Me.dgvErrors.Name = "dgvErrors"
+        Me.dgvErrors.ReadOnly = true
+        Me.dgvErrors.Size = New System.Drawing.Size(200, 100)
+        Me.dgvErrors.TabIndex = 0
         '
         'ErrorListTab
         '
-        Title = "Error List"
-        CType(dgvErrors, System.ComponentModel.ISupportInitialize).EndInit()
-        ResumeLayout(False)
-        Controls.Add(dgvErrors)
+        Me.Controls.Add(Me.dgvErrors)
+        Me.Title = "Error List"
+        CType(Me.dgvErrors,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
 
-    End Sub
+End Sub
 
 #End Region
 

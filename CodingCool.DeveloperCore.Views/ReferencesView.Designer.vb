@@ -37,15 +37,15 @@ Partial Class ReferencesView
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnRemove = New System.Windows.Forms.Button()
         Me.dgvSelected = New System.Windows.Forms.DataGridView()
-        Me.TabControl1.SuspendLayout()
-        Me.tpGAC.SuspendLayout()
-        CType(Me.dgvGAC, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tpCOM.SuspendLayout()
-        CType(Me.dgvCOM, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tpBrowse.SuspendLayout()
-        CType(Me.dgvBrowse, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvSelected, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        Me.TabControl1.SuspendLayout
+        Me.tpGAC.SuspendLayout
+        CType(Me.dgvGAC,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.tpCOM.SuspendLayout
+        CType(Me.dgvCOM,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.tpBrowse.SuspendLayout
+        CType(Me.dgvBrowse,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.dgvSelected,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'TabControl1
         '
@@ -53,7 +53,7 @@ Partial Class ReferencesView
         Me.TabControl1.Controls.Add(Me.tpCOM)
         Me.TabControl1.Controls.Add(Me.tpBrowse)
         Me.TabControl1.Location = New System.Drawing.Point(3, 3)
-        Me.TabControl1.Multiline = True
+        Me.TabControl1.Multiline = true
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(468, 224)
@@ -70,17 +70,17 @@ Partial Class ReferencesView
         Me.tpGAC.Size = New System.Drawing.Size(460, 198)
         Me.tpGAC.TabIndex = 0
         Me.tpGAC.Text = "GAC"
-        Me.tpGAC.UseVisualStyleBackColor = True
+        Me.tpGAC.UseVisualStyleBackColor = true
         '
         'cbSpecificVersion
         '
-        Me.cbSpecificVersion.AutoSize = True
+        Me.cbSpecificVersion.AutoSize = true
         Me.cbSpecificVersion.Location = New System.Drawing.Point(224, 9)
         Me.cbSpecificVersion.Name = "cbSpecificVersion"
         Me.cbSpecificVersion.Size = New System.Drawing.Size(101, 17)
         Me.cbSpecificVersion.TabIndex = 3
         Me.cbSpecificVersion.Text = "Specific version"
-        Me.cbSpecificVersion.UseVisualStyleBackColor = True
+        Me.cbSpecificVersion.UseVisualStyleBackColor = true
         '
         'txtGACSearch
         '
@@ -91,12 +91,12 @@ Partial Class ReferencesView
         '
         'dgvGAC
         '
-        Me.dgvGAC.AllowUserToAddRows = False
-        Me.dgvGAC.AllowUserToDeleteRows = False
+        Me.dgvGAC.AllowUserToAddRows = false
+        Me.dgvGAC.AllowUserToDeleteRows = false
         Me.dgvGAC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvGAC.Location = New System.Drawing.Point(0, 33)
         Me.dgvGAC.Name = "dgvGAC"
-        Me.dgvGAC.ReadOnly = True
+        Me.dgvGAC.ReadOnly = true
         Me.dgvGAC.Size = New System.Drawing.Size(460, 165)
         Me.dgvGAC.TabIndex = 1
         '
@@ -110,7 +110,7 @@ Partial Class ReferencesView
         Me.tpCOM.Size = New System.Drawing.Size(460, 198)
         Me.tpCOM.TabIndex = 1
         Me.tpCOM.Text = "COM"
-        Me.tpCOM.UseVisualStyleBackColor = True
+        Me.tpCOM.UseVisualStyleBackColor = true
         '
         'txtCOMSearch
         '
@@ -121,12 +121,12 @@ Partial Class ReferencesView
         '
         'dgvCOM
         '
-        Me.dgvCOM.AllowUserToAddRows = False
-        Me.dgvCOM.AllowUserToDeleteRows = False
+        Me.dgvCOM.AllowUserToAddRows = false
+        Me.dgvCOM.AllowUserToDeleteRows = false
         Me.dgvCOM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvCOM.Location = New System.Drawing.Point(0, 33)
         Me.dgvCOM.Name = "dgvCOM"
-        Me.dgvCOM.ReadOnly = True
+        Me.dgvCOM.ReadOnly = true
         Me.dgvCOM.Size = New System.Drawing.Size(460, 165)
         Me.dgvCOM.TabIndex = 0
         '
@@ -140,7 +140,7 @@ Partial Class ReferencesView
         Me.tpBrowse.Size = New System.Drawing.Size(460, 198)
         Me.tpBrowse.TabIndex = 2
         Me.tpBrowse.Text = "Browse"
-        Me.tpBrowse.UseVisualStyleBackColor = True
+        Me.tpBrowse.UseVisualStyleBackColor = true
         '
         'btnBrowse
         '
@@ -149,16 +149,16 @@ Partial Class ReferencesView
         Me.btnBrowse.Size = New System.Drawing.Size(448, 23)
         Me.btnBrowse.TabIndex = 1
         Me.btnBrowse.Text = "Browse"
-        Me.btnBrowse.UseVisualStyleBackColor = True
+        Me.btnBrowse.UseVisualStyleBackColor = true
         '
         'dgvBrowse
         '
-        Me.dgvBrowse.AllowUserToAddRows = False
-        Me.dgvBrowse.AllowUserToDeleteRows = False
+        Me.dgvBrowse.AllowUserToAddRows = false
+        Me.dgvBrowse.AllowUserToDeleteRows = false
         Me.dgvBrowse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvBrowse.Location = New System.Drawing.Point(3, 36)
         Me.dgvBrowse.Name = "dgvBrowse"
-        Me.dgvBrowse.ReadOnly = True
+        Me.dgvBrowse.ReadOnly = true
         Me.dgvBrowse.Size = New System.Drawing.Size(454, 159)
         Me.dgvBrowse.TabIndex = 0
         '
@@ -169,11 +169,11 @@ Partial Class ReferencesView
         Me.btnSelect.Size = New System.Drawing.Size(75, 23)
         Me.btnSelect.TabIndex = 1
         Me.btnSelect.Text = "Select"
-        Me.btnSelect.UseVisualStyleBackColor = True
+        Me.btnSelect.UseVisualStyleBackColor = true
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
+        Me.Label1.AutoSize = true
         Me.Label1.Location = New System.Drawing.Point(4, 230)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(109, 13)
@@ -187,22 +187,22 @@ Partial Class ReferencesView
         Me.btnRemove.Size = New System.Drawing.Size(75, 23)
         Me.btnRemove.TabIndex = 3
         Me.btnRemove.Text = "Remove"
-        Me.btnRemove.UseVisualStyleBackColor = True
+        Me.btnRemove.UseVisualStyleBackColor = true
         '
         'dgvSelected
         '
-        Me.dgvSelected.AllowUserToAddRows = False
-        Me.dgvSelected.AllowUserToDeleteRows = False
+        Me.dgvSelected.AllowUserToAddRows = false
+        Me.dgvSelected.AllowUserToDeleteRows = false
         Me.dgvSelected.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvSelected.Location = New System.Drawing.Point(7, 246)
         Me.dgvSelected.Name = "dgvSelected"
-        Me.dgvSelected.ReadOnly = True
+        Me.dgvSelected.ReadOnly = true
         Me.dgvSelected.Size = New System.Drawing.Size(460, 151)
         Me.dgvSelected.TabIndex = 4
         '
         'ReferencesView
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.dgvSelected)
         Me.Controls.Add(Me.btnRemove)
@@ -211,20 +211,20 @@ Partial Class ReferencesView
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "ReferencesView"
         Me.Size = New System.Drawing.Size(555, 400)
-        Me.TabControl1.ResumeLayout(False)
-        Me.tpGAC.ResumeLayout(False)
-        Me.tpGAC.PerformLayout()
-        CType(Me.dgvGAC, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tpCOM.ResumeLayout(False)
-        Me.tpCOM.PerformLayout()
-        CType(Me.dgvCOM, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tpBrowse.ResumeLayout(False)
-        CType(Me.dgvBrowse, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvSelected, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        Me.TabControl1.ResumeLayout(false)
+        Me.tpGAC.ResumeLayout(false)
+        Me.tpGAC.PerformLayout
+        CType(Me.dgvGAC,System.ComponentModel.ISupportInitialize).EndInit
+        Me.tpCOM.ResumeLayout(false)
+        Me.tpCOM.PerformLayout
+        CType(Me.dgvCOM,System.ComponentModel.ISupportInitialize).EndInit
+        Me.tpBrowse.ResumeLayout(false)
+        CType(Me.dgvBrowse,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvSelected,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
+        Me.PerformLayout
 
-    End Sub
+End Sub
 
     Friend WithEvents TabControl1 As Windows.Forms.TabControl
     Friend WithEvents tpGAC As Windows.Forms.TabPage

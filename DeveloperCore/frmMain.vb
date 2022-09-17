@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports CodingCool.DeveloperCore.Core
+﻿Imports CodingCool.DeveloperCore.Core
 Imports CodingCool.DeveloperCore.Editor
 Imports CodingCool.DeveloperCore.Structure
 Imports CodingCool.DeveloperCore.Views
@@ -17,7 +16,7 @@ Public Class frmMain
 
 #Region "Variables"
 
-    Private WithEvents CurrentTB As FastColoredTextBoxNS.FastColoredTextBox
+    Private WithEvents CurrentTB As ICSharpCode.TextEditor.TextEditorControl
     Private WithEvents tbOutput As OutputTab
     Private WithEvents tbTaskList As TaskListTab
     Private WithEvents tbErrorList As ErrorListTab
@@ -51,8 +50,6 @@ Public Class frmMain
         btnDeleteText.Image = Icons.Commands.My.Resources.Icons_16x16_DeleteIcon
         btnDeleteText.DisplayStyle = ToolStripItemDisplayStyle.Image
         tbSolution.BackColor = ColorTranslator.FromHtml("#8a8a88")
-        lstFiles.BackColor = ColorTranslator.FromHtml("#8a8a88")
-        lstFiles.ForeColor = Color.White
         tcTools.BackColor = ColorTranslator.FromHtml("#8a8a88")
         tcMain.BackColor = ColorTranslator.FromHtml("#8a8a88")
         BackColor = ColorTranslator.FromHtml("#888888")
@@ -102,7 +99,7 @@ Public Class frmMain
     End Sub
 
     Private Sub tcMain_TabStripItemSelectionChanged(e As FarsiLibrary.Win.TabStripItemChangedEventArgs) Handles tcMain.TabStripItemSelectionChanged
-        CurrentTB = CType(e.Item, CodeTab).TxtEditor
+        CurrentTB = DirectCast(e.Item, EditorCodeTab).txtEditor
     End Sub
 
     Private Sub frmMain_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -122,16 +119,19 @@ Public Class frmMain
 #Region "Build"
 
     Private Async Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
-        If Not Await Build() Then
+        If CurrentSolution IsNot Nothing AndAlso Not Await Build() Then
             MessageBox.Show("Build failed!")
         End If
     End Sub
 
     Private Async Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
-        If Not Await Build() Then
-            MessageBox.Show("Build failed!")
+        If CurrentSolution IsNot Nothing Then
+            If Not Await Build() Then
+                MessageBox.Show("Build failed!")
+            Else
+                'TODO: Start the program
+            End If
         End If
-        'TODO: Start the program
     End Sub
 
     Private Async Function Build() As Task(Of Boolean)
@@ -150,25 +150,19 @@ Public Class frmMain
 #Region "Files"
 
     Private Sub tbObjectExplorer_Naviagte(sender As Object, e As Integer) Handles tbStructure.Naviagte
-        CurrentTB.SelectionStart = e
-        CurrentTB.OnSelectionChanged()
+
     End Sub
 
     Private Sub btnNewFile_Click(sender As Object, e As EventArgs) Handles btnNewFile.Click, btnNewContext.Click
-        frmNewFile.ShowDialog()
-        lstFiles.Items.Clear()
+
     End Sub
 
     Private Sub btnReferences_Click(sender As Object, e As EventArgs) Handles btnReferences.Click
-        frmReferences_OLD.ShowDialog()
+
     End Sub
 
     Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
-        'Dim ofd As New OpenFileDialog
-        'ofd.Filter = $"Code files (*.{Language})|*.{Language}"
-        'If ofd.ShowDialog() = DialogResult.OK Then
 
-        'End If
     End Sub
 
     Private Sub btnDeleteContext_Click(sender As Object, e As EventArgs) Handles btnDeleteContext.Click
@@ -177,7 +171,7 @@ Public Class frmMain
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim objTab As Object = tcMain.SelectedItem
-        objTab.Save()
+        If objTab IsNot Nothing Then objTab.Save()
     End Sub
 
     Private Sub btnSaveAll_Click(sender As Object, e As EventArgs) Handles btnSaveAll.Click
@@ -187,20 +181,9 @@ Public Class frmMain
     End Sub
 
     Private Sub seExplorer_Open(sender As Object, e As String) Handles seExplorer.Open
-        Dim objTab As CodeTab
-        Dim strExt As String = Path.GetExtension(e)
-        If strExt = ".cs" Then
-            objTab = New CodeTab(FastColoredTextBoxNS.Language.CSharp, "")
-        ElseIf strExt = ".vb" Then
-            objTab = New CodeTab(FastColoredTextBoxNS.Language.VB, "")
-        Else
-            objTab = New CodeTab(FastColoredTextBoxNS.Language.Custom, "")
-        End If
-        objTab.FilePath = e
-        objTab.Init()
+        Dim objTab As New EditorCodeTab(e)
         tcMain.Items.Add(objTab)
         tcMain.SelectedItem = objTab
-        CurrentTB.ClearUndo()
     End Sub
 
 #End Region
@@ -226,31 +209,31 @@ Public Class frmMain
 #Region "CommandButtons"
 
     Private Sub btnUndo_Click(sender As Object, e As EventArgs) Handles btnUndo.Click
-        CurrentTB.Undo()
+        If CurrentTB IsNot Nothing Then CurrentTB.Undo()
     End Sub
 
     Private Sub btnRedo_Click(sender As Object, e As EventArgs) Handles btnRedo.Click
-        CurrentTB.Redo()
+        If CurrentTB IsNot Nothing Then CurrentTB.Redo()
     End Sub
 
     Private Sub btnComment_Click(sender As Object, e As EventArgs) Handles btnComment.Click
-        CurrentTB.CommentSelected()
+
     End Sub
 
     Private Sub btnCut_Click(sender As Object, e As EventArgs) Handles btnCut.Click
-        CurrentTB.Cut()
+
     End Sub
 
     Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
-        CurrentTB.Copy()
+
     End Sub
 
     Private Sub btnPaste_Click(sender As Object, e As EventArgs) Handles btnPaste.Click
-        CurrentTB.Paste()
+
     End Sub
 
     Private Sub btnDeleteText_Click(sender As Object, e As EventArgs) Handles btnDeleteText.Click
-        CurrentTB.Text.Remove(CurrentTB.SelectionStart, CurrentTB.SelectionLength)
+
     End Sub
 
 #End Region

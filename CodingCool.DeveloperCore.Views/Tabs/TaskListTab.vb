@@ -30,33 +30,33 @@ Public Class TaskListTab
     End Sub
 
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
-        tmrLoad = New System.Windows.Forms.Timer(components)
-        dgvTasks = New System.Windows.Forms.DataGridView
-        CType(dgvTasks, System.ComponentModel.ISupportInitialize).BeginInit()
-        SuspendLayout()
+        Me.components = New System.ComponentModel.Container()
+        Me.tmrLoad = New System.Windows.Forms.Timer(Me.components)
+        Me.dgvTasks = New System.Windows.Forms.DataGridView()
+        CType(Me.dgvTasks,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'tmrLoad
         '
-        tmrLoad.Interval = 5000
+        Me.tmrLoad.Interval = 5000
         '
         'dgvTasks
         '
-        dgvTasks.AllowUserToAddRows = False
-        dgvTasks.AllowUserToDeleteRows = False
-        dgvTasks.AllowUserToResizeRows = False
-        dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTasks.Dock = System.Windows.Forms.DockStyle.Fill
-        dgvTasks.Location = New System.Drawing.Point(0, 0)
-        dgvTasks.MultiSelect = False
-        dgvTasks.Name = "dgvTasks"
-        dgvTasks.ReadOnly = True
-        dgvTasks.Size = New System.Drawing.Size(240, 150)
-        dgvTasks.TabIndex = 0
-        CType(dgvTasks, System.ComponentModel.ISupportInitialize).EndInit()
-        ResumeLayout(False)
+        Me.dgvTasks.AllowUserToAddRows = false
+        Me.dgvTasks.AllowUserToDeleteRows = false
+        Me.dgvTasks.AllowUserToResizeRows = false
+        Me.dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvTasks.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvTasks.Location = New System.Drawing.Point(0, 0)
+        Me.dgvTasks.MultiSelect = false
+        Me.dgvTasks.Name = "dgvTasks"
+        Me.dgvTasks.ReadOnly = true
+        Me.dgvTasks.Size = New System.Drawing.Size(240, 150)
+        Me.dgvTasks.TabIndex = 0
+        CType(Me.dgvTasks,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
 
-    End Sub
+End Sub
 
 #End Region
 

@@ -56,23 +56,20 @@ Partial Class frmMain
         Me.tcTools = New FarsiLibrary.Win.FATabStrip()
         Me.tcViews = New System.Windows.Forms.TabControl()
         Me.tbSolution = New System.Windows.Forms.TabPage()
+        Me.seExplorer = New CodingCool.DeveloperCore.SolutionExplorer.RoslynSolutionExplorer()
         Me.menuFiles = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.btnNewContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnDeleteContext = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnExistingContext = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tpProperties = New System.Windows.Forms.TabPage()
         Me.tcMain = New FarsiLibrary.Win.FATabStrip()
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
         Me.tmrObjectExplorer = New System.Windows.Forms.Timer(Me.components)
-        Me.lstFiles = New System.Windows.Forms.ListView()
-        Me.seExplorer = New CodingCool.DeveloperCore.SolutionExplorer.RoslynSolutionExplorer()
         Me.MenuStrip1.SuspendLayout
         CType(Me.tcTools,System.ComponentModel.ISupportInitialize).BeginInit
         Me.tcViews.SuspendLayout
         Me.tbSolution.SuspendLayout
         Me.menuFiles.SuspendLayout
-        Me.tpProperties.SuspendLayout
         CType(Me.tcMain,System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.splitterMain,System.ComponentModel.ISupportInitialize).BeginInit
         Me.splitterMain.Panel1.SuspendLayout
@@ -287,7 +284,6 @@ Partial Class frmMain
         'tcViews
         '
         Me.tcViews.Controls.Add(Me.tbSolution)
-        Me.tcViews.Controls.Add(Me.tpProperties)
         Me.tcViews.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcViews.Location = New System.Drawing.Point(0, 0)
         Me.tcViews.Name = "tcViews"
@@ -305,6 +301,17 @@ Partial Class frmMain
         Me.tbSolution.TabIndex = 0
         Me.tbSolution.Text = "Solution Explorer"
         Me.tbSolution.UseVisualStyleBackColor = true
+        '
+        'seExplorer
+        '
+        Me.seExplorer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.seExplorer.ImageIndex = 0
+        Me.seExplorer.LabelEdit = true
+        Me.seExplorer.Location = New System.Drawing.Point(3, 3)
+        Me.seExplorer.Name = "seExplorer"
+        Me.seExplorer.SelectedImageIndex = 0
+        Me.seExplorer.Size = New System.Drawing.Size(257, 570)
+        Me.seExplorer.TabIndex = 1
         '
         'menuFiles
         '
@@ -330,17 +337,6 @@ Partial Class frmMain
         Me.btnExistingContext.Name = "btnExistingContext"
         Me.btnExistingContext.Size = New System.Drawing.Size(115, 22)
         Me.btnExistingContext.Text = "Existing"
-        '
-        'tpProperties
-        '
-        Me.tpProperties.Controls.Add(Me.lstFiles)
-        Me.tpProperties.Location = New System.Drawing.Point(4, 22)
-        Me.tpProperties.Name = "tpProperties"
-        Me.tpProperties.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpProperties.Size = New System.Drawing.Size(263, 576)
-        Me.tpProperties.TabIndex = 2
-        Me.tpProperties.Text = "Properties"
-        Me.tpProperties.UseVisualStyleBackColor = true
         '
         'tcMain
         '
@@ -390,29 +386,6 @@ Partial Class frmMain
         '
         Me.tmrObjectExplorer.Interval = 1000
         '
-        'lstFiles
-        '
-        Me.lstFiles.ContextMenuStrip = Me.menuFiles
-        Me.lstFiles.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lstFiles.HideSelection = false
-        Me.lstFiles.Location = New System.Drawing.Point(3, 3)
-        Me.lstFiles.Name = "lstFiles"
-        Me.lstFiles.Size = New System.Drawing.Size(257, 570)
-        Me.lstFiles.TabIndex = 5
-        Me.lstFiles.UseCompatibleStateImageBehavior = false
-        Me.lstFiles.View = System.Windows.Forms.View.List
-        '
-        'seExplorer
-        '
-        Me.seExplorer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.seExplorer.ImageIndex = 0
-        Me.seExplorer.LabelEdit = true
-        Me.seExplorer.Location = New System.Drawing.Point(3, 3)
-        Me.seExplorer.Name = "seExplorer"
-        Me.seExplorer.SelectedImageIndex = 0
-        Me.seExplorer.Size = New System.Drawing.Size(257, 570)
-        Me.seExplorer.TabIndex = 1
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
@@ -429,7 +402,6 @@ Partial Class frmMain
         Me.tcViews.ResumeLayout(false)
         Me.tbSolution.ResumeLayout(false)
         Me.menuFiles.ResumeLayout(false)
-        Me.tpProperties.ResumeLayout(false)
         CType(Me.tcMain,System.ComponentModel.ISupportInitialize).EndInit
         Me.splitterMain.Panel1.ResumeLayout(false)
         Me.splitterMain.Panel2.ResumeLayout(false)
@@ -473,7 +445,6 @@ End Sub
     Friend WithEvents btnViewOutput As ToolStripMenuItem
     Friend WithEvents splitterMain As SplitContainer
     Friend WithEvents splitterEdit As SplitContainer
-    Friend WithEvents tpProperties As TabPage
     Friend WithEvents ToolsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnTaskList As ToolStripMenuItem
     Friend WithEvents btnErrorList As ToolStripMenuItem
@@ -484,5 +455,4 @@ End Sub
     Friend WithEvents btnDeleteText As ToolStripMenuItem
     Friend WithEvents btnPaste As ToolStripMenuItem
     Friend WithEvents seExplorer As SolutionExplorer.RoslynSolutionExplorer
-    Friend WithEvents lstFiles As ListView
 End Class

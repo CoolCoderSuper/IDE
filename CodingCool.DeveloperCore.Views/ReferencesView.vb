@@ -25,7 +25,6 @@ Public Class ReferencesView
         dgvGAC.Columns(0).Width = 200
     End Sub
 
-    'TODO: Fix the stupid thing
     Private Sub LoadCOM()
         Dim lCLSID As String() = CType(Registry.ClassesRoot.GetValue("CLSID"), RegistryKey).GetSubKeyNames
         Dim lResult As New List(Of GridCOMRef)
