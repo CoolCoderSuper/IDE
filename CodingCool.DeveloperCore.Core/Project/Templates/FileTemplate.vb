@@ -1,4 +1,7 @@
 ﻿Imports System.Drawing
+Imports System.IO
+Imports System.Reflection
+Imports Nustache.Core
 
 ''' <summary>
 ''' Represents a template for creating a file.
@@ -6,7 +9,7 @@
 Public Class FileTemplate
 
     Public Sub New()
-        Files = New Dictionary(Of String, Byte())
+        Variables = New Dictionary(Of String, String)
     End Sub
 
     ''' <summary>
@@ -16,46 +19,77 @@ Public Class FileTemplate
     Public Property Id As String
 
     ''' <summary>
-    ''' The name of the template.
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Name As String
-
-    ''' <summary>
-    ''' The category for this template.
+    ''' The id of the category.
     ''' </summary>
     ''' <returns></returns>
     Public Property Category As String
 
     ''' <summary>
-    ''' The icon for the template.
+    ''' The icon for this template.
     ''' </summary>
     ''' <returns></returns>
-    Public Property Icon As Image
+    Public Property Icon As Icon
 
     ''' <summary>
-    ''' The bare-bones file entity the template creates.
+    ''' The name of the file.
     ''' </summary>
     ''' <returns></returns>
-    Public Property File As Object'File
+    Public Property Name As String
 
     ''' <summary>
-    ''' The files which to create.
+    ''' Additional variables stored
     ''' </summary>
     ''' <returns></returns>
-    Public Property Files As Dictionary(Of String, Byte())
+    Public Property Variables As Dictionary(Of String, String)
 
     ''' <summary>
-    ''' Creates the file.
+    ''' The template of the file.
     ''' </summary>
-    ''' <param name="pr">The project to add the file to.</param>
-    ''' <returns>The updated project.</returns>
-    Public Function Create(pr As Object) As Object'Project) As Project
-        For Each f As KeyValuePair(Of String, Byte()) In Files
-            IO.File.WriteAllBytes(f.Key, f.Value)
+    ''' <returns></returns>
+    Public Property Template As String
+
+    ''' <summary>
+    ''' The assembly run the action from.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property AssemblyPath As String
+
+    ''' <summary>
+    ''' The type where the action is.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Type As String
+
+    ''' <summary>
+    ''' The name of the static method to call.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Action As String
+
+    ''' <summary>
+    ''' The extension if the file.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Extension As String
+
+    ''' <summary>
+    ''' Creates the file, applying the template, and runs the specified action.
+    ''' </summary>
+    ''' <param name="strPath">The path to save the file to.</param>
+    ''' <returns>The contents of the file.</returns>
+    Public Function Create(strPath As String) As String
+        Variables.Add("name", Name)
+        Dim res As Object = Assembly.LoadFile(AssemblyPath).GetType(Type).GetMethod(Action, BindingFlags.Static).Invoke(Nothing, {})
+        Template = res.Template
+        For Each val As KeyValuePair(Of String, String) In res.Variables
+            Variables.Add(val.Key, val.Value)
         Next
-        pr.Files.Add(File)
-        Return pr
+        Dim strContent As String = Render.StringToString(Template, Variables)
+        If Path.GetExtension(strPath) = "" Then
+            strPath &= Extension
+        End If
+        File.WriteAllText(strPath, strContent)
+        Return strContent
     End Function
 
 End Class

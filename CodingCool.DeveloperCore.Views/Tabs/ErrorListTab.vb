@@ -1,6 +1,7 @@
-﻿Imports CodingCool.DeveloperCore.Core
+﻿Imports System.Windows.Forms
+Imports CodingCool.DeveloperCore.Core
 Imports FarsiLibrary.Win
-Imports System.Windows.Forms
+Imports Microsoft.CodeAnalysis
 
 Public Class ErrorListTab
     Inherits FATabStripItem
@@ -15,20 +16,20 @@ Public Class ErrorListTab
 
     Public Property Language As String
     Public Property Errors As New List(Of ErrorItem)
+    Public Property Solution As Solution
 
 #Region "Intialization"
 
     Public Sub New()
         InitializeComponent()
-        tmrLoad.Start()
     End Sub
 
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.tmrLoad = New System.Windows.Forms.Timer(Me.components)
         Me.dgvErrors = New System.Windows.Forms.DataGridView()
-        CType(Me.dgvErrors,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.SuspendLayout
+        CType(Me.dgvErrors, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
         '
         'tmrLoad
         '
@@ -36,15 +37,15 @@ Public Class ErrorListTab
         '
         'dgvErrors
         '
-        Me.dgvErrors.AllowUserToAddRows = false
-        Me.dgvErrors.AllowUserToDeleteRows = false
-        Me.dgvErrors.AllowUserToResizeRows = false
+        Me.dgvErrors.AllowUserToAddRows = False
+        Me.dgvErrors.AllowUserToDeleteRows = False
+        Me.dgvErrors.AllowUserToResizeRows = False
         Me.dgvErrors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvErrors.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvErrors.Location = New System.Drawing.Point(0, 0)
-        Me.dgvErrors.MultiSelect = false
+        Me.dgvErrors.MultiSelect = False
         Me.dgvErrors.Name = "dgvErrors"
-        Me.dgvErrors.ReadOnly = true
+        Me.dgvErrors.ReadOnly = True
         Me.dgvErrors.Size = New System.Drawing.Size(200, 100)
         Me.dgvErrors.TabIndex = 0
         '
@@ -52,10 +53,10 @@ Public Class ErrorListTab
         '
         Me.Controls.Add(Me.dgvErrors)
         Me.Title = "Error List"
-        CType(Me.dgvErrors,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ResumeLayout(false)
+        CType(Me.dgvErrors, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
 
-End Sub
+    End Sub
 
 #End Region
 
@@ -65,21 +66,29 @@ End Sub
         Errors = lErrors.Concat(Errors).ToList
     End Sub
 
-    Public Sub Reload
+    Public Sub Reload()
         dgvErrors.DataSource = Helpers.QueryableToDataTable(Errors)
     End Sub
 
-    Private Sub tmrLoad_Tick(sender As Object, e As EventArgs) Handles tmrLoad.Tick
-        Load()
+    Public sub Start
+        tmrLoad.Start
+    End sub
+
+    Public sub [Stop]
+        tmrLoad.Stop
+    End sub
+
+    Private Async Sub tmrLoad_Tick(sender As Object, e As EventArgs) Handles tmrLoad.Tick
+        tmrLoad.Stop
+        Await Load()
+        tmrLoad.Start
     End Sub
 
-    Private Sub Load()
-        'Dim objHelper As New Core.ErrorHelper
-        '
-        'If dgvErrors.DataSource IsNot dtResults Then
-        '    dgvErrors.DataSource = dtResults
-        'End If
-    End Sub
+    Private Async Function Load() As Task
+        Dim objHelper As New ErrorHelper
+        Errors = Await objHelper.GetErrors(Solution)
+        Reload()
+    End Function
 
 #End Region
 

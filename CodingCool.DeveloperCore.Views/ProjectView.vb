@@ -25,20 +25,16 @@ Public Class ProjectView
 
     Private Sub LoadImages()
         For Each t As Core.ProjectTemplate In PRTemplates.Templates
-            ilTemplates.Images.Add(t.Id, t.Icon)
+
         Next
     End Sub
 
     Private Sub tvCategories_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvCategories.AfterSelect
         lvTemplates.Items.Clear()
-        For Each t As Core.ProjectTemplate In PRTemplates.Templates.Where(Function(x) x.Category = e.Node.Name)
-            Dim item As New ListViewItem
-            item.Text = t.Name
-            item.Name = t.Id
-            item.Tag = t
-            item.ImageKey = t.Id
-            lvTemplates.Items.Add(item)
-        Next
+        'For Each t As Core.ProjectTemplate In PRTemplates.Templates.Where(Function(x) x.Category = e.Node.Name)
+        '    Dim item As New ListViewItem
+        '    lvTemplates.Items.Add(item)
+        'Next
     End Sub
 
 End Class

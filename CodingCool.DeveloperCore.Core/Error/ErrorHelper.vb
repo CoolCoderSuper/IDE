@@ -10,8 +10,12 @@ Public Class ErrorHelper
     ''' </summary>
     ''' <param name="sln">The solution to check.</param>
     ''' <returns></returns>
-    Public Function GetErrors(sln As Solution) As List(Of ErrorItem)
+    Public Async Function GetErrors(sln As Solution) As Task(Of List(Of ErrorItem))
         Dim lDiagnostics As New List(Of Diagnostic)
+        For Each proj As Project In sln.Projects
+           Dim comp As Compilation = Await proj.GetCompilationAsync
+           lDiagnostics.AddRange(comp.GetDiagnostics.ToArray)
+        Next
         Return ConvertDiagnostic(lDiagnostics)
     End Function
 

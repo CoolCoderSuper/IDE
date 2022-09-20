@@ -226,12 +226,6 @@
     <Compile Include="frmOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTest.Designer.vb">
-      <DependentUpon>frmTest.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmTest.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -275,9 +269,6 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTest.resx">
-      <DependentUpon>frmTest.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="frmNewProject.resx">
       <DependentUpon>frmNewProject.vb</DependentUpon>
@@ -306,10 +297,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodingCool.DeveloperCore.Code.Common\CodingCool.DeveloperCore.Code.vbproj">
-      <Project>{d759b67d-e06b-4795-83d1-538b6fa92d2d}</Project>
-      <Name>CodingCool.DeveloperCore.Code</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CodingCool.DeveloperCore.Core\CodingCool.DeveloperCore.Core.vbproj">
       <Project>{E13EE95D-015B-42A5-9CE2-2EE3F378A17C}</Project>
       <Name>CodingCool.DeveloperCore.Core</Name>
@@ -322,7 +309,7 @@
       <Project>{203943ae-d821-409a-8ab3-9d8929fac0cb}</Project>
       <Name>CodingCool.DeveloperCore.Icons.Commands</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodingCool.DeveloperCore.ObjectExplorer\CodingCool.DeveloperCore.Structure.vbproj">
+    <ProjectReference Include="..\CodingCool.DeveloperCore.Structure\CodingCool.DeveloperCore.Structure.vbproj">
       <Project>{3DCE28C7-09F6-49C6-B26F-62B56E9A2F59}</Project>
       <Name>CodingCool.DeveloperCore.Structure</Name>
     </ProjectReference>

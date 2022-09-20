@@ -199,8 +199,13 @@ Public Class frmMain
         ofd.Multiselect = False
         ofd.Filter = "Solution files (*.sln)|*.sln"
         If ofd.ShowDialog() = DialogResult.OK Then
+            tbErrorList.Stop
             CurrentSolution = Await SolutionParser.LoadSolution(ofd.FileName)
             seExplorer.LoadMSBuild(CurrentSolution.FilePath)
+            tbErrorList.Errors.Clear
+            tbErrorList.Reload
+            tbErrorList.Solution = CurrentSolution
+            tbErrorList.Start
         End If
     End Sub
 

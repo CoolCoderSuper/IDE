@@ -28,13 +28,6 @@ Public Class ProjectTemplateManager
         Dim objDoc As XDocument = XDocument.Load(TemplateSettings)
         For Each el As XElement In objDoc.Element("Templates").Elements("Template")
             Dim objTemplate As New ProjectTemplate
-            objTemplate.Id = el.Element("Id").Value
-            objTemplate.Name = el.Element("Name").Value
-            objTemplate.Category = el.Element("Category").Value
-            objTemplate.Icon = Image.FromFile(el.Element("Icon").Value)
-            'objTemplate.Project = SolutionParser.ParseProject(el.Element("Project"))
-            'objTemplate.Folders = el.Element("Folders").ToFolders
-            'objTemplate.Files = el.Element("Files").ToFileValueSet
             Templates.Add(objTemplate)
         Next
     End Sub
