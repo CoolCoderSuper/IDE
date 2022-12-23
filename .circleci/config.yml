@@ -19,7 +19,7 @@ jobs:
           command: |
             $ProgressPreference = "SilentlyContinue"
             
-            msbuild "DeveloperCore\DeveloperCore.vbproj" /p:Configuration=Release /t:restore,build /p:RestorePackagesConfig=true
+            msbuild "DeveloperCore.sln" /p:Configuration=Release /t:restore,build /p:RestorePackagesConfig=true
 workflows:
   version: 2
   build_and_upload_artifact:
