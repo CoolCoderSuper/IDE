@@ -11,7 +11,7 @@ Public Class TemplateCategoryManager
     ''' The location of the category settings file.
     ''' </summary>
     ''' <returns></returns>
-    Public Property CategorySettings As String
+    Public Shared Property CategorySettings As String
 
     ''' <summary>
     ''' The list of available templates.

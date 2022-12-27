@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:dev="using:DeveloperCore.Avalonia"
+		xmlns:editor="using:AvaloniaEdit"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DeveloperCore.Avalonia.MainWindow"
+        Title="DeveloperCore.Avalonia">
+	<Grid ColumnDefinitions="Auto,*">
+		<TabControl FontSize="12" Width="250">
+			<TabItem FontSize="12" Header="Solution Explorer">
+				<DockPanel>
+					<editor:TextEditor Name="Editor"
+					   Background="Transparent" ShowLineNumbers="True"
+					   FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
+					   Margin="30"
+					   Foreground="#D4D4D4"
+					   HorizontalScrollBarVisibility="Auto"
+					   VerticalScrollBarVisibility="Visible"
+					   FontWeight="Light"
+					   FontSize="14" />
+				</DockPanel>
+
+			</TabItem>
+			<TabItem FontSize="12" Header="Structure">
+				<dev:RoslynStructureView/>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</Window>

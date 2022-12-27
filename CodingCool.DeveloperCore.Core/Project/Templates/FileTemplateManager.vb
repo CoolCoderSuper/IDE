@@ -14,7 +14,7 @@ Public Class FileTemplateManager
     ''' The location of the template settings file.
     ''' </summary>
     ''' <returns></returns>
-    Public Property TemplateSettings As String
+    Public Shared Property TemplateSettings As String
 
     ''' <summary>
     ''' The list of available templates.
@@ -37,8 +37,18 @@ Public Class FileTemplateManager
                 .AssemblyPath = el.Element("AssemblyPath").Value
                 .Template = el.Element("Template").Value
                 .Type = el.Element("Type").Value
-                .Type = el.Element("Extension").Value
-                .Icon = New Icon(New MemoryStream(Convert.FromBase64String(el.Element("Icon").Value)))
+                .Extension = el.Element("Extension").Value
+                Dim strIcon As String = el.Element("Icon").Value
+                If strIcon = Nothing Then
+                    .Icon = Nothing
+                ElseIf File.Exists(strIcon) Then
+                    .Icon = Image.FromStream(New MemoryStream(File.ReadAllBytes(strIcon)))
+                Else
+                    .Icon = Image.FromStream(New MemoryStream(Convert.FromBase64String(strIcon)))
+                End If
+                For Each varEl As XElement In el.Elements("Variables")
+                    .Variables.Add(varEl.Name.ToString, varEl.Value)
+                Next
             End With
             Templates.Add(objTemplate)
         Next

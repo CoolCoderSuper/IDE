@@ -1,6 +1,6 @@
 ﻿Imports System.Reflection
+Imports System.Text
 Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' Some random helper methods I find useful.
@@ -81,9 +81,49 @@ Public Class Helpers
         Return True
     End Function
 
+    ''' <summary>
+    ''' Gets the relative path from absolute path.
+    ''' </summary>
+    ''' <param name="strRootDir"></param>
+    ''' <param name="strTargFilepath"></param>
+    ''' <param name="strPreferredSeparator"></param>
+    ''' <returns></returns>
+    Public Shared Function AbsolutePathToRelativePath(ByVal strRootDir As String, ByVal strTargFilepath As String, ByVal Optional strPreferredSeparator As String = "\") As String
+        If Equals(strRootDir, Nothing) OrElse Equals(strTargFilepath, Nothing) Then Return Nothing
+
+        Dim strSeps As String() = New String() {strPreferredSeparator}
+
+        If strRootDir.Length = 0 OrElse strTargFilepath.Length = 0 Then Return strTargFilepath
+
+        ' Convert to arrays
+        Dim strRootFolders As String() = strRootDir.Split(strSeps, StringSplitOptions.None)
+        Dim strTargFolders As String() = strTargFilepath.Split(strSeps, StringSplitOptions.None)
+        If String.Compare(strRootFolders(0), strTargFolders(0), StringComparison.OrdinalIgnoreCase) <> 0 Then Return strTargFilepath
+
+        ' Count common root folders
+        Dim i As Integer = 0
+        Dim listRelFolders As List(Of String) = New List(Of String)()
+        For i = 0 To strRootFolders.Length - 1
+            If String.Compare(strRootFolders(i), strTargFolders(i), StringComparison.OrdinalIgnoreCase) <> 0 Then Exit For
+        Next
+
+        For k = i To strTargFolders.Length - 1
+            listRelFolders.Add(strTargFolders(k))
+        Next
+
+        Dim sb As StringBuilder = New StringBuilder()
+        If i > 0 Then
+            ' Note: the last element of strTargFolders is actually the filename, so must adjust count for that
+            For j = 0 To strRootFolders.Length - i - 1
+                sb.Append("..")
+                sb.Append(strPreferredSeparator)
+            Next
+        End If
+
+        Return sb.Append(String.Join(strPreferredSeparator, listRelFolders.ToArray())).ToString()
+    End Function
+
 End Class
-
-
 
 Public Class AsyncHelper
     Private Shared ReadOnly _myTaskFactory As TaskFactory = New TaskFactory(CancellationToken.None, TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.[Default])

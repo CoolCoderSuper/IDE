@@ -22,13 +22,7 @@ Partial Class FileView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
-        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("VB", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
-        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows application")
-        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WPF")
-        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("C#", New System.Windows.Forms.TreeNode() {TreeNode4, TreeNode5})
-        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Other")
+        Me.components = New System.ComponentModel.Container()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.lblDescription = New System.Windows.Forms.Label()
@@ -37,6 +31,7 @@ Partial Class FileView
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.tvCategories = New System.Windows.Forms.TreeView()
         Me.lvTemplates = New System.Windows.Forms.ListView()
+        Me.ilItems = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.SplitContainer1,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SplitContainer1.Panel1.SuspendLayout
         Me.SplitContainer1.Panel2.SuspendLayout
@@ -45,8 +40,9 @@ Partial Class FileView
         '
         'Label3
         '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = true
-        Me.Label3.Location = New System.Drawing.Point(32, 372)
+        Me.Label3.Location = New System.Drawing.Point(32, 373)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(41, 13)
         Me.Label3.TabIndex = 25
@@ -54,23 +50,28 @@ Partial Class FileView
         '
         'txtName
         '
-        Me.txtName.Location = New System.Drawing.Point(161, 369)
+        Me.txtName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.txtName.Location = New System.Drawing.Point(161, 370)
         Me.txtName.Name = "txtName"
-        Me.txtName.Size = New System.Drawing.Size(428, 20)
+        Me.txtName.Size = New System.Drawing.Size(429, 20)
         Me.txtName.TabIndex = 20
         '
         'lblDescription
         '
+        Me.lblDescription.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.lblDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblDescription.Location = New System.Drawing.Point(11, 334)
+        Me.lblDescription.Location = New System.Drawing.Point(11, 335)
         Me.lblDescription.Name = "lblDescription"
-        Me.lblDescription.Size = New System.Drawing.Size(578, 23)
+        Me.lblDescription.Size = New System.Drawing.Size(579, 23)
         Me.lblDescription.TabIndex = 19
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = true
-        Me.Label2.Location = New System.Drawing.Point(200, 11)
+        Me.Label2.Location = New System.Drawing.Point(150, 11)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(62, 13)
         Me.Label2.TabIndex = 16
@@ -87,6 +88,9 @@ Partial Class FileView
         '
         'SplitContainer1
         '
+        Me.SplitContainer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
+            Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.SplitContainer1.Location = New System.Drawing.Point(11, 35)
         Me.SplitContainer1.Name = "SplitContainer1"
         '
@@ -98,7 +102,7 @@ Partial Class FileView
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.lvTemplates)
         Me.SplitContainer1.Size = New System.Drawing.Size(578, 296)
-        Me.SplitContainer1.SplitterDistance = 188
+        Me.SplitContainer1.SplitterDistance = 138
         Me.SplitContainer1.TabIndex = 14
         '
         'tvCategories
@@ -106,33 +110,27 @@ Partial Class FileView
         Me.tvCategories.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tvCategories.Location = New System.Drawing.Point(0, 0)
         Me.tvCategories.Name = "tvCategories"
-        TreeNode1.Name = "NVWIN"
-        TreeNode1.Text = "Windows application"
-        TreeNode2.Name = "NVBWPF"
-        TreeNode2.Text = "WPF"
-        TreeNode3.Name = "NVB"
-        TreeNode3.Text = "VB"
-        TreeNode4.Name = "NCWIN"
-        TreeNode4.Text = "Windows application"
-        TreeNode5.Name = "NCWPF"
-        TreeNode5.Text = "WPF"
-        TreeNode6.Name = "NCS"
-        TreeNode6.Text = "C#"
-        TreeNode7.Name = "NOTHER"
-        TreeNode7.Text = "Other"
-        Me.tvCategories.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6, TreeNode7})
-        Me.tvCategories.Size = New System.Drawing.Size(188, 296)
+        Me.tvCategories.Size = New System.Drawing.Size(138, 296)
         Me.tvCategories.TabIndex = 0
         '
         'lvTemplates
         '
         Me.lvTemplates.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lvTemplates.HideSelection = false
+        Me.lvTemplates.LargeImageList = Me.ilItems
         Me.lvTemplates.Location = New System.Drawing.Point(0, 0)
+        Me.lvTemplates.MultiSelect = false
         Me.lvTemplates.Name = "lvTemplates"
-        Me.lvTemplates.Size = New System.Drawing.Size(386, 296)
+        Me.lvTemplates.Size = New System.Drawing.Size(436, 296)
+        Me.lvTemplates.SmallImageList = Me.ilItems
         Me.lvTemplates.TabIndex = 0
         Me.lvTemplates.UseCompatibleStateImageBehavior = false
+        '
+        'ilItems
+        '
+        Me.ilItems.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit
+        Me.ilItems.ImageSize = New System.Drawing.Size(16, 16)
+        Me.ilItems.TransparentColor = System.Drawing.Color.Transparent
         '
         'FileView
         '
@@ -145,7 +143,7 @@ Partial Class FileView
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Name = "FileView"
-        Me.Size = New System.Drawing.Size(597, 397)
+        Me.Size = New System.Drawing.Size(598, 397)
         Me.SplitContainer1.Panel1.ResumeLayout(false)
         Me.SplitContainer1.Panel2.ResumeLayout(false)
         CType(Me.SplitContainer1,System.ComponentModel.ISupportInitialize).EndInit
@@ -162,4 +160,5 @@ End Sub
     Friend WithEvents SplitContainer1 As Windows.Forms.SplitContainer
     Friend WithEvents tvCategories As Windows.Forms.TreeView
     Friend WithEvents lvTemplates As Windows.Forms.ListView
+    Friend WithEvents ilItems As Windows.Forms.ImageList
 End Class

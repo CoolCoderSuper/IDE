@@ -156,6 +156,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FontComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RoslynStructureView.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tabs\ErrorListTab.vb">
       <SubType>Component</SubType>
     </Compile>

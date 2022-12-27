@@ -21,6 +21,6 @@ Public Class EditorCodeTab
     End Sub
 
     Private Sub txtEditor_TextChanged(sender As Object, e As EventArgs) Handles txtEditor.TextChanged
-        Title = Path.GetFileName(FilePath) & " *"
+        Title = $"{Path.GetFileName(FilePath)} *"
     End Sub
 End Class

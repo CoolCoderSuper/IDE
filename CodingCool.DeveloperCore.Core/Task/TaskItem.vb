@@ -27,4 +27,10 @@ Public Class TaskItem
     ''' <returns></returns>
     Public Property Line As Integer
 
+    ''' <summary>
+    ''' The column in line.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Column As Integer
+
 End Class

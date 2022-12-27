@@ -79,9 +79,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeTab.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="EditorCodeTab.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -103,9 +100,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CodeTab.resx">
-      <DependentUpon>CodeTab.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

@@ -25,15 +25,13 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.mainMenu = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnNewProject = New System.Windows.Forms.ToolStripMenuItem()
         Me.ItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnNew = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnNewFile = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnReferences = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnNewExisting = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnExistingFile = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnOpen = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnSave = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,20 +54,18 @@ Partial Class frmMain
         Me.tcTools = New FarsiLibrary.Win.FATabStrip()
         Me.tcViews = New System.Windows.Forms.TabControl()
         Me.tbSolution = New System.Windows.Forms.TabPage()
-        Me.seExplorer = New CodingCool.DeveloperCore.SolutionExplorer.RoslynSolutionExplorer()
-        Me.menuFiles = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.btnNewContext = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnDeleteContext = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnExistingContext = New System.Windows.Forms.ToolStripMenuItem()
+        Me.seExplorer = New CodingCool.DeveloperCore.SolutionExplorer.MSBuildSolutionExplorer()
+        Me.tpStructure = New System.Windows.Forms.TabPage()
+        Me.rsvStructure = New CodingCool.DeveloperCore.Views.RoslynStructureView()
         Me.tcMain = New FarsiLibrary.Win.FATabStrip()
         Me.splitterMain = New System.Windows.Forms.SplitContainer()
         Me.splitterEdit = New System.Windows.Forms.SplitContainer()
         Me.tmrObjectExplorer = New System.Windows.Forms.Timer(Me.components)
-        Me.MenuStrip1.SuspendLayout
+        Me.mainMenu.SuspendLayout
         CType(Me.tcTools,System.ComponentModel.ISupportInitialize).BeginInit
         Me.tcViews.SuspendLayout
         Me.tbSolution.SuspendLayout
-        Me.menuFiles.SuspendLayout
+        Me.tpStructure.SuspendLayout
         CType(Me.tcMain,System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.splitterMain,System.ComponentModel.ISupportInitialize).BeginInit
         Me.splitterMain.Panel1.SuspendLayout
@@ -81,16 +77,16 @@ Partial Class frmMain
         Me.splitterEdit.SuspendLayout
         Me.SuspendLayout
         '
-        'MenuStrip1
+        'mainMenu
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.btnSave, Me.btnSaveAll, Me.btnCut, Me.btnCopy, Me.btnPaste, Me.btnDeleteText, Me.btnUndo, Me.btnRedo, Me.btnComment, Me.btnStart, Me.btnBuild, Me.ViewToolStripMenuItem, Me.ToolsToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.MenuStrip1.ShowItemToolTips = true
-        Me.MenuStrip1.Size = New System.Drawing.Size(1090, 24)
-        Me.MenuStrip1.TabIndex = 2
-        Me.MenuStrip1.Text = "MenuStrip1"
+        Me.mainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.btnSave, Me.btnSaveAll, Me.btnCut, Me.btnCopy, Me.btnPaste, Me.btnDeleteText, Me.btnUndo, Me.btnRedo, Me.btnComment, Me.btnStart, Me.btnBuild, Me.ViewToolStripMenuItem, Me.ToolsToolStripMenuItem})
+        Me.mainMenu.Location = New System.Drawing.Point(0, 0)
+        Me.mainMenu.Name = "mainMenu"
+        Me.mainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.mainMenu.ShowItemToolTips = true
+        Me.mainMenu.Size = New System.Drawing.Size(1090, 24)
+        Me.mainMenu.TabIndex = 2
+        Me.mainMenu.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
@@ -114,35 +110,22 @@ Partial Class frmMain
         '
         'ItemToolStripMenuItem
         '
-        Me.ItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNew, Me.btnNewExisting})
+        Me.ItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNewFile, Me.btnExistingFile})
         Me.ItemToolStripMenuItem.Name = "ItemToolStripMenuItem"
         Me.ItemToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-        Me.ItemToolStripMenuItem.Text = "Item"
-        '
-        'btnNew
-        '
-        Me.btnNew.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNewFile, Me.btnReferences})
-        Me.btnNew.Name = "btnNew"
-        Me.btnNew.Size = New System.Drawing.Size(115, 22)
-        Me.btnNew.Text = "New"
+        Me.ItemToolStripMenuItem.Text = "File"
         '
         'btnNewFile
         '
         Me.btnNewFile.Name = "btnNewFile"
-        Me.btnNewFile.Size = New System.Drawing.Size(126, 22)
-        Me.btnNewFile.Text = "File"
+        Me.btnNewFile.Size = New System.Drawing.Size(115, 22)
+        Me.btnNewFile.Text = "New"
         '
-        'btnReferences
+        'btnExistingFile
         '
-        Me.btnReferences.Name = "btnReferences"
-        Me.btnReferences.Size = New System.Drawing.Size(126, 22)
-        Me.btnReferences.Text = "Reference"
-        '
-        'btnNewExisting
-        '
-        Me.btnNewExisting.Name = "btnNewExisting"
-        Me.btnNewExisting.Size = New System.Drawing.Size(115, 22)
-        Me.btnNewExisting.Text = "Existing"
+        Me.btnExistingFile.Name = "btnExistingFile"
+        Me.btnExistingFile.Size = New System.Drawing.Size(115, 22)
+        Me.btnExistingFile.Text = "Existing"
         '
         'btnOpen
         '
@@ -284,6 +267,7 @@ Partial Class frmMain
         'tcViews
         '
         Me.tcViews.Controls.Add(Me.tbSolution)
+        Me.tcViews.Controls.Add(Me.tpStructure)
         Me.tcViews.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcViews.Location = New System.Drawing.Point(0, 0)
         Me.tcViews.Name = "tcViews"
@@ -308,35 +292,35 @@ Partial Class frmMain
         Me.seExplorer.ImageIndex = 0
         Me.seExplorer.LabelEdit = true
         Me.seExplorer.Location = New System.Drawing.Point(3, 3)
+        Me.seExplorer.MSBuildSLN = Nothing
         Me.seExplorer.Name = "seExplorer"
         Me.seExplorer.SelectedImageIndex = 0
         Me.seExplorer.Size = New System.Drawing.Size(257, 570)
         Me.seExplorer.TabIndex = 1
         '
-        'menuFiles
+        'tpStructure
         '
-        Me.menuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNewContext, Me.btnDeleteContext, Me.btnExistingContext})
-        Me.menuFiles.Name = "menuFiles"
-        Me.menuFiles.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.menuFiles.Size = New System.Drawing.Size(116, 70)
+        Me.tpStructure.Controls.Add(Me.rsvStructure)
+        Me.tpStructure.Location = New System.Drawing.Point(4, 22)
+        Me.tpStructure.Name = "tpStructure"
+        Me.tpStructure.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpStructure.Size = New System.Drawing.Size(263, 576)
+        Me.tpStructure.TabIndex = 1
+        Me.tpStructure.Text = "Structure"
+        Me.tpStructure.UseVisualStyleBackColor = true
         '
-        'btnNewContext
+        'rsvStructure
         '
-        Me.btnNewContext.Name = "btnNewContext"
-        Me.btnNewContext.Size = New System.Drawing.Size(115, 22)
-        Me.btnNewContext.Text = "New"
-        '
-        'btnDeleteContext
-        '
-        Me.btnDeleteContext.Name = "btnDeleteContext"
-        Me.btnDeleteContext.Size = New System.Drawing.Size(115, 22)
-        Me.btnDeleteContext.Text = "Delete"
-        '
-        'btnExistingContext
-        '
-        Me.btnExistingContext.Name = "btnExistingContext"
-        Me.btnExistingContext.Size = New System.Drawing.Size(115, 22)
-        Me.btnExistingContext.Text = "Existing"
+        Me.rsvStructure.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rsvStructure.ForeColor = System.Drawing.Color.Black
+        Me.rsvStructure.ImageIndex = 0
+        Me.rsvStructure.Loader = Nothing
+        Me.rsvStructure.Location = New System.Drawing.Point(3, 3)
+        Me.rsvStructure.Name = "rsvStructure"
+        Me.rsvStructure.SelectedImageIndex = 0
+        Me.rsvStructure.Size = New System.Drawing.Size(257, 570)
+        Me.rsvStructure.TabIndex = 0
+        Me.rsvStructure.Text = "Structure"
         '
         'tcMain
         '
@@ -392,16 +376,16 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1090, 626)
         Me.Controls.Add(Me.splitterMain)
-        Me.Controls.Add(Me.MenuStrip1)
-        Me.MainMenuStrip = Me.MenuStrip1
+        Me.Controls.Add(Me.mainMenu)
+        Me.MainMenuStrip = Me.mainMenu
         Me.Name = "frmMain"
         Me.Text = "DeveloperCore"
-        Me.MenuStrip1.ResumeLayout(false)
-        Me.MenuStrip1.PerformLayout
+        Me.mainMenu.ResumeLayout(false)
+        Me.mainMenu.PerformLayout
         CType(Me.tcTools,System.ComponentModel.ISupportInitialize).EndInit
         Me.tcViews.ResumeLayout(false)
         Me.tbSolution.ResumeLayout(false)
-        Me.menuFiles.ResumeLayout(false)
+        Me.tpStructure.ResumeLayout(false)
         CType(Me.tcMain,System.ComponentModel.ISupportInitialize).EndInit
         Me.splitterMain.Panel1.ResumeLayout(false)
         Me.splitterMain.Panel2.ResumeLayout(false)
@@ -415,18 +399,15 @@ Partial Class frmMain
         Me.PerformLayout
 
 End Sub
-    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents mainMenu As MenuStrip
     Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnNewProject As ToolStripMenuItem
     Friend WithEvents ItemToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents btnNew As ToolStripMenuItem
-    Friend WithEvents btnNewExisting As ToolStripMenuItem
+    Friend WithEvents btnExistingFile As ToolStripMenuItem
     Friend WithEvents btnOpen As ToolStripMenuItem
     Friend WithEvents btnExit As ToolStripMenuItem
     Friend WithEvents btnStart As ToolStripMenuItem
-    Friend WithEvents btnNewFile As ToolStripMenuItem
-    Friend WithEvents btnReferences As ToolStripMenuItem
     Friend WithEvents btnSave As ToolStripMenuItem
     Friend WithEvents btnSaveAll As ToolStripMenuItem
     Friend WithEvents btnBuild As ToolStripMenuItem
@@ -434,10 +415,6 @@ End Sub
     Friend WithEvents tbSolution As TabPage
     Friend WithEvents tcMain As FATabStrip
     Friend WithEvents tcTools As FATabStrip
-    Friend WithEvents menuFiles As ContextMenuStrip
-    Friend WithEvents btnNewContext As ToolStripMenuItem
-    Friend WithEvents btnDeleteContext As ToolStripMenuItem
-    Friend WithEvents btnExistingContext As ToolStripMenuItem
     Friend WithEvents btnOptions As ToolStripMenuItem
     Friend WithEvents btnUndo As ToolStripMenuItem
     Friend WithEvents btnRedo As ToolStripMenuItem
@@ -454,5 +431,8 @@ End Sub
     Friend WithEvents btnCopy As ToolStripMenuItem
     Friend WithEvents btnDeleteText As ToolStripMenuItem
     Friend WithEvents btnPaste As ToolStripMenuItem
-    Friend WithEvents seExplorer As SolutionExplorer.RoslynSolutionExplorer
+    Friend WithEvents seExplorer As SolutionExplorer.MSBuildSolutionExplorer
+    Friend WithEvents btnNewFile As ToolStripMenuItem
+    Friend WithEvents tpStructure As TabPage
+    Friend WithEvents rsvStructure As Views.RoslynStructureView
 End Class

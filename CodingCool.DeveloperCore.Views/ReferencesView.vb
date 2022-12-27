@@ -1,65 +1,113 @@
 ﻿Imports System.IO
-Imports System.Reflection.Metadata
-Imports System.Reflection.PortableExecutable
-Imports System.Runtime.InteropServices
-Imports System.Text
-Imports System.Text.RegularExpressions
-Imports CodingCool.DeveloperCore.Views.ICSharpCode.Decompiler.Metadata
-Imports ICSharpCode.Decompiler.Metadata
-Imports Microsoft.Win32
+Imports System.Reflection
+Imports System.Windows.Forms
+Imports CodingCool.DeveloperCore.Core
 
+'TODO: Save the browse list
 Public Class ReferencesView
+    Private lGacResults As List(Of AssemblyName)
+    Private lComResults As List(Of TypeLibrary)
+
+    Public ReadOnly Property Results As IEnumerable(Of Object)
+        Get
+            Return lvSelected.Items.OfType(Of ListViewItem).Select(Function(x) x.Tag).AsEnumerable
+        End Get
+    End Property
+
+    Public WriteOnly Property Projects As Dictionary(Of String, String)
+        Set(value As Dictionary(Of String, String))
+
+        End Set
+    End Property
+
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    Private Sub ReferencesView_Load(sender As Object, e As EventArgs) Handles Me.Load
+        LoadGAC()
+        LoadGACData(FilterGAC)
+        LoadCOM()
+        LoadCOMData(FilterCOM)
+        AddHandler txtGACSearch.TextChanged, AddressOf GACFilter_Changed
+        AddHandler cbSpecificVersion.CheckedChanged, AddressOf GACFilter_Changed
+        AddHandler txtCOMSearch.TextChanged, AddressOf COMFilterChanged
+    End Sub
 
     Private Sub LoadGAC()
+        lGacResults = Fusion.GetGacAsAssembly.ToList
+        lGacResults.RemoveAll(Function(x) x.Name.EndsWith(".resources", StringComparison.OrdinalIgnoreCase))
+    End Sub
 
-        'Dim p As New Process
-        'p.StartInfo.CreateNoWindow = True
-        'p.StartInfo.RedirectStandardOutput = True
-        'p.StartInfo.UseShellExecute = False
-        'p.StartInfo.FileName = "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\gacutil.exe"
-        'p.StartInfo.Arguments = "-l"
-        'p.Start()
-        'Dim output As IO.StreamReader = p.StandardOutput
-        'Dim lResult As New List(Of GridGACRef)
-        'While Not output.EndOfStream
-        '    Try
-        '        Dim aName As Reflection.AssemblyName = New Reflection.AssemblyName(output.ReadLine)
-        '        lResult.Add(New GridGACRef With {.Name = aName.Name, .Version = If(aName.Version Is Nothing, "", aName.Version.ToString)})
-        '    Catch ex As Exception
+    Private Function FilterGAC() As List(Of AssemblyName)
+        Dim lVRes As New List(Of AssemblyName)
+        For Each name As String In lGacResults.Select(Function(x) x.Name).Distinct
+            lVRes.Add(lGacResults.Where(Function(x) x.Name = name).OrderByDescending(Function(y) y.Version).First)
+        Next
+        Return If(cbSpecificVersion.Checked, lGacResults, lVRes).Where(Function(x) x.Name.ToLower.Contains(txtGACSearch.Text.ToLower)).OrderBy(Function(x) x.Name).ToList
+    End Function
 
-        '    End Try
-        'End While
-        'lResult.RemoveRange(0, 2)
-        'dgvGAC.DataSource = lResult
-        'dgvGAC.Columns(0).Width = 200
+    Private Sub GACFilter_Changed(sender As Object, e As EventArgs)
+        LoadGACData(FilterGAC())
+    End Sub
+
+    Private Sub LoadGACData(lRes As List(Of AssemblyName))
+        lvGAC.Items.Clear()
+        For Each a As AssemblyName In lRes
+            lvGAC.Items.Add(New ListViewItem({a.Name, If(a.Version Is Nothing, "", a.Version.ToString)}) With {.Tag = a})
+        Next
     End Sub
 
     Private Sub LoadCOM()
-        Dim lCLSID As String() = CType(Registry.ClassesRoot.GetValue("CLSID"), RegistryKey).GetSubKeyNames
-        Dim lResult As New List(Of GridCOMRef)
-        For Each clsid As String In lCLSID
-            lResult.Add(New GridCOMRef() With {.Name = Registry.ClassesRoot.GetValue(clsid).GetValue})
+        lComResults = TypeLibrary.Libraries.ToList
+    End Sub
+
+    Private Sub LoadCOMData(lRes As List(Of TypeLibrary))
+        lvCOM.Items.Clear()
+        For Each tLib As TypeLibrary In lRes
+            lvCOM.Items.Add(New ListViewItem({tLib.Description, tLib.Path}) With {.Tag = tLib})
         Next
-        dgvCOM.DataSource = lResult
     End Sub
 
-    Private Sub ReferencesView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadGAC()
-        'LoadCOM()
+    Private Function FilterCOM() As List(Of TypeLibrary)
+        Return lComResults.Where(Function(x) x.Description.ToLower.Contains(txtCOMSearch.Text.ToLower)).OrderBy(Function(x) x.Description).ToList
+    End Function
+
+    Private Sub COMFilterChanged(sender As Object, e As EventArgs)
+        LoadCOMData(FilterCOM)
     End Sub
 
-    Public Class GridGACRef
-        Public Property Name As String
-        Public Property Version As String
-    End Class
+    Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
+        'TODO: Automatically add to the selected list
+        Dim ofd As New OpenFileDialog With {
+            .RestoreDirectory = True,
+            .Multiselect = True,
+            .Filter = "Assembly files (*.exe;*.dll)|*.dll;*.exe|All files (*.*)|*.*"
+        }
+        If ofd.ShowDialog = DialogResult.OK Then
+            For Each f As String In ofd.FileNames
+                lvBrowse.Items.Add(New ListViewItem({Path.GetFileNameWithoutExtension(f), f}) With {.Tag = f})
+            Next
+        End If
+    End Sub
 
-    Public Class GridCOMRef
-        Public Property Name As String
-        Public Property Path As String
-    End Class
+    Private Sub btnSelect_Click(sender As Object, e As EventArgs) Handles btnSelect.Click
+        If tcReferences.SelectedTab Is tpGAC AndAlso lvGAC.SelectedItems.Count > 0 Then
+            Dim aName As AssemblyName = lvGAC.SelectedItems.Item(0).Tag
+            lvSelected.Items.Add(New ListViewItem({aName.Name, "GAC", aName.Name}) With {.Tag = aName})
+        ElseIf tcReferences.SelectedTab Is tpCOM AndAlso lvCOM.SelectedItems.Count > 0 Then
+            Dim tLib As TypeLibrary = lvCOM.SelectedItems.Item(0).Tag
+            lvSelected.Items.Add(New ListViewItem({tLib.Description, "Type Library", tLib.Path}) With {.Tag = tLib})
+        ElseIf tcReferences.SelectedTab Is tpBrowse AndAlso lvBrowse.SelectedItems.Count > 0 Then
+            Dim strPath As String = lvBrowse.SelectedItems.Item(0).Tag
+            lvSelected.Items.Add(New ListViewItem({Path.GetFileName(strPath), "Assembly", strPath}) With {.Tag = strPath})
+        End If
+    End Sub
 
-End Class
-
-Public Class GacLoader
+    Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
+        If lvSelected.SelectedItems.Count > 0 Then
+            lvSelected.Items.Remove(lvSelected.SelectedItems.Item(0))
+        End If
+    End Sub
 
 End Class

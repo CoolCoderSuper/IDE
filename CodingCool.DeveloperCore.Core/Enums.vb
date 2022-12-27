@@ -8,22 +8,8 @@ Public Enum ErrorTypes
     Hidden
 End Enum
 
-Public Enum ExplorerItemTypes
-    [Class]
-    Method
-    [Property]
-    [Event]
-    [Operator]
-    Variable
-    [Interface]
-    Struct
-    [Namespace]
-    [Enum]
-    [Module]
-End Enum
-
 ''' <summary>
-''' Represents a projects athentication mode.
+''' Represents a projects authentication mode.
 ''' </summary>
 Public Enum AuthenticationModes
     Windows
@@ -60,7 +46,8 @@ End Enum
 ''' Represents actions that can be done in the solution explorer.
 ''' </summary>
 Public Enum ActionTypes
-    Create
+    NewFile
+    NewFolder
     Delete
     ViewCode
     Exclude
@@ -68,14 +55,6 @@ Public Enum ActionTypes
     Paste
     CopyFullPath
     OpenInFileExplorer
-    Open
     OpenWith
-End Enum
-
-''' <summary>
-''' Represents different ways to copy files.
-''' </summary>
-Public Enum CopyTypes
-    Copy
-    Cut
+    Rename
 End Enum

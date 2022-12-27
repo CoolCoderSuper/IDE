@@ -1,6 +1,6 @@
-﻿Imports CodingCool.DeveloperCore.Core
+﻿Imports System.IO
+Imports CodingCool.DeveloperCore.Core
 Imports CodingCool.DeveloperCore.Editor
-Imports CodingCool.DeveloperCore.Structure
 Imports CodingCool.DeveloperCore.Views
 Imports Microsoft.CodeAnalysis
 Imports Microsoft.CodeAnalysis.Emit
@@ -20,7 +20,6 @@ Public Class frmMain
     Private WithEvents tbOutput As OutputTab
     Private WithEvents tbTaskList As TaskListTab
     Private WithEvents tbErrorList As ErrorListTab
-    Private WithEvents tbStructure As RoslynStructureTab
 
 #End Region
 
@@ -55,33 +54,9 @@ Public Class frmMain
         BackColor = ColorTranslator.FromHtml("#888888")
         ConfigureErrorList()
         tcTools.Items.Add(tbErrorList)
-        'ConfigueTaskList()
-        'tcTools.Items.Add(tbTaskList)
         tbOutput = New OutputTab
         tcTools.Items.Add(tbOutput)
-        tbStructure = New RoslynStructureTab
-        tcViews.TabPages.Add(tbStructure)
         tmrObjectExplorer.Start()
-    End Sub
-
-    Private Sub ConfigueTaskList()
-        'Try
-        '    Dim l As New List(Of String)
-        '    Dim objDoc As XDocument = XDocument.Load(ProjectRoot)
-        '    Dim objRoot As XElement = objDoc.Element("Project")
-        '    Dim objFiles As XElement = objRoot.Element("Files")
-        '    For Each objEl As XElement In objFiles.Elements("File")
-        '        l.Add(objEl.Value)
-        '    Next
-        '    tbTaskList = New TaskListTab(String.Empty, l.ToArray())
-        'Catch ex As Exception
-        '    tbTaskList = New TaskListTab(String.Empty, {})
-        'End Try
-        'If Language = "cs" Then
-        '    tbTaskList.CommentPrefix = "//"
-        'Else
-        '    tbTaskList.CommentPrefix = "'"
-        'End If
     End Sub
 
     Private Sub ConfigureErrorList()
@@ -94,12 +69,13 @@ Public Class frmMain
 
     Private Sub tmrObjectExplorer_Tick(sender As Object, e As EventArgs) Handles tmrObjectExplorer.Tick
         If CurrentTB IsNot Nothing Then
-            tbStructure.LoadVb(CurrentTB.Text)
+            rsvStructure.LoadStructure(CurrentTB.Text)
         End If
     End Sub
 
     Private Sub tcMain_TabStripItemSelectionChanged(e As FarsiLibrary.Win.TabStripItemChangedEventArgs) Handles tcMain.TabStripItemSelectionChanged
         CurrentTB = DirectCast(e.Item, EditorCodeTab).txtEditor
+        rsvStructure.Loader = LoaderFactory.GetLoaderFromFile(CurrentTB.FileName)
     End Sub
 
     Private Sub frmMain_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -149,23 +125,11 @@ Public Class frmMain
 
 #Region "Files"
 
-    Private Sub tbObjectExplorer_Naviagte(sender As Object, e As Integer) Handles tbStructure.Naviagte
-
+    Private Sub btnNewFile_Click(sender As Object, e As EventArgs) Handles btnNewFile.Click
+        frmNewFile.ShowDialog()
     End Sub
 
-    Private Sub btnNewFile_Click(sender As Object, e As EventArgs) Handles btnNewFile.Click, btnNewContext.Click
-
-    End Sub
-
-    Private Sub btnReferences_Click(sender As Object, e As EventArgs) Handles btnReferences.Click
-
-    End Sub
-
-    Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnNewExisting.Click, btnExistingContext.Click
-
-    End Sub
-
-    Private Sub btnDeleteContext_Click(sender As Object, e As EventArgs) Handles btnDeleteContext.Click
+    Private Sub btnNewExisting_Click(sender As Object, e As EventArgs) Handles btnExistingFile.Click
 
     End Sub
 
@@ -181,9 +145,25 @@ Public Class frmMain
     End Sub
 
     Private Sub seExplorer_Open(sender As Object, e As String) Handles seExplorer.Open
-        Dim objTab As New EditorCodeTab(e)
-        tcMain.Items.Add(objTab)
-        tcMain.SelectedItem = objTab
+        If Directory.Exists(e) Then
+            Process.Start(e)
+        Else
+            Dim objTab As New EditorCodeTab(e)
+            rsvStructure.Loader = LoaderFactory.GetLoaderFromFile(e)
+            tcMain.Items.Add(objTab)
+            tcMain.SelectedItem = objTab
+        End If
+    End Sub
+
+    Private Sub seExplorer_Action(sender As Object, e As ActionEventArgs) Handles seExplorer.Action
+        Select Case e.Action
+            Case ActionTypes.Exclude
+                seExplorer.Exclude(e.Data)
+        End Select
+    End Sub
+
+    Private Sub tbObjectExplorer_Navigate(sender As Object, e As Integer) Handles rsvStructure.Navigate
+
     End Sub
 
 #End Region
@@ -191,7 +171,9 @@ Public Class frmMain
 #Region "Project"
 
     Private Sub btnNewProject_Click(sender As Object, e As EventArgs) Handles btnNewProject.Click
-        frmNewProject.ShowDialog()
+        Dim frmDiaglog As New frmReferences(seExplorer.Projects.LoadedProjects.First)
+        frmDiaglog.ShowDialog
+        'frmNewProject.ShowDialog()
     End Sub
 
     Private Async Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
@@ -199,13 +181,13 @@ Public Class frmMain
         ofd.Multiselect = False
         ofd.Filter = "Solution files (*.sln)|*.sln"
         If ofd.ShowDialog() = DialogResult.OK Then
-            tbErrorList.Stop
+            tbErrorList.Stop()
             CurrentSolution = Await SolutionParser.LoadSolution(ofd.FileName)
             seExplorer.LoadMSBuild(CurrentSolution.FilePath)
-            tbErrorList.Errors.Clear
-            tbErrorList.Reload
+            tbErrorList.Errors.Clear()
+            tbErrorList.Reload()
             tbErrorList.Solution = CurrentSolution
-            tbErrorList.Start
+            tbErrorList.Start()
         End If
     End Sub
 
@@ -261,6 +243,10 @@ Public Class frmMain
         If Not tcTools.Items.Contains(tbErrorList) Then
             tcTools.Items.Add(tbErrorList)
         End If
+    End Sub
+
+    Private Sub ItemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ItemToolStripMenuItem.Click
+
     End Sub
 
 #End Region

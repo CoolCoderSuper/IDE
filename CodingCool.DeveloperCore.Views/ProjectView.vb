@@ -4,10 +4,6 @@ Public Class ProjectView
     Public PRTemplates As Core.ProjectTemplateManager
     Public TemplateCategories As Core.TemplateCategoryManager
 
-    'Public Function GetProject() As Core.Project
-    '    Dim objProject As New Core.Project
-    'End Function
-
     Private Sub ProjectView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         PRTemplates = New Core.ProjectTemplateManager : PRTemplates.Load()
         TemplateCategories = New Core.TemplateCategoryManager : TemplateCategories.Load()

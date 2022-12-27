@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Reflection
 Imports Nustache.Core
 
+'TODO: Add child files
 ''' <summary>
 ''' Represents a template for creating a file.
 ''' </summary>
@@ -28,7 +29,7 @@ Public Class FileTemplate
     ''' The icon for this template.
     ''' </summary>
     ''' <returns></returns>
-    Public Property Icon As Icon
+    Public Property Icon As Image
 
     ''' <summary>
     ''' The name of the file.

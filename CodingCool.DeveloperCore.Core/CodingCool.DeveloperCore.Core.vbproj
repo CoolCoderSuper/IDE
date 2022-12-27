@@ -71,14 +71,6 @@
       <HintPath>..\packages\Microsoft.Build.Locator.1.5.5\lib\net46\Microsoft.Build.Locator.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Build.Locator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9dff12846e04bfbd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Build.Locator.1.5.5\lib\net46\Microsoft.Build.Locator.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Build.Locator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9dff12846e04bfbd, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Build.Locator.1.5.5\lib\net46\Microsoft.Build.Locator.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Build.Tasks.Core">
       <HintPath>..\Microsoft.Build.Tasks.Core.dll</HintPath>
     </Reference>
@@ -221,19 +213,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor\AutocompleteItems.vb" />
-    <Compile Include="Components\FontComboBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Enums.vb" />
     <Compile Include="Error\ErrorHelper.vb" />
     <Compile Include="Error\ErrorItem.vb" />
-    <Compile Include="Error\ErrorNumber.vb" />
-    <Compile Include="EventArgs\CopyItemEventArgs.vb" />
     <Compile Include="EventArgs\MenuItemClickEventArgs.vb" />
     <Compile Include="EventArgs\MoveItemEventArgs.vb" />
     <Compile Include="EventArgs\RenameItemEventArgs.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="References\Fusion.vb" />
     <Compile Include="Helpers.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -252,8 +239,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Project\SolutionBuild.vb" />
-    <Compile Include="Structure\StructureHelpers.vb" />
-    <Compile Include="Structure\StrctureItem.vb" />
     <Compile Include="Project\SolutionParser.vb" />
     <Compile Include="Project\Templates\FileTemplate.vb" />
     <Compile Include="Project\Templates\FileTemplateManager.vb" />
@@ -261,8 +246,17 @@
     <Compile Include="Project\Templates\ProjectTemplateManager.vb" />
     <Compile Include="Project\Templates\TemplateCategory.vb" />
     <Compile Include="Project\Templates\TemplateCategoryManager.vb" />
+    <Compile Include="References\TypeLibrary.vb" />
+    <Compile Include="Structure\CsLoader.vb" />
+    <Compile Include="Structure\ILoader.vb" />
+    <Compile Include="Structure\LoaderFactory.vb" />
+    <Compile Include="Structure\StructureItem.vb" />
+    <Compile Include="Structure\VbLoader.vb" />
+    <Compile Include="Task\CsTaskLoader.vb" />
+    <Compile Include="Task\ITaskLoader.vb" />
     <Compile Include="Task\TaskHelper.vb" />
     <Compile Include="Task\TaskItem.vb" />
+    <Compile Include="Task\VbTaskLoader.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -1,11 +1,9 @@
-﻿Imports Microsoft.Build.Locator
-Imports Microsoft.CodeAnalysis.MSBuild
+﻿Imports Microsoft.CodeAnalysis.MSBuild
 
 Public Class SolutionParser
     Public Shared Property Workspace As MSBuildWorkspace
 
     Public Shared Async Function LoadSolution(strFile As String) As Task(Of Microsoft.CodeAnalysis.Solution)
-        If Not MSBuildLocator.IsRegistered Then MSBuildLocator.RegisterDefaults()
         Workspace = MSBuildWorkspace.Create
         Return Await Workspace.OpenSolutionAsync(strFile)
     End Function

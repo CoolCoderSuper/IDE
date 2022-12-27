@@ -1,4 +1,5 @@
 ﻿Imports CodingCool.DeveloperCore.Core
+Imports CodingCool.DeveloperCore.Views
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmOptions

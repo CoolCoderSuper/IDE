@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Build.Locator
+﻿Imports CodingCool.DeveloperCore.Core
+Imports Microsoft.Build.Locator
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My
@@ -11,6 +12,8 @@ Namespace My
     Partial Friend Class MyApplication
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             If Not MSBuildLocator.IsRegistered Then MSBuildLocator.RegisterDefaults()
+            TemplateCategoryManager.CategorySettings = "C:\CodingCool\DeveloperCore\categories.xml"
+            FileTemplateManager.TemplateSettings = "C:\CodingCool\DeveloperCore\files.xml"
         End Sub
     End Class
 End Namespace
