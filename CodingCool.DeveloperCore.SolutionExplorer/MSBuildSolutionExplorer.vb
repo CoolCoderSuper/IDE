@@ -2,14 +2,20 @@
 Imports System.Windows.Forms
 Imports CodingCool.DeveloperCore.Core
 
-'TODO: SDK Style projects
 'TODO: Add shared projects
-'TODO: Project references
+'TODO: Assembly metadata, InternalsVisibleTo, BaseApplicationManifest, CodeAnalysisImport, Import, NativeReference, conditions, custom tools
+'TODO: Hide unsupported buttons
+'TODO: Manage project and solution folders
+'TODO: Project menu
+'TODO: Solution menu
+'TODO: Solution items
+'TODO: Package references
 Public Class MSBuildSolutionExplorer
     Inherits TreeView
 
     'Private sln As Solution
     Public Property MSBuildSLN As Microsoft.Build.Construction.SolutionFile
+
     Public Property Projects As Microsoft.Build.Evaluation.ProjectCollection
 
 #Region "Components"
@@ -84,7 +90,7 @@ Public Class MSBuildSolutionExplorer
 #Region "Load"
 
     Public Sub LoadMSBuild(strSln As String)
-        Projects?.UnloadAllProjects
+        Projects?.UnloadAllProjects()
         MSBuildSLN = Microsoft.Build.Construction.SolutionFile.Parse(strSln)
         Projects = Nothing
         Nodes.Clear()
@@ -105,13 +111,13 @@ Public Class MSBuildSolutionExplorer
                 If item.ItemType = "Reference" Then
                     Dim path As String = item.GetMetadataValue("HintPath")
                     If path <> "" AndAlso File.Exists(path) Then
-                        nReferences.Nodes.Add($"Reference_{proj.FullPath}_{path}", Reflection.AssemblyName.GetAssemblyName(If(IO.Path.IsPathRooted(path), path, $"{proj.DirectoryPath}\{path}")).Name, "Reference", "Reference")
+                        nReferences.Nodes.Add($"Reference_{proj.FullPath}_{path}", Reflection.AssemblyName.GetAssemblyName(If(IO.Path.IsPathRooted(path), path, $"{proj.DirectoryPath}\{path}")).Name, "Reference", "Reference").Tag = item
                     Else
-                        nReferences.Nodes.Add($"Reference_{proj.FullPath}_{item.EvaluatedInclude}", New Reflection.AssemblyName(item.EvaluatedInclude).Name, "Reference", "Reference")
+                        nReferences.Nodes.Add($"Reference_{proj.FullPath}_{item.EvaluatedInclude}", New Reflection.AssemblyName(item.EvaluatedInclude).Name, "Reference", "Reference").Tag = item
                     End If
                 ElseIf item.ItemType = "COMReference" Then
                     nReferences.Nodes.Add($"Reference_{proj.FullPath}_{item.EvaluatedInclude}", item.EvaluatedInclude, "Reference", "Reference")
-                ElseIf item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" Then
+                ElseIf item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" Then
                     Dim lFolders As List(Of String) = item.UnevaluatedInclude.Replace("/", "\").Split("\").ToList
                     Dim strFile As String = lFolders(lFolders.Count - 1)
                     lFolders.RemoveAt(lFolders.Count - 1)
@@ -140,12 +146,13 @@ Public Class MSBuildSolutionExplorer
                         strPathId = $"{f}\"
                         Dim strKey As String = $"Folder_{proj.FullPath}_{strPathId}"
                         nLastNode = If(Nodes.Find(strKey, True).Any, Nodes.Find(strKey, True).First, nLastNode.Nodes.Add(strKey, f, "Folder", "Folder"))
+                        If nLastNode.Tag IsNot Nothing Then nLastNode.Tag = item
                     Next
                 ElseIf item.ItemType = "ProjectReference" Then
-                    'Nodes.Add(item.UnevaluatedInclude)
+                    nReferences.Nodes.Add($"Reference_{proj.FullPath}_{item.UnevaluatedInclude}", Path.GetFileNameWithoutExtension(If(Path.IsPathRooted(item.UnevaluatedInclude), item.UnevaluatedInclude, $"{proj.DirectoryPath}\{item.UnevaluatedInclude}")), "Reference", "Reference").Tag = item
                 ElseIf item.ItemType = "Analyzer" Then
                     Dim path As String = item.UnevaluatedInclude
-                    nAnalyzers.Nodes.Add($"Analyzer_{proj.FullPath}_{path}", Reflection.Assembly.LoadFrom($"{proj.DirectoryPath}\{path}").GetName().Name, "Reference", "Reference")
+                    nAnalyzers.Nodes.Add($"Analyzer_{proj.FullPath}_{path}", Reflection.AssemblyName.GetAssemblyName(If(IO.Path.IsPathRooted(path), path, $"{proj.DirectoryPath}\{path}")).Name, "Reference", "Reference").Tag = item
                 End If
             Next
             For Each item As Microsoft.Build.Evaluation.ProjectItem In proj.Items.Where(Function(x) x.Metadata.Any(Function(y) y.Name = "DependentUpon"))
@@ -254,6 +261,83 @@ Public Class MSBuildSolutionExplorer
 
 #End Region
 
+    Private Sub RoslynSolutionExplorer_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles Me.NodeMouseDoubleClick
+        If TypeOf e.Node.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = e.Node.Tag
+            If item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" Then
+                RaiseEvent Open(Me, $"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            If item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" Then
+                RaiseEvent Open(Me, $"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnOpenInExplorer_Click(sender As Object, e As EventArgs) Handles btnOpenInExplorer.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            If item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" Then
+                RaiseEvent Open(Me, Path.GetDirectoryName($"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}"))
+            End If
+        End If
+    End Sub
+
+    Private Sub btnCopyPath_Click(sender As Object, e As EventArgs) Handles btnCopyPath.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            If item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" Then
+                Clipboard.SetText($"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnExclude_Click(sender As Object, e As EventArgs) Handles btnExclude.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            If item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" OrElse item.ItemType = "Reference" OrElse item.ItemType = "COMReference" OrElse item.ItemType = "ProjectReference" OrElse item.ItemType = "Analyzer" Then
+                RaiseEvent Action(Me, New ActionEventArgs() With {.Action = ActionTypes.Exclude, .Data = item})
+                Exclude(item)
+            End If
+        End If
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            If item.ItemType = "Compile" OrElse item.ItemType = "EmbeddedResource" OrElse item.ItemType = "None" OrElse item.ItemType = "Content" OrElse item.ItemType = "Reference" OrElse item.ItemType = "COMReference" OrElse item.ItemType = "ProjectReference" OrElse item.ItemType = "Analyzer" Then
+                RaiseEvent Action(Me, New ActionEventArgs() With {.Action = ActionTypes.Delete, .Data = item})
+                Delete(item)
+            End If
+        End If
+    End Sub
+
+#Region "TODO"
+
+    Private Sub btnPaste_Click(sender As Object, e As EventArgs) Handles btnPaste.Click
+        Dim item As Microsoft.Build.Evaluation.ProjectItem = Clipboard.GetData(Constants.ClipboardDataFormat)
+    End Sub
+
+    Private Sub btnCut_Click(sender As Object, e As EventArgs) Handles btnCut.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            Exclude(item)
+            Clipboard.SetData(Constants.ClipboardDataFormat, item)
+        End If
+    End Sub
+
+    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
+        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
+            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
+            Clipboard.SetData(Constants.ClipboardDataFormat, item)
+        End If
+    End Sub
+
 #Region "Rename"
 
     Private Sub SolutionExplorer_BeforeLabelEdit(sender As Object, e As NodeLabelEditEventArgs) Handles Me.BeforeLabelEdit
@@ -294,40 +378,7 @@ Public Class MSBuildSolutionExplorer
 
 #End Region
 
-    Private Sub RoslynSolutionExplorer_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles Me.NodeMouseDoubleClick
-        If TypeOf e.Node.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
-            Dim item As Microsoft.Build.Evaluation.ProjectItem = e.Node.Tag
-            RaiseEvent Open(Me, $"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}")
-        End If
-    End Sub
-
-    Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
-        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
-            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
-            RaiseEvent Open(Me, $"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}")
-        End If
-    End Sub
-
-    Private Sub btnOpenInExplorer_Click(sender As Object, e As EventArgs) Handles btnOpenInExplorer.Click
-        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
-            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
-            RaiseEvent Open(Me, Path.GetDirectoryName($"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}"))
-        End If
-    End Sub
-
-    Private Sub btnExclude_Click(sender As Object, e As EventArgs) Handles btnExclude.Click
-        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
-            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
-            RaiseEvent Action(Me, New ActionEventArgs() With {.Action = ActionTypes.Exclude, .Data = item})
-        End If
-    End Sub
-
-    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        If SelectedNode IsNot Nothing AndAlso TypeOf SelectedNode.Tag Is Microsoft.Build.Evaluation.ProjectItem Then
-            Dim item As Microsoft.Build.Evaluation.ProjectItem = SelectedNode.Tag
-            RaiseEvent Action(Me, New ActionEventArgs() With {.Action = ActionTypes.Delete, .Data = item})
-        End If
-    End Sub
+#End Region
 
     Public Event Open(sender As Object, e As String)
 
@@ -338,11 +389,19 @@ Public Class MSBuildSolutionExplorer
     Public Event Action(sender As Object, e As ActionEventArgs)
 
 #Region "API"
+
     Public Sub Exclude(item As Microsoft.Build.Evaluation.ProjectItem)
         item.Project.RemoveItem(item)
-        item.Project.ReevaluateIfNecessary
-        item.Project.Save
+        item.Project.ReevaluateIfNecessary()
+        item.Project.Save()
     End Sub
+
+    Public Sub Delete(item As Microsoft.Build.Evaluation.ProjectItem)
+        Dim strPath As String = If(Path.IsPathRooted(item.UnevaluatedInclude), item.UnevaluatedInclude, $"{item.Project.DirectoryPath}\{item.UnevaluatedInclude}")
+        If File.Exists(strPath) Then File.Delete(strPath)
+        Exclude(item)
+    End Sub
+
 #End Region
 
 End Class
@@ -355,3 +414,7 @@ Public Enum SolutionItemType
     Reference
     Properties
 End Enum
+
+Public Class Constants
+    Public Const ClipboardDataFormat As String = "MSBuildProjectItem"
+End Class

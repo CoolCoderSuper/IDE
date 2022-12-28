@@ -14,9 +14,11 @@ Public Class ReferencesView
         End Get
     End Property
 
-    Public WriteOnly Property Projects As Dictionary(Of String, String)
-        Set(value As Dictionary(Of String, String))
-
+    Public WriteOnly Property Projects As List(Of (String, String))
+        Set
+            For Each pr As (String, String) In Value
+                lvProjects.Items.Add(New ListViewItem({pr.Item1, pr.Item2}) With {.Tag = pr})
+            Next
         End Set
     End Property
 
@@ -101,6 +103,9 @@ Public Class ReferencesView
         ElseIf tcReferences.SelectedTab Is tpBrowse AndAlso lvBrowse.SelectedItems.Count > 0 Then
             Dim strPath As String = lvBrowse.SelectedItems.Item(0).Tag
             lvSelected.Items.Add(New ListViewItem({Path.GetFileName(strPath), "Assembly", strPath}) With {.Tag = strPath})
+        ElseIf tcReferences.SelectedTab Is tpProjects AndAlso lvProjects.SelectedItems.Count > 0 Then
+            Dim pr As (String, String) = lvProjects.SelectedItems.Item(0).Tag
+            lvSelected.Items.Add(New ListViewItem({pr.Item1, "Project", pr.Item2}) With {.Tag = pr})
         End If
     End Sub
 

@@ -156,10 +156,7 @@ Public Class frmMain
     End Sub
 
     Private Sub seExplorer_Action(sender As Object, e As ActionEventArgs) Handles seExplorer.Action
-        Select Case e.Action
-            Case ActionTypes.Exclude
-                seExplorer.Exclude(e.Data)
-        End Select
+
     End Sub
 
     Private Sub tbObjectExplorer_Navigate(sender As Object, e As Integer) Handles rsvStructure.Navigate
@@ -171,8 +168,8 @@ Public Class frmMain
 #Region "Project"
 
     Private Sub btnNewProject_Click(sender As Object, e As EventArgs) Handles btnNewProject.Click
-        Dim frmDiaglog As New frmReferences(seExplorer.Projects.LoadedProjects.First)
-        frmDiaglog.ShowDialog
+        Dim frmDialog As New frmReferences(seExplorer.Projects.LoadedProjects.First, seExplorer.Projects.LoadedProjects.ToList)
+        frmDialog.ShowDialog
         'frmNewProject.ShowDialog()
     End Sub
 

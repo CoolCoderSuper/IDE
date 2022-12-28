@@ -1,12 +1,14 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports CodingCool.DeveloperCore.Core
 Imports Microsoft.Build.Evaluation
 
 Public Class frmReferences
 
-    Public Sub New(pr As Project)
+    Public Sub New(pr As Project, projects As List(Of Project))
         InitializeComponent()
         Project = pr
+        rvReferences.Projects = projects.Select(Function(x) (Path.GetFileNameWithoutExtension(x.ProjectFileLocation.LocationString), x.ProjectFileLocation.LocationString)).ToList
     End Sub
 
     Public ReadOnly Property Project As Project
@@ -33,9 +35,14 @@ Public Class frmReferences
                 refItem.SetMetadataValue("Isolated", tLib.Isolated)
                 refItem.SetMetadataValue("EmbedInteropTypes", True)
             End If
+            Dim pr As (String, String) = If(TypeOf ref Is (String, String), ref, Nothing)
+            If Not pr.Equals(Nothing) Then
+                Dim refItem As ProjectItem = Project.AddItem("ProjectReference", Helpers.AbsolutePathToRelativePath(Project.DirectoryPath, pr.Item2)).First
+                refItem.SetMetadataValue("Name", pr.Item1)
+            End If
         Next
-        Project.ReevaluateIfNecessary
-        Project.Save
+        Project.ReevaluateIfNecessary()
+        Project.Save()
         DialogResult = DialogResult.OK
         Close()
     End Sub
