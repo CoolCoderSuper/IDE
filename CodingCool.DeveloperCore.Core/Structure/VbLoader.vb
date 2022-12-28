@@ -1,5 +1,4 @@
-﻿Imports CodingCool.DeveloperCore.Core
-Imports Microsoft.CodeAnalysis
+﻿Imports Microsoft.CodeAnalysis
 Imports Microsoft.CodeAnalysis.VisualBasic
 Imports Microsoft.CodeAnalysis.VisualBasic.Syntax
 

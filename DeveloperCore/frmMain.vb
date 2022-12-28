@@ -182,12 +182,12 @@ Public Class frmMain
         ofd.Filter = "Solution files (*.sln)|*.sln"
         If ofd.ShowDialog() = DialogResult.OK Then
             tbErrorList.Stop()
-            CurrentSolution = Await SolutionParser.LoadSolution(ofd.FileName)
-            seExplorer.LoadMSBuild(CurrentSolution.FilePath)
-            tbErrorList.Errors.Clear()
-            tbErrorList.Reload()
-            tbErrorList.Solution = CurrentSolution
-            tbErrorList.Start()
+            'CurrentSolution = Await SolutionParser.LoadSolution(ofd.FileName)
+            seExplorer.LoadMSBuild(ofd.FileName)
+            'tbErrorList.Errors.Clear()
+            'tbErrorList.Reload()
+            'tbErrorList.Solution = CurrentSolution
+            'tbErrorList.Start()
         End If
     End Sub
 
